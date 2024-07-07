@@ -4,7 +4,7 @@ import CustomForm from '../../../component/Form/CustomForm'
 import CustomInput from '../../../component/Form/CustomInput'
 import { Link, useNavigate } from 'react-router-dom'
 import { IoIosArrowBack } from 'react-icons/io'
-import { forgetPasswordSchema } from '../../../schema/authSchema'
+import {newPasswordSchema } from '../../../schema/authSchema'
 const NewPassword = () => {
     const navigate = useNavigate()
     const submit = (data) => {
@@ -22,7 +22,7 @@ const NewPassword = () => {
                         <Link to="/auth/otp"><IoIosArrowBack /></Link>
                         Update Password</h1>
                 </div>
-                <CustomForm onSubmit={submit} resolver={zodResolver(forgetPasswordSchema)}>
+                <CustomForm onSubmit={submit} resolver={zodResolver(newPasswordSchema)}>
                     <CustomInput
                         name="password"
                         type="password"

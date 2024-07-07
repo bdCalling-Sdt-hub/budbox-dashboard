@@ -40,7 +40,7 @@ const Sidebar = () => {
 
     }
     return (
-        <div className='w- h-screen bg-[#4c7e95]'>
+        <div className='w- h-screen bg-[#4c7e95] sticky top-0 left-0'>
             <div className="flex flex-col justify-center items-center pt-5 gap-2 text-white">
                 <img src={user.image} alt={user.name} className='rounded-full size-14 ring-4 ring-white' />
                 <h1 className="font-semibold uppercase">{user.name}</h1>

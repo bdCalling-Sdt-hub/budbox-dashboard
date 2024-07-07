@@ -8,7 +8,7 @@ const Header = () => {
 
     }
     return (
-        <div className='w-full h-20 px-5 bg-[#4c7e95] flex justify-between items-center text-white'>
+        <div className='w-full h-20 px-5 bg-[#4c7e95] flex justify-between items-center text-white sticky top-0 left-0 z-10'>
             <div>
                 <h1 className='text-xl'>Welcome, Rakib</h1>
                 <span className='text-sm'>Have a nice day</span>

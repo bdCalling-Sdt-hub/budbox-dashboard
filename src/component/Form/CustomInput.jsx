@@ -17,7 +17,7 @@ const CustomInput = ({
                             type={type}
                             id={name}
                             disabled={disabled}
-                            className={`w-full  px-3 py-1 border border-gray-400 rounded outline-none mt-2 ${error ? "focus:border-rose-500" : "focus:border-[#144982]"
+                            className={`w-full  px-3 py-2 border border-gray-400 rounded-[2px] outline-none mt-2 ${error ? "focus:border-rose-500" : "focus:border-[#144982]"
                                 }`}
                             placeholder={placeholder}
                         />
