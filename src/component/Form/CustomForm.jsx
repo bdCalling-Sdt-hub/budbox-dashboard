@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
-import { FormProvider, useForm, } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
+
 const CustomForm = ({
     onSubmit,
     children,
@@ -22,7 +23,7 @@ const CustomForm = ({
     };
     return (
         <FormProvider {...methods}>
-            <form onSubmit={handleSubmit(submit)}>{children}</form>
+            <form onSubmit={handleSubmit(submit)} className='w-full'>{children}</form>
         </FormProvider>
     );
 };
