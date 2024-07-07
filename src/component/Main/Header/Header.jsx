@@ -1,6 +1,9 @@
 import { MdOutlineNotificationsActive } from 'react-icons/md'
+import { useNavigate } from 'react-router-dom'
 
 const Header = () => {
+
+    const navigate = useNavigate()
     const user = {
         name: 'Md Rakib Islam',
         email: 'rakib.com',
@@ -18,8 +21,9 @@ const Header = () => {
                     <MdOutlineNotificationsActive className='size-8' />
                     <span className='absolute top-0 right-0 text-xs bg-[#e6f9ef] size-4 flex justify-center items-center rounded-full text-gray-600'>12</span>
                 </h1>
-                <img src={user.image} alt={user.name} className='size-12 rounded-full' />
+                <img onClick={() => navigate('/personal-info')} src={user.image} alt={user.name} className='size-12 rounded-full cursor-pointer' />
                 <span>{user.name}</span>
+
             </div>
         </div>
     )
