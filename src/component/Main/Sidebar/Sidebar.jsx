@@ -1,67 +1,82 @@
-import { IoIosLogOut } from "react-icons/io"
-import { IoCopyOutline, IoSettingsOutline } from "react-icons/io5"
-import { LuLayoutDashboard } from "react-icons/lu"
-import { PiCurrencyCircleDollar, PiUsersThree } from "react-icons/pi"
-import { NavLink, useNavigate } from "react-router-dom"
+import { IoIosLogOut } from "react-icons/io";
+import { IoSettingsOutline } from "react-icons/io5";
+import { LuLayoutDashboard } from "react-icons/lu";
+import { PiCurrencyCircleDollar, PiUsersThree } from "react-icons/pi";
+import { NavLink, useNavigate } from "react-router-dom";
+import { HiOutlineDatabase } from "react-icons/hi";
+import logo from "/public/logo/logo.png";
+import { BiCalendarEdit } from "react-icons/bi";
 
 const sidebarItems = [
-    {
-        path: '/',
-        name: 'Dashboard',
-        icon: <LuLayoutDashboard className="size-6" />
-    },
-    {
-        path: '/users',
-        name: 'Users',
-        icon: <PiUsersThree className="size-6" />
-    },
-    {
-        path: '/category',
-        name: 'Category',
-        icon: <IoCopyOutline className="size-6" />
-    },
-    {
-        path: '/earnings',
-        name: 'Earnings',
-        icon: <PiCurrencyCircleDollar className="size-6" />
-    },
-    {
-        path: '/settings',
-        name: 'Settings',
-        icon: <IoSettingsOutline className="size-6" />
-    }
-]
+  {
+    path: "/",
+    name: "Dashboard",
+    icon: <LuLayoutDashboard className="size-8" />,
+  },
+  {
+    path: "/users",
+    name: "Users",
+    icon: <PiUsersThree className="size-8" />,
+  },
+  {
+    path: "/budboxes",
+    name: "Budboxes",
+    icon: <PiUsersThree className="size-8" />,
+  },
+  {
+    path: "/items",
+    name: "Items",
+    icon: <HiOutlineDatabase className="size-8" />,
+  },
+  {
+    path: "/earnings",
+    name: "Earnings",
+    icon: <PiCurrencyCircleDollar className="size-8" />,
+  },
+  {
+    path: "/orders",
+    name: "Orders",
+    icon: <BiCalendarEdit className="size-8" />,
+  },
+  {
+    path: "/settings",
+    name: "Settings",
+    icon: <IoSettingsOutline className="size-8" />,
+  },
+];
 const Sidebar = () => {
-    const navigate = useNavigate()
-    const user = {
-        name: 'Md Rakib Islam',
-        email: 'rakib.com',
-        image: 'https://i.postimg.cc/0QZmYnLd/rakib.png'
+  const navigate = useNavigate();
+  return (
+    <div className="w- h-screen bg-[#111111] sticky top-0 left-0">
+      <div className="flex flex-col justify-center items-center pt-5 gap-2 text-white">
+        <img src={logo} alt="logo" className="w-56 h-24 mb-5" />
+      </div>
+      <div className="w-full h-[2px] bg-[#f7cc50] mb-5 " />
+      <ul className="w-full flex flex-col gap-3">
+        {sidebarItems.map((item) => (
+          <NavLink
+            key={item.name}
+            to={item.path}
+            className={({ isActive }) =>
+              isActive
+                ? "bg-[#333333] px-10 py-5 flex items-center gap-3  text-[#f7cc50]"
+                : " px-10 py-5 flex items-center gap-3 text-[#f7cc50]"
+            }
+          >
+            {item?.icon}
+            <h>{item.name}</h>
+          </NavLink>
+        ))}
+      </ul>
+      <button
+        onClick={() => navigate("auth")}
+        className="flex items-center gap-2 p-3 text-white mt-16"
+      >
+        <IoIosLogOut className="size-8" />
+        <span>Logout</span>
+      </button>
+    </div>
+  );
+};
 
-    }
-    return (
-        <div className='w- h-screen bg-[#4c7e95] sticky top-0 left-0'>
-            <div className="flex flex-col justify-center items-center pt-5 gap-2 text-white">
-                <img src={user.image} alt={user.name} className='rounded-full size-14 ring-4 ring-white' />
-                <h1 className="font-semibold uppercase">{user.name}</h1>
-                <span className="text-sm">FOR - GREAT - PARENTS</span>
-            </div>
-            <hr className="mb-5" />
-            <ul className="w-full flex flex-col gap-3">
-                {
-                    sidebarItems.map(item => <NavLink key={item.name} to={item.path} className={({ isActive }) => isActive ? 'bg-white p-3 flex items-center gap-2 text-[#4c7e95]' : 'p-3 flex items-center gap-2 text-white'}>
-                        <h1 className="size-7"> {item?.icon}</h1>
-                        <span>{item.name}</span>
-                    </NavLink>)
-                }
-
-            </ul>
-            <button onClick={()=>navigate('auth')} className="flex items-center gap-2 p-3 text-white mt-16">
-                <IoIosLogOut className="size-6" />
-                <span>Logout</span>
-            </button>
-        </div>
-    )
-}
-
-export default Sidebar
+export default Sidebar;
