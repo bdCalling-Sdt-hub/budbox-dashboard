@@ -5,7 +5,7 @@ import { RiUserVoiceLine } from "react-icons/ri"
 const Status = () => {
     return (
         <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-5">
-            <div className="flex justify-between items-center border p-5 rounded-lg">
+            <div className="flex justify-between items-center p-8 rounded-lg bg-white">
                 <div className="size-16 p-3 flex justify-center items-center rounded bg-[#111111] text-[#f7cc50]">
                     <PiCurrencyCircleDollar className="size-8" />
                 </div>
@@ -14,7 +14,7 @@ const Status = () => {
                     <h1 className="text-center text-3xl font-semibold text-[#222222]">$24.30</h1>
                 </div>
             </div>
-            <div className="flex justify-between items-center border p-5 rounded-lg">
+            <div className="flex justify-between items-center p-8 rounded-lg bg-white">
                 <div className="size-16 p-3 flex justify-center items-center rounded bg-[#111111] text-[#f7cc50]">
                     <PiUsersThree className="size-8" />
                 </div>
@@ -23,7 +23,7 @@ const Status = () => {
                     <h1 className="text-center text-3xl font-semibold text-[#222222]">1200</h1>
                 </div>
             </div>
-            <div className="flex justify-between items-center border p-5 rounded-lg">
+            <div className="flex justify-between items-center p-8 rounded-lg bg-white">
                 <div className="size-16 p-3 flex justify-center items-center rounded bg-[#111111] text-[#f7cc50]">
                     <LiaDonateSolid className="size-8" />
                 </div>
@@ -32,7 +32,7 @@ const Status = () => {
                     <h1 className="text-center text-3xl font-semibold text-[#222222]">1200</h1>
                 </div>
             </div>
-            <div className="flex justify-between items-center border p-5 rounded-lg">
+            <div className="flex justify-between items-center p-8 rounded-lg bg-white">
                 <div className="size-16 p-3 flex justify-center items-center rounded bg-[#111111] text-[#f7cc50]">
                     <RiUserVoiceLine className="size-6" />
                 </div>
