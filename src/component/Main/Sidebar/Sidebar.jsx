@@ -6,6 +6,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { HiOutlineDatabase } from "react-icons/hi";
 import logo from "/public/logo/logo.png";
 import { BiCalendarEdit } from "react-icons/bi";
+import { FiBox } from "react-icons/fi";
+
 
 const sidebarItems = [
   {
@@ -21,7 +23,7 @@ const sidebarItems = [
   {
     path: "/budboxes",
     name: "Budboxes",
-    icon: <PiUsersThree className="size-8" />,
+    icon: <FiBox className="size-8" />,
   },
   {
     path: "/items",
