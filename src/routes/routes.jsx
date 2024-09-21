@@ -18,6 +18,7 @@ import AddBoxPage from "../page/AddBox/AddBoxPage";
 import ItemsPage from "../page/Items/ItemsPage";
 import AddItemPage from "../page/AddItem/AddItemPage";
 import EditItemPage from "../page/EditItem/EditItemPage";
+import OrdersPage from "../page/Orders/OrdersPage";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: "earnings",
         element: <Earnings />,
+      },
+      {
+        path: '/orders',
+        element: <OrdersPage/>
       },
       {
         path: "personal-info",
