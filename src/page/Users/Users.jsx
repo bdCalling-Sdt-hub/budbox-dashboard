@@ -39,7 +39,6 @@ const Users = () => {
             email: "rakib2020.tkg@gmail.com",
             phone: "+8801319101179",
             address: "Thakurgaon Sadar Thakurgaon",
-            gender: "Male",
             createdAt: "2021-08-01T00:00:00.000Z",
         },
         {
@@ -49,7 +48,6 @@ const Users = () => {
             email: "rakib2020.tkg@gmail.com",
             phone: "+8801319101179",
             address: "Thakurgaon Sadar Thakurgaon",
-            gender: "Male",
             createdAt: "2021-08-01T00:00:00.000Z",
         },
         {
@@ -59,7 +57,6 @@ const Users = () => {
             email: "rakib2020.tkg@gmail.com",
             phone: "+8801319101179",
             address: "Thakurgaon Sadar Thakurgaon",
-            gender: "Male",
             createdAt: "2021-08-01T00:00:00.000Z",
         },
         {
@@ -69,7 +66,6 @@ const Users = () => {
             email: "rakib2020.tkg@gmail.com",
             phone: "+8801319101179",
             address: "Thakurgaon Sadar Thakurgaon",
-            gender: "Male",
             createdAt: "2021-08-01T00:00:00.000Z",
         },
         {
@@ -79,7 +75,6 @@ const Users = () => {
             email: "rakib2020.tkg@gmail.com",
             phone: "+8801319101179",
             address: "Thakurgaon Sadar Thakurgaon",
-            gender: "Male",
             createdAt: "2021-08-01T00:00:00.000Z",
         },
         {
@@ -89,7 +84,6 @@ const Users = () => {
             email: "rakib2020.tkg@gmail.com",
             phone: "+8801319101179",
             address: "Thakurgaon Sadar Thakurgaon",
-            gender: "Male",
             createdAt: "2021-08-01T00:00:00.000Z",
         },
         {
@@ -99,7 +93,6 @@ const Users = () => {
             email: "rakib2020.tkg@gmail.com",
             phone: "+8801319101179",
             address: "Thakurgaon Sadar Thakurgaon",
-            gender: "Male",
             createdAt: "2021-08-01T00:00:00.000Z",
         },
         {
@@ -109,7 +102,6 @@ const Users = () => {
             email: "rakib2020.tkg@gmail.com",
             phone: "+8801319101179",
             address: "Thakurgaon Sadar Thakurgaon",
-            gender: "Male",
             createdAt: "2021-08-01T00:00:00.000Z",
         },
     ]
@@ -136,11 +128,6 @@ const Users = () => {
             key: "phone",
         },
         {
-            title: "Gender",
-            dataIndex: "gender",
-            key: "gender",
-        },
-        {
             title: "Join Date",
             dataIndex: "createdAt",
             key: "createdAt",
@@ -151,7 +138,7 @@ const Users = () => {
             key: "action",
             render: (_, record) => (
                 <Space size="middle">
-                    <BsInfoCircle onClick={() => handleView(record)} size={18} className="text-[#4c7e95] cursor-pointer" />
+                    <BsInfoCircle onClick={() => handleView(record)} size={18} className="text-[#111111] cursor-pointer" />
                 </Space>
             ),
         },
@@ -198,7 +185,7 @@ const Users = () => {
                         <Input placeholder="User name" />
                     </Item>
                     <Item>
-                        <button className=" size-8 rounded-full flex justify-center items-center bg-[#4c7e95] text-white"><IoIosSearch className="size-5" /></button>
+                        <button className=" size-8 rounded-full flex justify-center items-center bg-[#111111] text-white"><IoIosSearch className="size-5" /></button>
                     </Item>
                 </Form>
             </div>
@@ -206,7 +193,7 @@ const Users = () => {
                 theme={{
                     components: {
                         Table: {
-                            headerBg: "#4c7e95",
+                            headerBg: "#111111",
                             headerColor: "white",
                             headerBorderRadius: 2,
                         },
@@ -230,11 +217,13 @@ const Users = () => {
                 onOk={() => setIsModalOpen(false)}
                 onCancel={() => setIsModalOpen(false)}
                 footer={null}
+                centered
             >
                 <div className="text-black bg-primary">
-                    <div className="flex justify-center items-center gap-2 flex-col">
-                        <p className="text-2xl font-bold mb-4 my-10">User Details</p>
+                    <div className="size-28 border rounded-full mx-auto">
+                        {/* <img src="" alt="" /> */}
                     </div>
+                    <h1 className="text-center text-2xl font-semibold my-2">User Details</h1>
                     <div className="p-5">
                         <div className="flex justify-between py-3">
                             <p>User Name</p>

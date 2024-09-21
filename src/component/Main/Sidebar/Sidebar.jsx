@@ -61,8 +61,8 @@ const Sidebar = () => {
             to={item.path}
             className={({ isActive }) =>
               isActive
-                ? "bg-[#333333] px-10 py-5 flex items-center gap-3  text-[#f7cc50]"
-                : " px-10 py-5 flex items-center gap-3 text-[#f7cc50]"
+                ? "bg-[#333333] px-10 py-4 flex items-center gap-3  text-[#f7cc50]"
+                : " px-10 py-4 flex items-center gap-3 text-[#f7cc50]"
             }
           >
             {item?.icon}
@@ -72,7 +72,7 @@ const Sidebar = () => {
       </ul>
       <button
         onClick={() => navigate("auth")}
-        className="flex items-center gap-2 p-3 text-white mt-16"
+        className="flex items-center gap-2 px-10 py-4 text-rose-500 mt-16"
       >
         <IoIosLogOut className="size-8" />
         <span>Logout</span>
