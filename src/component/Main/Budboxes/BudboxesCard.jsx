@@ -20,7 +20,7 @@ const BudboxesCard = ({ item }) => {
             <button className="px-8 py-2 bg-[#f7cc50] text-white rounded text-sm">
               Delete
             </button>
-            <Link to={`/category/edit-category/${123456}`}>
+            <Link to={`/budboxes/edit-box/${123456}`}>
               <button className="px-10 py-2 border border-[#f7cc50] text-white rounded text-sm">
                 Edit
               </button>

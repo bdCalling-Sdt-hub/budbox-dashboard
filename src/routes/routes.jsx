@@ -6,9 +6,6 @@ import ForgetPassword from "../page/Auth/ForgetPassword/ForgetPassword";
 import SignIn from "../page/Auth/SignIn/SignIn";
 import Otp from "../page/Auth/Otp/Otp";
 import NewPassword from "../page/Auth/NewPassword/NewPassword";
-import CategoryPage from "../page/Category/CategoryPage";
-import AddCategoryPage from "../page/AddCategory/AddCategoryPage";
-import EditCategory from "../component/Main/EditCategory/EditCategory";
 import PersonalInformationPage from "../page/PersonalInformation/PersonalInformationPage";
 import SettingsPage from "../page/Settings/SettingsPage";
 import PrivacyPolicyPage from "../page/PrivacyPolicy/PrivacyPolicyPage";
@@ -16,6 +13,8 @@ import TermsconditionPage from "../page/TermsCondition/TermsconditionPage";
 import AboutUsPage from "../page/AboutUs/AboutUsPage";
 import BudboxesPage from "../page/Budboxes/BudboxesPage";
 import UsersPage from "../page/Users/UsersPage";
+import EditBoxPage from "../page/EditBox/EditBoxPage";
+import AddBoxPage from "../page/AddBox/AddBoxPage";
 
 const router = createBrowserRouter([
   {
@@ -36,17 +35,12 @@ const router = createBrowserRouter([
         element: <BudboxesPage/>
       },
       {
-        path: "category",
-        element: <CategoryPage />
+        path: "budboxes/add-box",
+        element: <AddBoxPage/>
       },
       {
-        path: "category/add-category/:id",
-        element: <AddCategoryPage />
-
-      },
-      {
-        path: "category/edit-category/:id",
-        element: <EditCategory />
+        path: 'budboxes/edit-box/:id',
+        element: <EditBoxPage />
       },
       {
         path: 'earnings',

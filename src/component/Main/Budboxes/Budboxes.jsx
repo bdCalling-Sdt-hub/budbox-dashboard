@@ -17,7 +17,7 @@ const Budboxes = () => {
     <section>
       <div className="w-full flex justify-between items-center px-3 py-6">
         <h1 className="text-xl font-semibold ">Budboxes</h1>
-        <Link to={`/category/add-category/123456`}>
+        <Link to={`/budboxes/add-box`}>
           <button className="px-8 py-2 bg-[#111111] text-white flex justify-center items-center gap-1 rounded text-sm">
             <FaPlus />
             Add Box
