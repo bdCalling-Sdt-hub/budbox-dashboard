@@ -15,6 +15,9 @@ import BudboxesPage from "../page/Budboxes/BudboxesPage";
 import UsersPage from "../page/Users/UsersPage";
 import EditBoxPage from "../page/EditBox/EditBoxPage";
 import AddBoxPage from "../page/AddBox/AddBoxPage";
+import ItemsPage from "../page/Items/ItemsPage";
+import AddItemPage from "../page/AddItem/AddItemPage";
+import EditItemPage from "../page/EditItem/EditItemPage";
 
 const router = createBrowserRouter([
   {
@@ -24,73 +27,84 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <DashboardHome />
+        element: <DashboardHome />,
       },
       {
         path: "users",
-        element: <UsersPage />
+        element: <UsersPage />,
       },
       {
-        path:"budboxes",
-        element: <BudboxesPage/>
+        path: "budboxes",
+        element: <BudboxesPage />,
       },
       {
         path: "budboxes/add-box",
-        element: <AddBoxPage/>
+        element: <AddBoxPage />,
       },
       {
-        path: 'budboxes/edit-box/:id',
-        element: <EditBoxPage />
+        path: "budboxes/edit-box/:id",
+        element: <EditBoxPage />,
       },
       {
-        path: 'earnings',
-        element: <Earnings />
-
+        path: "items",
+        element: <ItemsPage />,
       },
       {
-        path: 'personal-info',
-        element: <PersonalInformationPage />
+        path: "items/add-item",
+        element: <AddItemPage />,
       },
       {
-        path: 'settings',
-        element: <SettingsPage />
+        path: "items/edit-item/:id",
+        element: <EditItemPage />,
       },
       {
-        path: 'settings/privacy-policy',
-        element: <PrivacyPolicyPage />
+        path: "earnings",
+        element: <Earnings />,
       },
       {
-        path: 'settings/terms-conditions',
-        element: <TermsconditionPage />
+        path: "personal-info",
+        element: <PersonalInformationPage />,
       },
       {
-        path: 'settings/about-us',
-        element: <AboutUsPage />
-      }
-    ]
+        path: "settings",
+        element: <SettingsPage />,
+      },
+      {
+        path: "settings/privacy-policy",
+        element: <PrivacyPolicyPage />,
+      },
+      {
+        path: "settings/terms-conditions",
+        element: <TermsconditionPage />,
+      },
+      {
+        path: "settings/about-us",
+        element: <AboutUsPage />,
+      },
+    ],
   },
   {
-    path: '/auth',
+    path: "/auth",
     errorElement: <h1>Auth Error</h1>,
     children: [
       {
         index: true,
-        element: <SignIn />
+        element: <SignIn />,
       },
       {
-        path: 'forget-password',
-        element: <ForgetPassword />
+        path: "forget-password",
+        element: <ForgetPassword />,
       },
       {
-        path: 'otp',
-        element: <Otp />
+        path: "otp",
+        element: <Otp />,
       },
       {
-        path: 'new-password',
-        element: <NewPassword />
-      }
-    ]
-  }
+        path: "new-password",
+        element: <NewPassword />,
+      },
+    ],
+  },
 ]);
 
 export default router;
