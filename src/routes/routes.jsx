@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 import DashboardHome from "../page/DashboardHome/DashboardHome";
-import Users from "../page/Users/Users";
 import Earnings from "../page/Earnings/Earnings";
 import ForgetPassword from "../page/Auth/ForgetPassword/ForgetPassword";
 import SignIn from "../page/Auth/SignIn/SignIn";
@@ -15,6 +14,8 @@ import SettingsPage from "../page/Settings/SettingsPage";
 import PrivacyPolicyPage from "../page/PrivacyPolicy/PrivacyPolicyPage";
 import TermsconditionPage from "../page/TermsCondition/TermsconditionPage";
 import AboutUsPage from "../page/AboutUs/AboutUsPage";
+import BudboxesPage from "../page/Budboxes/BudboxesPage";
+import UsersPage from "../page/Users/UsersPage";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,11 @@ const router = createBrowserRouter([
       },
       {
         path: "users",
-        element: <Users />
+        element: <UsersPage />
+      },
+      {
+        path:"budboxes",
+        element: <BudboxesPage/>
       },
       {
         path: "category",
