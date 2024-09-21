@@ -28,7 +28,7 @@ const Status = () => {
                     <LiaDonateSolid className="size-8" />
                 </div>
                 <div className="space-y-2">
-                    <h1>Total Donation  </h1>
+                    <h1>Total Employee</h1>
                     <h1 className="text-center text-3xl font-semibold text-[#222222]">1200</h1>
                 </div>
             </div>
@@ -37,7 +37,7 @@ const Status = () => {
                     <RiUserVoiceLine className="size-6" />
                 </div>
                 <div className="space-y-2">
-                    <h1>Total Services</h1>
+                    <h1>Total Manager</h1>
                     <h1 className="text-center text-3xl font-semibold text-[#222222]">1200</h1>
                 </div>
             </div>

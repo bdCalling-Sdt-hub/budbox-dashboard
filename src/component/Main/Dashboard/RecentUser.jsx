@@ -25,8 +25,8 @@ const recentUser = [
 
 const RecentUser = () => {
     return (
-        <div className="col-span-full md:col-span-2">
-            <h1 className=" font-semibold py-3">Recent Users</h1>
+        <div className="w-full col-span-full md:col-span-2 p-5 bg-white rounded-lg">
+            <h1 className="font-semibold py-3">Recent Users</h1>
             <div className="flex flex-col gap-5 ">
                 {
                     recentUser.map(user => <div key={user.name} className="flex items-center gap-2">
