@@ -5,11 +5,11 @@ import BudboxesCard from "./BudboxesCard";
 const Budboxes = () => {
     const boxesData = [
         {
-          name: "Concert",
+          name: "Budboxes",
           image: "https://i.postimg.cc/G2pFgc96/category.png",
         },
         {
-          name: "Game",
+          name: "Build Your Box",
           image: "https://i.postimg.cc/vmbL97yY/category2.png",
         },
       ];
