@@ -240,24 +240,24 @@ const Users = () => {
             User Details
           </h1>
           <div className="p-5">
-            <div className="flex justify-between py-3">
-              <p>User Name</p>
+            <div className="flex justify-between py-3 border-b">
+              <p>User Name : </p>
               <p>{user?.name || "N/A"}</p>
             </div>
-            <div className="flex justify-between py-3">
-              <p>Email</p>
+            <div className="flex justify-between py-3 border-b">
+              <p>Email : </p>
               <p>{user?.email || "N/A"}</p>
             </div>
-            <div className="flex justify-between py-3">
-              <p>Phone Number</p>
+            <div className="flex justify-between py-3 border-b">
+              <p>Phone Number : </p>
               <p>{user?.phone || "N/A"}</p>
             </div>
-            <div className="flex justify-between py-3">
-              <p>Address</p>
+            <div className="flex justify-between py-3 border-b">
+              <p>Address : </p>
               <p>{user?.address || "N/A"}</p>
             </div>
-            <div className="flex justify-between py-3">
-              <p>Gender</p>
+            <div className="flex justify-between py-3 border-b">
+              <p>Gender : </p>
               <p>{user?.gender || "N/A"}</p>
             </div>
             <div className="flex justify-between py-3">

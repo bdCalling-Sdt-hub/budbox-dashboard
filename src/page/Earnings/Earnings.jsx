@@ -173,7 +173,7 @@ const Earnings = () => {
           <h1 className="text-center text-2xl font-semibold my-2">
             Transaction Details
           </h1>
-          <div>
+          <div className="p-5">
             <div className="flex justify-between py-3 border-b">
               <p>User Name :</p>
               <p>{selectedRecord?.user?.name || "N/A"}</p>
