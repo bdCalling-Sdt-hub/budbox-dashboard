@@ -1,5 +1,5 @@
 import { MdOutlineNotificationsActive } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -15,12 +15,14 @@ const Header = () => {
         <span className="text-sm">Have a nice day</span>
       </div>
       <div className="flex justify-between items-center gap-3">
-        <h1 className="relative">
-          <MdOutlineNotificationsActive className="size-8" />
-          <span className="absolute top-0 right-0 text-xs bg-[#f7cc50] size-4 flex justify-center items-center rounded-full text-gray-600">
-            12
-          </span>
-        </h1>
+        <Link to={"/notification"}>
+          <h1 className="relative">
+            <MdOutlineNotificationsActive className="size-8" />
+            <span className="absolute top-0 right-0 text-xs bg-[#f7cc50] size-4 flex justify-center items-center rounded-full text-gray-600">
+              12
+            </span>
+          </h1>
+        </Link>
         <img
           onClick={() => navigate("/personal-info")}
           src={user.image}

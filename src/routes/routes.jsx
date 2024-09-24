@@ -19,6 +19,8 @@ import ItemsPage from "../page/Items/ItemsPage";
 import AddItemPage from "../page/AddItem/AddItemPage";
 import EditItemPage from "../page/EditItem/EditItemPage";
 import OrdersPage from "../page/Orders/OrdersPage";
+import BudBoxDetails from "../component/Main/Budboxes/BudBoxDetails";
+import Notification from "../component/Main/Notification/Notification";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "budboxes",
         element: <BudboxesPage />,
+      },
+      {
+        path: "budboxes/budboxes-details/:id",
+        element: <BudBoxDetails/>
       },
       {
         path: "budboxes/add-box",
@@ -69,6 +75,10 @@ const router = createBrowserRouter([
       {
         path: "personal-info",
         element: <PersonalInformationPage />,
+      },
+      {
+        path: "/notification",
+        element: <Notification/>
       },
       {
         path: "settings",

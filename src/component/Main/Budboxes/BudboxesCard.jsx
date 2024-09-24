@@ -5,6 +5,7 @@ const BudboxesCard = ({ item }) => {
   const { name, image } = item;
   return (
     <div className="w-full group">
+      <Link to={'/budboxes/budboxes-details/11'}>
       <div className="relative overflow-hidden  rounded-md">
         <img
           src={image}
@@ -28,6 +29,7 @@ const BudboxesCard = ({ item }) => {
           </div>
         </div>
       </div>
+      </Link>
     </div>
   );
 };

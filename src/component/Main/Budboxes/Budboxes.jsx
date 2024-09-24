@@ -1,15 +1,16 @@
 import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import box1 from '../../../../public/box/box.jpg'
 import BudboxesCard from "./BudboxesCard";
 
 const Budboxes = () => {
     const boxesData = [
         {
-          name: "Budboxes",
-          image: "https://i.postimg.cc/G2pFgc96/category.png",
+          name: "Combo Box",
+          image: box1,
         },
         {
-          name: "Build Your Box",
+          name: "Build Your Own Box",
           image: "https://i.postimg.cc/vmbL97yY/category2.png",
         },
       ];
