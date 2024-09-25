@@ -16,7 +16,7 @@ const Budboxes = () => {
       ];
   return (
     <section>
-      <div className="w-full flex justify-between items-center px-3 py-6">
+      <div className="w-full flex justify-between items-center py-6">
         <h1 className="text-2xl font-semibold ">Budboxes</h1>
         <Link to={`/budboxes/add-box`}>
           <button className="px-10 py-3 bg-[#111111] text-white flex justify-center items-center gap-1 rounded text-sm">

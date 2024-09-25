@@ -70,9 +70,9 @@ const Items = () => {
   return (
     <section >
       <div className="w-full flex justify-between items-center py-6">
-        <h1 className="text-xl font-semibold ">Items</h1>
+        <h1 className="text-2xl font-semibold ">Items</h1>
         <Link to={`/items/add-item`}>
-          <button className="px-8 py-2 bg-[#111111] text-white flex justify-center items-center gap-1 rounded text-sm">
+          <button className="px-8 py-3 bg-[#111111] text-white flex justify-center items-center gap-1 rounded text-sm">
             <FaPlus />
             Add Item
           </button>

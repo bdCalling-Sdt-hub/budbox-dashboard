@@ -183,7 +183,7 @@ const Users = () => {
   return (
     <section>
       <div className="flex justify-between items-center">
-        <h1 className="text-xl font-semibold">Users List</h1>
+        <h1 className="text-2xl font-semibold">Users List</h1>
         <Form
           className="flex px-3 py-[22px] justify-between items-center"
           layout="inline"
