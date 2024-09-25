@@ -67,7 +67,7 @@ const AddBox = () => {
               rows="4"
             ></textarea>
           </div>
-          <button type="submit" className="w-full px-4 py-3 text-white bg-black rounded-lg">
+          <button type="submit" className="w-full px-4 py-3 text-white bg-black rounded-lg mt-8">
             Add Budbox
           </button>
         </form>

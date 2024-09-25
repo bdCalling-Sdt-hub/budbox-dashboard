@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 /* eslint-disable react/prop-types */
 const ItemCard = ({ item }) => {
-  const { name, description, price, image } = item;
+  const { name, price, image } = item;
   return (
     <div className="w-full rounded-lg border">
       <img
@@ -12,10 +12,9 @@ const ItemCard = ({ item }) => {
       />
       <div className="p-5 space-y-2">
         <h1 className="font-semibold text-lg">{name}</h1>
-        <p className="text-gray-600">{description}</p>
         <h1 className="text-xl font-semibold">${price}</h1>
       </div>
-      <div className="flex gap-5 px-5 py-3">
+      <div className="flex gap-5 px-5 pb-5">
         <button className="px-8 py-2 bg-[#f7cc50] text-white rounded text-sm">
           Delete
         </button>
