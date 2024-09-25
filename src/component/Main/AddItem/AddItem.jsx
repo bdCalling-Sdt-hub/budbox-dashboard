@@ -6,7 +6,7 @@ const AddItem = () => {
   return (
     <div className="w-full">
       <div className="flex gap-4 items-center  my-6">
-        <Link to={"/budboxes"}>
+        <Link to={"/items"}>
           <IoChevronBack className="size-6" />
         </Link>
         <h1 className="text-2xl font-semibold">Add Item</h1>

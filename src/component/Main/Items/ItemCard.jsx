@@ -8,7 +8,7 @@ const ItemCard = ({ item }) => {
       <img
         src={image}
         alt={name}
-        className="w-full h-56 rounded-lg object-cover"
+        className="w-full h-56 rounded-t-lg object-cover"
       />
       <div className="p-5 space-y-2">
         <h1 className="font-semibold text-lg">{name}</h1>
@@ -18,7 +18,7 @@ const ItemCard = ({ item }) => {
         <button className="px-8 py-2 bg-[#f7cc50] text-white rounded text-sm">
           Delete
         </button>
-        <Link to={`/items/edit-items/${123456}`}>
+        <Link to={`/items/edit-item/${123456}`}>
           <button className="px-10 py-2 border border-[#f7cc50] text-[#f7cc50]  rounded text-sm">
             Edit
           </button>
