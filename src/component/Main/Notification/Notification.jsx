@@ -1,6 +1,5 @@
 import { Pagination } from "antd";
 import { useState } from "react";
-import { AiOutlineBell } from "react-icons/ai";
 import { IoMdNotificationsOutline } from "react-icons/io";
 
 const Notification = () => {

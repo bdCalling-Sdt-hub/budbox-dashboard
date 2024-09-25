@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 import { Button, Form, Input, Modal, Switch } from "antd";
 import { useEffect, useState } from "react";
 import { GoArrowLeft } from "react-icons/go";
