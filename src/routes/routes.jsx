@@ -21,6 +21,7 @@ import EditItemPage from "../page/EditItem/EditItemPage";
 import OrdersPage from "../page/Orders/OrdersPage";
 import BudBoxDetails from "../component/Main/Budboxes/BudBoxDetails";
 import Notification from "../component/Main/Notification/Notification";
+import EditPersonalInformationPage from "../page/EditPersonalInformationPage/EditPersonalInformationPage";
 
 const router = createBrowserRouter([
   {
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
       {
         path: "personal-info",
         element: <PersonalInformationPage />,
+      },
+      {
+        path:"edit-personal-info",
+        element:<EditPersonalInformationPage/>
       },
       {
         path: "/notification",
