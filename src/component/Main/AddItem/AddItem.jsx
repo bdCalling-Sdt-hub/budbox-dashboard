@@ -13,7 +13,7 @@ const AddItem = () => {
   const fileInputRef = useRef(null); // To reference the hidden file input
   const [addItem, { isLoading }] = useAddProductMutation();
   const [form] = Form.useForm(); // Ant Design form instance
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // Handle image change (preview the image)
   const handleImageChange = (event) => {
@@ -48,7 +48,7 @@ const AddItem = () => {
         setImageFile(null);
         setImageUrl(null);
         form.resetFields();
-        navigate('/items')
+        navigate("/items");
       }
     } catch (error) {
       console.error("Error adding item:", error);
