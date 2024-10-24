@@ -1,7 +1,11 @@
 import { IoChevronBack } from "react-icons/io5";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { imageBaseUrl } from "../../../config/imageBaseUrl";
 
 const PersonalInformation = () => {
+  const {user} = useSelector((state)=>state.auth);
+  console.log(user)
   return (
     <div className="w-full">
       {/* Back Button and Title */}
@@ -23,9 +27,9 @@ const PersonalInformation = () => {
       <div className="w-full h-full grid grid-cols-1 md:grid-cols-12 gap-8 mt-10">
         {/* Profile Picture */}
         <div className="w-full h-96 border col-span-full md:col-span-3 rounded-lg flex justify-center items-center flex-col gap-5">
-          <div className="size-32 rounded-full border"></div>
+          <img className="size-32 rounded-full mx-auto" src={`${imageBaseUrl}${user?.image?.url}`} alt="" />
           <span className="mt-2 text-gray-500">Profile</span>
-          <span className="text-lg font-semibold">Admin</span>
+          <span className="text-lg font-semibold uppercase">{user?.role}</span>
         </div>
 
         {/* Personal Details */}
@@ -34,7 +38,7 @@ const PersonalInformation = () => {
             <label className="block text-sm font-semibold">Name</label>
             <input
               type="text"
-              defaultValue="Will"
+              defaultValue={user?.fullName}
               readOnly
               className="w-full border border-gray-300 rounded-lg px-5 py-3 bg-white outline-none"
             />
@@ -43,7 +47,7 @@ const PersonalInformation = () => {
             <label className="block text-sm font-semibold">Email</label>
             <input
               type="email"
-              defaultValue="will@gmail.com"
+              defaultValue={user?.email}
               readOnly
               className="w-full border border-gray-300 rounded-lg px-5 py-3 bg-white outline-none"
             />
@@ -52,7 +56,7 @@ const PersonalInformation = () => {
             <label className="block text-sm font-semibold">Phone Number</label>
             <input
               type="text"
-              value="+1242 3000597212"
+              defaultValue={user?.phone?user?.phone : "N/A"}
               readOnly
               className="w-full border border-gray-300 rounded-lg px-5 py-3 bg-white outline-none"
             />
