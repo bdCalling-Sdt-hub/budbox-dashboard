@@ -12,6 +12,7 @@ import { BsInfoCircle } from "react-icons/bs";
 import moment from "moment";
 import { IoIosSearch } from "react-icons/io";
 import { useGetAllUsersQuery } from "../../../redux/features/user/userApi";
+import { imageBaseUrl } from "../../../config/imageBaseUrl";
 
 const { Item } = Form;
 
@@ -25,15 +26,18 @@ const Users = () => {
   const { data, isFetching, isError, error } = useGetAllUsersQuery(params);
 
   const handleView = (record) => {
+    console.log(record);
     setUser(record);
     setIsModalOpen(true);
   };
 
   const dataSource = allUser?.map((user, index) => ({
-    key: user._id,
+    key: user.id,
     si: index + 1,
     name: user?.fullName,
     email: user?.email,
+    address: user?.address_line1,
+    image: user?.image?.url,
     phone: user?.phone,
     createdAt: user?.createdAt,
   }));
@@ -157,15 +161,12 @@ const Users = () => {
 
   const onFinish = (values) => {
     let queryParams = [];
-    const { username, providername } = values;
+    const { username } = values;
     if (date) {
       queryParams.push({ name: "date", value: date });
     }
     if (username) {
       queryParams.push({ name: "userName", value: username });
-    }
-    if (providername) {
-      queryParams.push({ name: "providerName", value: providername });
     }
     setParams(queryParams);
   };
@@ -234,9 +235,11 @@ const Users = () => {
         centered
       >
         <div className="text-black bg-primary">
-          <div className="size-28 border rounded-full mx-auto">
-            {/* <img src="" alt="" /> */}
-          </div>
+          <img
+            className="size-28 mx-auto"
+            src={`${imageBaseUrl}${user?.image}`}
+            alt=""
+          />
           <h1 className="text-center text-2xl font-semibold my-2">
             User Details
           </h1>
@@ -256,10 +259,6 @@ const Users = () => {
             <div className="flex justify-between py-3 border-b">
               <p>Address : </p>
               <p>{user?.address || "N/A"}</p>
-            </div>
-            <div className="flex justify-between py-3 border-b">
-              <p>Gender : </p>
-              <p>{user?.gender || "N/A"}</p>
             </div>
             <div className="flex justify-between py-3">
               <p>Joining Date :</p>
