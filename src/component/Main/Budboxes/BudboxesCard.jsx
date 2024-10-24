@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
+import { imageBaseUrl } from "../../../config/imageBaseUrl";
 
 const BudboxesCard = ({ item }) => {
   const { name, image } = item;
@@ -8,7 +9,7 @@ const BudboxesCard = ({ item }) => {
       <Link to={'/budboxes/budboxes-details/11'}>
       <div className="relative overflow-hidden  rounded-md">
         <img
-          src={image}
+          src={`${imageBaseUrl}${image?.url}`}
           alt={name}
           className="w-full h-96 object-cover  rounded-md cursor-pointer "
         />

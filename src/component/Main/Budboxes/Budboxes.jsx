@@ -1,19 +1,10 @@
 import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import box1 from '../../../../public/box/box.jpg'
 import BudboxesCard from "./BudboxesCard";
+import { useGetAllCategoriesQuery } from "../../../redux/features/category/categoryApi";
 
 const Budboxes = () => {
-    const boxesData = [
-        {
-          name: "Combo Box",
-          image: box1,
-        },
-        {
-          name: "Build Your Own Box",
-          image: "https://i.postimg.cc/vmbL97yY/category2.png",
-        },
-      ];
+  const {data:boxesData} = useGetAllCategoriesQuery();
   return (
     <section>
       <div className="w-full flex justify-between items-center py-6">
@@ -27,7 +18,7 @@ const Budboxes = () => {
       </div>
       <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-5">
         {
-          boxesData.map((item, index) => {
+          boxesData?.map((item, index) => {
             return <BudboxesCard key={index + 1} item={item} />
           })
         }

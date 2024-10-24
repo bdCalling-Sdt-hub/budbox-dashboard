@@ -7,18 +7,12 @@ export const baseApi = createApi({
     prepareHeaders: (headers, { getState }) => {
       // Retrieve the token from your store or local storage
       const token = getState().auth.token;
-
-      // If a token exists, add it to the headers
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
-
-      // You can also set other headers here if needed
-      headers.set("Content-Type", "application/json");
-      
       return headers;
-    }
+    },
   }),
-  tagTypes: ["User"],
+  tagTypes: ["User", "Products"],
   endpoints: () => ({}),
 });
