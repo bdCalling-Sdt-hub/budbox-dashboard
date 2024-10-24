@@ -1,43 +1,92 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import changePasswordImage from '../../../assets/auth/changePassword.png'
-import CustomForm from '../../../component/Form/CustomForm'
-import CustomInput from '../../../component/Form/CustomInput'
-import { Link, useNavigate } from 'react-router-dom'
-import { IoIosArrowBack } from 'react-icons/io'
-import {newPasswordSchema } from '../../../schema/authSchema'
-const NewPassword = () => {
-    const navigate = useNavigate()
-    const submit = (data) => {
-        console.log(data)
-        navigate('/')
-    }
-    return (
-        <div className="w-full max-w-4xl mx-auto h-screen grid grid-cols-1 md:grid-cols-2 gap-5 place-content-center">
-            <div>
-                <img src={changePasswordImage} className='size-96 mx-auto' alt="" />
-            </div>
-            <div className='mt-16'>
-                <div className='mb-5'>
-                    <h1 className='font-semibold text-xl flex items-center gap-2'>
-                        <Link to="/auth/otp"><IoIosArrowBack /></Link>
-                        Update Password</h1>
-                </div>
-                <CustomForm onSubmit={submit} resolver={zodResolver(newPasswordSchema)}>
-                    <CustomInput
-                        name="password"
-                        type="password"
-                        placeholder="Password"
-                    />
-                    <CustomInput
-                        name="confirmPassword"
-                        type="password"
-                        placeholder="Confirm Password"
-                    />
-                    <button type='submit' className='w-full bg-[#edf2f4]  text-[#4c7e95] py-2 px-4 border border-[#4c7e95] hover:bg-[#4c7e95] hover:text-white transition-all duration-300 mt-5'>Update</button>
-                </CustomForm>
-            </div>
-        </div>
-    )
-}
+import changePasswordImage from "../../../assets/auth/changePassword.png";
+import { Link, useNavigate } from "react-router-dom";
+import { IoIosArrowBack } from "react-icons/io";
+import { Form } from "antd"; // Import Ant Design Form
+import CustomInput from "../../../utils/CustomInput";
+import CustomButton from "../../../utils/CustomButton";
 
-export default NewPassword
+const NewPassword = () => {
+  const navigate = useNavigate();
+
+  const submit = (values) => {
+    console.log(values);
+    navigate("/");
+  };
+
+  return (
+    <div className="w-full max-w-6xl mx-auto h-full md:h-screen grid grid-cols-1 md:grid-cols-2 place-content-center px-5 py-10 gap-8 bg-white ">
+      <div>
+        <img
+          src={changePasswordImage}
+          className="w-full h-full mx-auto"
+          alt="Change Password Illustration"
+        />
+      </div>
+      <div className="mt-16">
+        <div className="mb-5">
+          <h1 className="font-semibold text-xl flex items-center gap-2">
+            <Link to="/auth/otp">
+              <IoIosArrowBack />
+            </Link>
+            Update Password
+          </h1>
+        </div>
+
+        {/* Ant Design Form */}
+        <Form
+          layout="vertical"
+          onFinish={submit} // Ant Design's form submission handler
+          initialValues={{ password: "", confirmPassword: "" }} // Initial values
+        >
+          {/* CustomInput wrapped inside Form.Item for validation */}
+          <Form.Item
+            label="New Password"
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Please input your new password",
+              },
+            ]}
+          >
+            <CustomInput isPassword type="password" placeholder="Password" />
+          </Form.Item>
+
+          <Form.Item
+            label="Confirm Password"
+            name="confirmPassword"
+            rules={[
+              {
+                required: true,
+                message: "Please confirm your password",
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error("Passwords do not match!"));
+                },
+              }),
+            ]}
+          >
+            <CustomInput
+              isPassword
+              type="password"
+              placeholder="Confirm Password"
+            />
+          </Form.Item>
+
+          {/* CustomButton for submission */}
+          <Form.Item>
+            <CustomButton border className="w-full">
+              Update Password
+            </CustomButton>
+          </Form.Item>
+        </Form>
+      </div>
+    </div>
+  );
+};
+
+export default NewPassword;

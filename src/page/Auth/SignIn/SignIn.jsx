@@ -1,49 +1,96 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import signinImage from '../../../assets/auth/signIn.png'
-import CustomForm from '../../../component/Form/CustomForm'
-import CustomInput from '../../../component/Form/CustomInput'
-import { Link, useNavigate } from 'react-router-dom'
-import { signInSchema } from '../../../schema/authSchema'
+import signinImage from "../../../assets/auth/signIn.png";
+import { Link, useNavigate } from "react-router-dom";
+import { Form,Checkbox } from "antd";
+import { HiOutlineLockClosed, HiOutlineMail } from "react-icons/hi";
+import CustomButton from "../../../utils/CustomButton";
+import CustomInput from "../../../utils/CustomInput";
+
 const SignIn = () => {
-    const navigate = useNavigate()
-    const submit = (data) => {
-        console.log(data)
-        navigate('/')
-    }
-    return (
-        <div className="w-full max-w-4xl mx-auto h-screen grid grid-cols-1 md:grid-cols-2  place-content-center">
-            <div>
-                <img src={signinImage} className='size-96 mx-auto' alt="" />
-            </div>
-            <div className='mt-16'>
-                <div>
-                    <h1 className='font-semibold text-xl'>Hello,Welcome!</h1>
-                    <span>Please Enter Your Details Below to Continue</span>
+  const navigate = useNavigate();
+  const submit = (values) => {
+    console.log(values);
+    navigate('/')
+  };
 
-                </div>
-                <CustomForm onSubmit={submit} resolver={zodResolver(signInSchema)}>
-                    <CustomInput
-                        name="email"
-                        type="text"
-                        placeholder="Email"
-                    />
-                    <CustomInput
-                        name="password"
-                        type="password"
-                        placeholder="password"
-                    />
-                    <div className='flex justify-between items-center my-8'>
-                        <div className='flex items-center gap-1'>
-                            <input type="checkbox" name="" id="" />
-                            <label htmlFor="checkbox">Remember me</label>
-                        </div>
-                        <Link to='forget-password' className='text-[#4c7e95]'>Forgot Password?</Link>
-                    </div>
-                    <button type='submit' className='w-full bg-[#edf2f4]  text-[#4c7e95] py-2 px-4 border border-[#4c7e95] hover:bg-[#4c7e95] hover:text-white transition-all duration-300'>Sign In</button>
-                </CustomForm>
-            </div>
+  return (
+    <div className="w-full max-w-6xl mx-auto h-full md:h-screen grid grid-cols-1 md:grid-cols-2 place-content-center px-5 py-10 gap-8 bg-white ">
+      <div className="flex justify-center">
+        <img
+          src={signinImage}
+          className="w-full h-full mx-auto"
+          alt="Sign in illustration"
+        />
+      </div>
+      <div className="mt-16 px-8">
+        <div className="mb-8">
+          <h1 className="font-semibold text-3xl text-gray-800">
+            Hello, Welcome!
+          </h1>
+          <p className="text-gray-500">
+            Please Enter Your Details Below to Continue
+          </p>
         </div>
-    )
-}
+        <Form
+          layout="vertical"
+          onFinish={submit}
+          className="space-y-4"
+          initialValues={{
+            remember: true,
+          }}
+        >
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please input your email!",
+              },
+              {
+                type: "email",
+                message: "The input is not a valid email!",
+              },
+            ]}
+          >
+            <CustomInput type="email" icon={HiOutlineMail} placeholder={"Enter Email"} />
+          </Form.Item>
 
-export default SignIn
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Please input your password!",
+              },
+            ]}
+          >
+            <CustomInput
+              type="password"
+              icon={HiOutlineLockClosed}
+              placeholder={"Enter password"}
+              isPassword
+            />
+          </Form.Item>
+
+          <div className="flex justify-between items-center">
+            <Form.Item name="remember" valuePropName="checked" noStyle>
+              <Checkbox>Remember me</Checkbox>
+            </Form.Item>
+            <Link to="/auth/forget-password" className="underline">
+              Forgot password?
+            </Link>
+          </div>
+
+          <Form.Item>
+            <CustomButton className="w-full" border={true}>
+              Sign In
+            </CustomButton>
+          </Form.Item>
+        </Form>
+      </div>
+    </div>
+  );
+};
+
+export default SignIn;

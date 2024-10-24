@@ -1,39 +1,77 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import forgetPasswordImage from '../../../assets/auth/forget.png'
-import CustomForm from '../../../component/Form/CustomForm'
-import CustomInput from '../../../component/Form/CustomInput'
-import { Link, useNavigate } from 'react-router-dom'
-import { IoIosArrowBack } from 'react-icons/io'
-import { forgetPasswordSchema } from '../../../schema/authSchema'
-const ForgetPassword = () => {
-    const navigate = useNavigate()
-    const submit = (data) => {
-        console.log(data)
-        navigate('/')
-    }
-    return (
-        <div className="w-full max-w-4xl mx-auto h-screen grid grid-cols-1 md:grid-cols-2 gap-5 place-content-center">
-            <div>
-                <img src={forgetPasswordImage} className='size-96 mx-auto' alt="" />
-            </div>
-            <div className='mt-16'>
-                <div className='mb-5'>
-                    <h1 className='font-semibold text-xl flex items-center gap-2'>
-                        <Link to="/auth"><IoIosArrowBack /></Link>
-                        Forgot Password</h1>
-                    <span>{`Enter the email address associated with your account. We'll send you an OTP to your email.`}</span>
-                </div>
-                <CustomForm onSubmit={submit} resolver={zodResolver(forgetPasswordSchema)}>
-                    <CustomInput
-                        name="email"
-                        type="text"
-                        placeholder="Email"
-                    />
-                    <button type='submit' className='w-full bg-[#edf2f4]  text-[#4c7e95] py-2 px-4 border border-[#4c7e95] hover:bg-[#4c7e95] hover:text-white transition-all duration-300 mt-5'>Send OTP</button>
-                </CustomForm>
-            </div>
-        </div>
-    )
-}
+/* eslint-disable react/no-unescaped-entities */
+import forgetPasswordImage from "../../../assets/auth/forget.png";
+import { Link, useNavigate } from "react-router-dom";
+import { IoIosArrowBack } from "react-icons/io";
+import { Form } from "antd";
+import CustomInput from "../../../utils/CustomInput";
+import { HiOutlineMail } from "react-icons/hi";
+import CustomButton from "../../../utils/CustomButton";
 
-export default ForgetPassword
+const ForgetPassword = () => {
+  const navigate = useNavigate();
+
+  const submit = (values) => {
+    console.log(values);
+    navigate("/auth/otp");
+  };
+
+  return (
+    <div className="w-full max-w-6xl mx-auto h-full md:h-screen grid grid-cols-1 md:grid-cols-2 place-content-center px-5 py-10 gap-8 bg-white ">
+      <div>
+        <img
+          src={forgetPasswordImage}
+          className="w-full h-full mx-auto"
+          alt="Forgot Password Illustration"
+        />
+      </div>
+      <div className="mt-16">
+        <div className="mb-5 space-y-5">
+          <h1 className="font-semibold text-2xl flex items-center gap-2">
+            <Link to="/auth">
+              <IoIosArrowBack />
+            </Link>
+            Forgot Password
+          </h1>
+          <h1>
+            Enter the email address associated with your account. We'll send you
+            an OTP to your email.
+          </h1>
+        </div>
+
+        {/* Ant Design Form */}
+        <Form
+          layout="vertical"
+          onFinish={submit} // Ant Design form submission
+          initialValues={{ email: "" }} // Set initial form values
+        >
+          {/* CustomInput wrapped in Form.Item for validation */}
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please input your email!",
+              },
+              {
+                type: "email",
+                message: "Please enter a valid email address!",
+              },
+            ]}
+          >
+            <CustomInput icon={HiOutlineMail} placeholder="Email" />
+          </Form.Item>
+
+          {/* CustomButton for submit */}
+          <Form.Item>
+            <CustomButton border type="submit" className="w-full">
+              Send OTP
+            </CustomButton>
+          </Form.Item>
+        </Form>
+      </div>
+    </div>
+  );
+};
+
+export default ForgetPassword;
