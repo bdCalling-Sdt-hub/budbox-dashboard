@@ -6,13 +6,27 @@ import { Form } from "antd";
 import CustomInput from "../../../utils/CustomInput";
 import { HiOutlineMail } from "react-icons/hi";
 import CustomButton from "../../../utils/CustomButton";
+import { useForgotPasswordMutation } from "../../../redux/features/auth/authApi";
+import { toast } from "sonner";
 
 const ForgetPassword = () => {
   const navigate = useNavigate();
+  const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 
-  const submit = (values) => {
-    console.log(values);
-    navigate("/auth/otp");
+  const submit = async (values) => {
+    try {
+      const res = await forgotPassword(values);
+      if (res.error) {
+        toast.error(res?.error?.data?.message);
+        console.log(res.error);
+      }
+      if (res.data) {
+        toast.success(res.data.message);
+        navigate("/auth/otp");
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
   };
 
   return (
@@ -64,7 +78,12 @@ const ForgetPassword = () => {
 
           {/* CustomButton for submit */}
           <Form.Item>
-            <CustomButton border type="submit" className="w-full">
+            <CustomButton
+              loading={isLoading}
+              border
+              type="submit"
+              className="w-full"
+            >
               Send OTP
             </CustomButton>
           </Form.Item>
