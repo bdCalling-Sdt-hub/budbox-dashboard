@@ -1,16 +1,33 @@
 import changePasswordImage from "../../../assets/auth/changePassword.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import { Form } from "antd"; // Import Ant Design Form
 import CustomInput from "../../../utils/CustomInput";
 import CustomButton from "../../../utils/CustomButton";
+import { toast } from "sonner";
+import { useResetPasswordMutation } from "../../../redux/features/auth/authApi";
 
 const NewPassword = () => {
   const navigate = useNavigate();
-
-  const submit = (values) => {
-    console.log(values);
-    navigate("/");
+  const { email } = useParams();
+  const [resetPassword, { isLoading }] = useResetPasswordMutation();
+  const submit = async (values) => {
+    const { password } = values;
+    try {
+      const res = await resetPassword({
+        email,
+        password: password,
+      });
+      if (res.error) {
+        toast.error(res.error.data.message);
+      }
+      if (res.data) {
+        toast.success(res.data.message);
+        navigate("/auth/login");
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
   };
 
   return (
@@ -79,7 +96,7 @@ const NewPassword = () => {
 
           {/* CustomButton for submission */}
           <Form.Item>
-            <CustomButton border className="w-full">
+            <CustomButton loading={isLoading} border className="w-full">
               Update Password
             </CustomButton>
           </Form.Item>
