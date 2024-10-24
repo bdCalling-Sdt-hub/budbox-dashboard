@@ -1,4 +1,4 @@
-const { baseApi } = require("@/redux/baseApi/baseApi");
+import { baseApi } from "../../baseApi/baseApi";
 
 const profileApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({

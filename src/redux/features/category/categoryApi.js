@@ -1,4 +1,5 @@
-const { baseApi } = require("@/redux/baseApi/baseApi");
+import { baseApi } from "../../baseApi/baseApi";
+
 
 const categoryApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ConfigProvider,
   DatePicker,
@@ -9,109 +9,109 @@ import {
   Form,
 } from "antd";
 import { BsInfoCircle } from "react-icons/bs";
-// import { useGetUsersQuery } from "../../../redux/features/users/usersApi";
 import moment from "moment";
 import { IoIosSearch } from "react-icons/io";
+import { useGetAllUsersQuery } from "../../../redux/features/user/userApi";
 
 const { Item } = Form;
 
 const Users = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [params, setParams] = useState([]);
+  const [params, setParams] = useState([]);
   const [date, setDate] = useState("");
-  // const [allUser, setAllUser] = useState([]);
+  const [allUser, setAllUser] = useState([]);
   const [user, setUser] = useState(null);
-  // const { data, isFetching, isError, error } = useGetUsersQuery(params);
+  const { data, isFetching, isError, error } = useGetAllUsersQuery(params);
 
   const handleView = (record) => {
     setUser(record);
     setIsModalOpen(true);
   };
 
-  // const dataSource = allUser?.map((user, index) => ({
-  //     key: user._id,
-  //     si: index + 1,
-  //     name: user?.name,
-  //     email: user?.email,
-  //     phone: user?.phone,
-  //     createdAt: user?.createdAt,
-  // }))
+  const dataSource = allUser?.map((user, index) => ({
+    key: user._id,
+    si: index + 1,
+    name: user?.fullName,
+    email: user?.email,
+    phone: user?.phone,
+    createdAt: user?.createdAt,
+  }));
 
-  const dataSource = [
-    {
-      key: "1",
-      si: 1,
-      name: "Md Rakib Islam",
-      email: "rakib2020.tkg@gmail.com",
-      phone: "+8801319101179",
-      address: "Thakurgaon Sadar Thakurgaon",
-      createdAt: "2021-08-01T00:00:00.000Z",
-    },
-    {
-      key: "2",
-      si: 2,
-      name: "Md Rakib Islam",
-      email: "rakib2020.tkg@gmail.com",
-      phone: "+8801319101179",
-      address: "Thakurgaon Sadar Thakurgaon",
-      createdAt: "2021-08-01T00:00:00.000Z",
-    },
-    {
-      key: "1",
-      si: 1,
-      name: "Md Rakib Islam",
-      email: "rakib2020.tkg@gmail.com",
-      phone: "+8801319101179",
-      address: "Thakurgaon Sadar Thakurgaon",
-      createdAt: "2021-08-01T00:00:00.000Z",
-    },
-    {
-      key: "2",
-      si: 2,
-      name: "Md Rakib Islam",
-      email: "rakib2020.tkg@gmail.com",
-      phone: "+8801319101179",
-      address: "Thakurgaon Sadar Thakurgaon",
-      createdAt: "2021-08-01T00:00:00.000Z",
-    },
-    {
-      key: "1",
-      si: 1,
-      name: "Md Rakib Islam",
-      email: "rakib2020.tkg@gmail.com",
-      phone: "+8801319101179",
-      address: "Thakurgaon Sadar Thakurgaon",
-      createdAt: "2021-08-01T00:00:00.000Z",
-    },
-    {
-      key: "2",
-      si: 2,
-      name: "Md Rakib Islam",
-      email: "rakib2020.tkg@gmail.com",
-      phone: "+8801319101179",
-      address: "Thakurgaon Sadar Thakurgaon",
-      createdAt: "2021-08-01T00:00:00.000Z",
-    },
-    {
-      key: "1",
-      si: 1,
-      name: "Md Rakib Islam",
-      email: "rakib2020.tkg@gmail.com",
-      phone: "+8801319101179",
-      address: "Thakurgaon Sadar Thakurgaon",
-      createdAt: "2021-08-01T00:00:00.000Z",
-    },
-    {
-      key: "2",
-      si: 2,
-      name: "Md Rakib Islam",
-      email: "rakib2020.tkg@gmail.com",
-      phone: "+8801319101179",
-      address: "Thakurgaon Sadar Thakurgaon",
-      createdAt: "2021-08-01T00:00:00.000Z",
-    },
-  ];
+  // const dataSource = [
+  //   {
+  //     key: "1",
+  //     si: 1,
+  //     name: "Md Rakib Islam",
+  //     email: "rakib2020.tkg@gmail.com",
+  //     phone: "+8801319101179",
+  //     address: "Thakurgaon Sadar Thakurgaon",
+  //     createdAt: "2021-08-01T00:00:00.000Z",
+  //   },
+  //   {
+  //     key: "2",
+  //     si: 2,
+  //     name: "Md Rakib Islam",
+  //     email: "rakib2020.tkg@gmail.com",
+  //     phone: "+8801319101179",
+  //     address: "Thakurgaon Sadar Thakurgaon",
+  //     createdAt: "2021-08-01T00:00:00.000Z",
+  //   },
+  //   {
+  //     key: "1",
+  //     si: 1,
+  //     name: "Md Rakib Islam",
+  //     email: "rakib2020.tkg@gmail.com",
+  //     phone: "+8801319101179",
+  //     address: "Thakurgaon Sadar Thakurgaon",
+  //     createdAt: "2021-08-01T00:00:00.000Z",
+  //   },
+  //   {
+  //     key: "2",
+  //     si: 2,
+  //     name: "Md Rakib Islam",
+  //     email: "rakib2020.tkg@gmail.com",
+  //     phone: "+8801319101179",
+  //     address: "Thakurgaon Sadar Thakurgaon",
+  //     createdAt: "2021-08-01T00:00:00.000Z",
+  //   },
+  //   {
+  //     key: "1",
+  //     si: 1,
+  //     name: "Md Rakib Islam",
+  //     email: "rakib2020.tkg@gmail.com",
+  //     phone: "+8801319101179",
+  //     address: "Thakurgaon Sadar Thakurgaon",
+  //     createdAt: "2021-08-01T00:00:00.000Z",
+  //   },
+  //   {
+  //     key: "2",
+  //     si: 2,
+  //     name: "Md Rakib Islam",
+  //     email: "rakib2020.tkg@gmail.com",
+  //     phone: "+8801319101179",
+  //     address: "Thakurgaon Sadar Thakurgaon",
+  //     createdAt: "2021-08-01T00:00:00.000Z",
+  //   },
+  //   {
+  //     key: "1",
+  //     si: 1,
+  //     name: "Md Rakib Islam",
+  //     email: "rakib2020.tkg@gmail.com",
+  //     phone: "+8801319101179",
+  //     address: "Thakurgaon Sadar Thakurgaon",
+  //     createdAt: "2021-08-01T00:00:00.000Z",
+  //   },
+  //   {
+  //     key: "2",
+  //     si: 2,
+  //     name: "Md Rakib Islam",
+  //     email: "rakib2020.tkg@gmail.com",
+  //     phone: "+8801319101179",
+  //     address: "Thakurgaon Sadar Thakurgaon",
+  //     createdAt: "2021-08-01T00:00:00.000Z",
+  //   },
+  // ];
 
   const columns = [
     {
@@ -167,19 +167,20 @@ const Users = () => {
     if (providername) {
       queryParams.push({ name: "providerName", value: providername });
     }
-    // setParams(queryParams);
+    setParams(queryParams);
   };
 
   const handleDate = (date, dateString) => {
     setDate(dateString);
   };
-  // useEffect(() => {
-  //     if (isError && error) {
-  //         setAllUser([])
-  //     } else if (data) {
-  //         setAllUser(data?.data?.attributes)
-  //     }
-  // }, [data, isError, error])
+  useEffect(() => {
+    if (isError && error) {
+      setAllUser([]);
+    } else if (data) {
+      setAllUser(data?.data?.attributes?.user?.results);
+    }
+  }, [data, isError, error]);
+
   return (
     <section>
       <div className="flex justify-between items-center">
@@ -214,7 +215,7 @@ const Users = () => {
         }}
       >
         <Table
-          // loading={isFetching}
+          loading={isFetching}
           pagination={{
             position: ["bottomCenter"],
             current: currentPage,
