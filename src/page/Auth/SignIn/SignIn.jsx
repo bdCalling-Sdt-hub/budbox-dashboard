@@ -1,15 +1,39 @@
 import signinImage from "../../../assets/auth/signIn.png";
 import { Link, useNavigate } from "react-router-dom";
-import { Form,Checkbox } from "antd";
+import { Form, Checkbox } from "antd";
 import { HiOutlineLockClosed, HiOutlineMail } from "react-icons/hi";
 import CustomButton from "../../../utils/CustomButton";
 import CustomInput from "../../../utils/CustomInput";
+import { useLoginMutation } from "../../../redux/features/auth/authApi";
+import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { loggedUser } from "../../../redux/features/auth/authSlice";
 
 const SignIn = () => {
   const navigate = useNavigate();
-  const submit = (values) => {
-    console.log(values);
-    navigate('/')
+  const dispatch = useDispatch();
+  const [login, { isLoading }] = useLoginMutation();
+  const handleSubmit = async (values) => {
+    const { email, password } = values;
+    try {
+      const res = await login({ email, password });
+      if (res.error) {
+        toast.error(res.error.data.message);
+        console.log(res.error.data.message);
+      }
+      if (res.data) {
+        dispatch(
+          loggedUser({
+            token: res.data.data.attributes?.tokens?.access?.token,
+            user: res.data.data.attributes?.user,
+          })
+        );
+        toast.success(res.data.message);
+        navigate("/");
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
   };
 
   return (
@@ -32,7 +56,7 @@ const SignIn = () => {
         </div>
         <Form
           layout="vertical"
-          onFinish={submit}
+          onFinish={handleSubmit}
           className="space-y-4"
           initialValues={{
             remember: true,
@@ -52,7 +76,11 @@ const SignIn = () => {
               },
             ]}
           >
-            <CustomInput type="email" icon={HiOutlineMail} placeholder={"Enter Email"} />
+            <CustomInput
+              type="email"
+              icon={HiOutlineMail}
+              placeholder={"Enter Email"}
+            />
           </Form.Item>
 
           <Form.Item
@@ -83,7 +111,7 @@ const SignIn = () => {
           </div>
 
           <Form.Item>
-            <CustomButton className="w-full" border={true}>
+            <CustomButton loading={isLoading} className="w-full" border={true}>
               Sign In
             </CustomButton>
           </Form.Item>
