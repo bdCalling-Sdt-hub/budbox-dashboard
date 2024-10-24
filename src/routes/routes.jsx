@@ -116,11 +116,11 @@ const router = createBrowserRouter([
         element: <ForgetPassword />,
       },
       {
-        path: "otp",
+        path: "otp/:email",
         element: <Otp />,
       },
       {
-        path: "new-password",
+        path: "new-password/:email",
         element: <NewPassword />,
       },
     ],

@@ -22,7 +22,7 @@ const ForgetPassword = () => {
       }
       if (res.data) {
         toast.success(res.data.message);
-        navigate("/auth/otp");
+        navigate(`/auth/otp/${values?.email}`);
       }
     } catch (error) {
       toast.error("Something went wrong");
