@@ -5,11 +5,7 @@ import { useSelector } from "react-redux";
 
 const AdminRoutes = ({ children }) => {
   const { user } = useSelector((state) => state.auth);
-
-  // Check if the user is an admin
   const isAdmin = user && user.role === "admin";
-
-  // If not admin, redirect to the login page or unauthorized page
   if (!isAdmin) {
     return <Navigate to="/auth" replace />;
   }
