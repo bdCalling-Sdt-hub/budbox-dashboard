@@ -32,7 +32,7 @@ const Budboxes = () => {
     );
   } else {
     content = (
-      <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-5">
         {boxesData?.map((item, index) => {
           return <BudboxesCard key={index + 1} item={item} />;
         })}
