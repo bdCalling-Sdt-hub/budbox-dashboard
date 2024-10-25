@@ -1,17 +1,17 @@
-import { Form } from "antd";
+import { Form, Select } from "antd";
 import { useRef, useState } from "react";
 import { IoCameraOutline, IoChevronBack } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useAddProductMutation } from "../../../redux/features/product/productApi";
 import CustomButton from "../../../utils/CustomButton";
 import CustomInput from "../../../utils/CustomInput";
+import { useAddCategoryMutation } from "../../../redux/features/category/categoryApi";
 
 const AddBox = () => {
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const fileInputRef = useRef(null); // To reference the hidden file input
-  const [addItem, { isLoading }] = useAddProductMutation();
+  const [addBox, { isLoading }] = useAddCategoryMutation();
   const [form] = Form.useForm(); // Ant Design form instance
   const navigate = useNavigate();
 
@@ -32,23 +32,27 @@ const AddBox = () => {
   };
 
   const onFinish = async (values) => {
-    console.log(imageFile);
+    if(!imageFile){
+      toast.error("Please select an image");
+      return;
+    }
     const formdata = new FormData();
-    formdata.append("name", values.productName);
-    formdata.append("price", values.price);
-    formdata.append("weight", values.weight);
-    formdata.append("image", imageFile);
-
+    formdata.append("name", values.budBoxName);
+    formdata.append("type", values.type);
+    if (imageFile) {
+      formdata.append("image", imageFile);
+    }
     try {
-      const response = await addItem(formdata);
+      const response = await addBox(formdata);
       if (response.error) {
+        console.log(response.error);
         toast.error(response.error.data.message);
       } else {
-        toast.success(response.data.message);
+        toast.success("Bud Box added successfully");
         setImageFile(null);
         setImageUrl(null);
         form.resetFields();
-        navigate("/items");
+        navigate("/budboxes");
       }
     } catch (error) {
       console.error("Error adding item:", error);
@@ -98,17 +102,26 @@ const AddBox = () => {
         <Form.Item
           label="BudBox Name"
           name="budBoxName"
-          rules={[
-            { required: true, message: "Please enter the budbox name!" },
-          ]}
+          rules={[{ required: true, message: "Please enter the budbox name!" }]}
           className="w-full"
         >
           <CustomInput placeholder="Enter your budbox name" />
         </Form.Item>
+        <Form.Item
+          label="BudBox Name"
+          name="type"
+          rules={[{ required: true, message: "Please enter the budbox name!" }]}
+          className="w-full"
+        >
+          <Select size="large" placeholder="Enter your budbox type">
+            <Select.Option value="combo-box">Combo Box</Select.Option>
+            <Select.Option value="build-box">Build Box</Select.Option>
+          </Select>
+        </Form.Item>
 
         {/* Submit Button */}
         <CustomButton loading={isLoading} border className="w-full">
-        Add BudBox
+          Add BudBox
         </CustomButton>
       </Form>
     </div>

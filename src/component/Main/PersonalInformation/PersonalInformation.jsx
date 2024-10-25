@@ -1,16 +1,11 @@
 import { IoChevronBack } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { imageBaseUrl } from "../../../config/imageBaseUrl";
-import { useGetUserQuery } from "../../../redux/features/profile/profileApi";
 import { useSelector } from "react-redux";
 
 const PersonalInformation = () => {
-  const { user: authUser } = useSelector((state) => state.auth);
-  const { data: user } = useGetUserQuery(authUser?.id, {
-    skip: !authUser,
-  });
+  const { user } = useSelector((state) => state.auth);
 
-  console.log(user)
   return (
     <div className="w-full">
       {/* Back Button and Title */}

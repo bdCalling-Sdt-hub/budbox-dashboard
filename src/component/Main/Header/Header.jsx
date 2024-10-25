@@ -1,20 +1,16 @@
 import { MdOutlineNotificationsActive } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { useGetUserQuery } from "../../../redux/features/profile/profileApi";
 import { imageBaseUrl } from "../../../config/imageBaseUrl";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { user: authUser } = useSelector((state) => state.auth);
-  const { data: user } = useGetUserQuery(authUser?.id, {
-    skip: !authUser,
-  });
+  const { user } = useSelector((state) => state.auth);
 
   return (
     <div className="w-full h-24 px-5 bg-[#111111] flex justify-between items-center text-white sticky top-0 left-0 z-10">
       <div>
-        <h1 className="text-xl">Welcome, Rakib</h1>
+        <h1 className="text-xl">Welcome, {user?.fullName}</h1>
         <span className="text-sm">Have a nice day</span>
       </div>
       <div className="flex justify-between items-center gap-8">

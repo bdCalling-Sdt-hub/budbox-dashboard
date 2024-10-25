@@ -10,7 +10,15 @@ const categoryApi = baseApi.injectEndpoints({
         }),
         transformResponse: (response) => response?.data?.attributes
       }),
+      addCategory: builder.mutation({
+        query: (data) => ({
+          url: "/admin/category",
+          method: "POST",
+          body: data,
+        }),
+        transformResponse: (response) => response?.data?.attributes,
+      })
     }),
 })
 
-export const { useGetAllCategoriesQuery } = categoryApi;
+export const { useGetAllCategoriesQuery,useAddCategoryMutation } = categoryApi;
