@@ -4,11 +4,44 @@ import { useGetAllComboBoxQuery } from "../../../redux/features/combobox/combobo
 import ComboBoxCard from "./ComboBoxCard";
 import { IoChevronBack } from "react-icons/io5";
 const ComboxBoxs = () => {
-  const { data: comboboxs } = useGetAllComboBoxQuery();
-  console.log(comboboxs)
+  const {
+    data: comboboxs,
+    isError,
+    isLoading,
+    error,
+  } = useGetAllComboBoxQuery();
+  let content = null;
+  if (isLoading) {
+    content = <h1>Loading....</h1>;
+  } else if (isError && error) {
+    content = (
+      <h3 className="font-semibold text-rose-500 text-center py-5">
+        Something went wrong
+      </h3>
+    );
+  } else if (!comboboxs?.length) {
+    content = (
+      <div className="w-full text-center py-5 flex flex-col justify-center items-center">
+        <img
+          src="/src/assets/nodata/not-data.svg"
+          alt="No results"
+          className="w-[256px] mx-auto h-[256px] mb-4"
+        />
+        <h2 className="text-xl font-bold mb-2">No Combo box Found</h2>
+      </div>
+    );
+  } else {
+    content = (
+      <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-5">
+        {comboboxs?.results?.map((box, i) => (
+          <ComboBoxCard key={i} item={box} />
+        ))}
+      </div>
+    );
+  }
   return (
     <>
-      <div className="flex justify-between gap-4 items-center">
+      <div className="w-full flex justify-between gap-4 items-center">
         <div className="flex items-center gap-2">
           <Link to={"/budboxes"}>
             <IoChevronBack className="size-6" />
@@ -22,11 +55,7 @@ const ComboxBoxs = () => {
           </button>
         </Link>
       </div>
-      <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-5 py-10 ">
-        {comboboxs?.results?.map((box, i) => (
-          <ComboBoxCard key={i} item={box} />
-        ))}
-      </div>
+      {content}
     </>
   );
 };

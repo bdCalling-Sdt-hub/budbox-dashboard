@@ -40,7 +40,7 @@ const Items = () => {
     );
   }
   return (
-    <section>
+    <>
       <div className="w-full flex justify-between items-center py-6">
         <h1 className="text-2xl font-semibold ">Items</h1>
         <Link to={`/items/add-item`}>
@@ -51,7 +51,7 @@ const Items = () => {
         </Link>
       </div>
       {content}
-    </section>
+    </>
   );
 };
 
