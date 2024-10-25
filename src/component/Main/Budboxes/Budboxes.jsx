@@ -12,7 +12,7 @@ const Budboxes = () => {
         <Link to={`/budboxes/add-box`}>
           <button className="px-10 py-3 bg-[#111111] text-white flex justify-center items-center gap-1 rounded text-sm">
             <FaPlus />
-            Add Box
+            Add BadBox
           </button>
         </Link>
       </div>

@@ -19,9 +19,10 @@ import ItemsPage from "../page/Items/ItemsPage";
 import AddItemPage from "../page/AddItem/AddItemPage";
 import EditItemPage from "../page/EditItem/EditItemPage";
 import OrdersPage from "../page/Orders/OrdersPage";
-import BudBoxDetails from "../component/Main/Budboxes/BudBoxDetails";
 import Notification from "../component/Main/Notification/Notification";
 import EditPersonalInformationPage from "../page/EditPersonalInformationPage/EditPersonalInformationPage";
+import ComboxBoxs from "../component/Main/ComboBoxs/ComboxBoxs";
+import AddComboBox from "../component/Main/AddComboBox/AddComboBox";
 
 const router = createBrowserRouter([
   {
@@ -42,8 +43,12 @@ const router = createBrowserRouter([
         element: <BudboxesPage />,
       },
       {
-        path: "budboxes/budboxes-details/:id",
-        element: <BudBoxDetails/>
+        path: "budboxes/:type",
+        element: <ComboxBoxs />,
+      },
+      {
+        path: "budboxes/add-combo-box",
+        element: <AddComboBox />,
       },
       {
         path: "budboxes/add-box",
@@ -70,20 +75,20 @@ const router = createBrowserRouter([
         element: <Earnings />,
       },
       {
-        path: '/orders',
-        element: <OrdersPage/>
+        path: "/orders",
+        element: <OrdersPage />,
       },
       {
         path: "personal-info",
         element: <PersonalInformationPage />,
       },
       {
-        path:"edit-personal-info",
-        element:<EditPersonalInformationPage/>
+        path: "edit-personal-info",
+        element: <EditPersonalInformationPage />,
       },
       {
         path: "/notification",
-        element: <Notification/>
+        element: <Notification />,
       },
       {
         path: "settings",
