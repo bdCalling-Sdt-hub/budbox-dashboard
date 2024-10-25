@@ -13,7 +13,7 @@ const MainLayout = () => {
     <main className="w-full h-full flex">
       <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       {/* Main Content */}
-      <section className="w-full h-full md:ml-[300px] px-3">
+      <section className="w-full h-full md:ml-[350px] px-5">
         <Header toggleSidebar={toggleSidebar} />
         <Outlet />
       </section>
