@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { imageBaseUrl } from "../../../config/imageBaseUrl";
 
 const BudboxesCard = ({ item }) => {
-  const { name, image, type } = item;
+  const {id, name, image, type } = item;
   return (
     <div className="w-full group">
       <Link to={`/budboxes/${type}`}>
@@ -22,7 +22,7 @@ const BudboxesCard = ({ item }) => {
               <button className="px-10 py-3 bg-[#f7cc50] text-white rounded text-sm">
                 Delete
               </button>
-              <Link to={`/budboxes/edit-box/${123456}`}>
+              <Link to={`/budboxes/edit-box/${id}`}>
                 <button className="px-12 py-3 border border-[#f7cc50] text-white rounded text-sm">
                   Edit
                 </button>

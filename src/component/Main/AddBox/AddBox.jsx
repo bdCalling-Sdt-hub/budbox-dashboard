@@ -108,7 +108,7 @@ const AddBox = () => {
           <CustomInput placeholder="Enter your budbox name" />
         </Form.Item>
         <Form.Item
-          label="BudBox Name"
+          label="BudBox Type"
           name="type"
           rules={[{ required: true, message: "Please enter the budbox name!" }]}
           className="w-full"
