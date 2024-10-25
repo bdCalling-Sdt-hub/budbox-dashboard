@@ -24,11 +24,16 @@ import EditPersonalInformationPage from "../page/EditPersonalInformationPage/Edi
 import ComboxBoxs from "../component/Main/ComboBoxs/ComboxBoxs";
 import AddComboBox from "../component/Main/AddComboBox/AddComboBox";
 import EditComboBox from "../component/Main/EditComboBox/EditComboBox";
+import AdminRoutes from "./AdminRoutes";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
+    element: (
+      <AdminRoutes>
+        <MainLayout />
+      </AdminRoutes>
+    ),
     errorElement: <h1>Error</h1>,
     children: [
       {

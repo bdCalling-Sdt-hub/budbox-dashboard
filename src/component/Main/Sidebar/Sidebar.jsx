@@ -7,6 +7,8 @@ import { HiOutlineDatabase } from "react-icons/hi";
 import logo from "/public/logo/logo.png";
 import { BiCalendarEdit } from "react-icons/bi";
 import { FiBox } from "react-icons/fi";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../../redux/features/auth/authSlice";
 
 
 const sidebarItems = [
@@ -48,6 +50,11 @@ const sidebarItems = [
 ];
 const Sidebar = () => {
   const navigate = useNavigate();
+  const dispatch= useDispatch();
+  const handleLogout = ()=>{
+    dispatch(logoutUser())
+    navigate('/auth')
+  }
   return (
     <div className="w- h-screen bg-[#111111] sticky top-0 left-0">
       <div className="flex flex-col justify-center items-center pt-5 gap-2 text-white">
@@ -71,7 +78,7 @@ const Sidebar = () => {
         ))}
       </ul>
       <button
-        onClick={() => navigate("auth")}
+        onClick={handleLogout}
         className="flex items-center gap-2 px-10 py-4 text-rose-500 mt-16"
       >
         <IoIosLogOut className="size-8" />
