@@ -1,32 +1,55 @@
 import { Form, Select } from "antd";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { IoCameraOutline, IoChevronBack } from "react-icons/io5";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import CustomButton from "../../../utils/CustomButton";
 import CustomInput from "../../../utils/CustomInput";
-import { useAddComboBoxMutation } from "../../../redux/features/combobox/comboboxApi";
-import { useGetAllProductsQuery } from "../../../redux/features/product/productApi"; // Import the hook for fetching products
+import {
+  useGetComboBoxByIdQuery,
+  useUpdateComboBoxMutation,
+} from "../../../redux/features/combobox/comboboxApi"; // Add update and fetch query hooks
+import { useGetAllProductsQuery } from "../../../redux/features/product/productApi";
+import { imageBaseUrl } from "../../../config/imageBaseUrl";
 
-const AddComboBox = () => {
+const EditComboBox = () => {
+  const { id } = useParams(); // Get ComboBox ID from URL
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const fileInputRef = useRef(null);
-  const [addComboBox, { isLoading }] = useAddComboBoxMutation();
+  const [updateComboBox, { isLoading }] = useUpdateComboBoxMutation();
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
-  // Fetch products using useGetAllProductsQuery
-  const { data, isLoading: isProductLoading } = useGetAllProductsQuery();
+  // Fetch existing ComboBox data
+  const { data: comboBoxData, isLoading: isComboBoxLoading } =
+    useGetComboBoxByIdQuery(id);
 
-  // Transform the product data to match the format required by the Select options
+  // Fetch products for dropdown
+  const { data: productsData, isLoading: isProductLoading } =
+    useGetAllProductsQuery();
+
+  // Transform products data for Select options
   const productOptions =
-    data?.map((product) => ({
+    productsData?.map((product) => ({
       value: product.id,
       label: `${product.name} - $${product.price}`,
     })) || [];
 
-  // Handle image change (preview the image)
+  // Load existing ComboBox data into the form
+  useEffect(() => {
+    if (comboBoxData) {
+      form.setFieldsValue({
+        comboBoxName: comboBoxData.name,
+        comboBoxPrice: comboBoxData.price,
+        discount: comboBoxData.discount,
+        products: comboBoxData.products.map((product) => product.id),
+      });
+      setImageUrl(`${imageBaseUrl}${comboBoxData.image.url}`);
+    }
+  }, [comboBoxData, form]);
+
+  // Handle image change
   const handleImageChange = (event) => {
     const file = event.target.files && event.target.files[0];
     if (file) {
@@ -43,33 +66,28 @@ const AddComboBox = () => {
   };
 
   const onFinish = async (values) => {
-    if(!imageFile){
-      toast.error("Please select an image for the ComboBox");
-      return;
-    }
+
+    console.log(JSON.stringify(values.products))
     const formdata = new FormData();
-    formdata.append("categoryType", "combo-box"); // static category
-    formdata.append("name", values.comboBoxName); // ComboBox Name
-    formdata.append("price", values.comboBoxPrice); // ComboBox Price
-    formdata.append("products", JSON.stringify(values.products)); // Products as array
-    formdata.append("discount", values.discount || 0); // Discount
+    formdata.append("name", values.comboBoxName);
+    formdata.append("price", values.comboBoxPrice);
+    formdata.append("products", JSON.stringify(values.products));
+    formdata.append("discount", values.discount || 0);
+
     if (imageFile) {
-      formdata.append("image", imageFile); // Add image file if present
+      formdata.append("image", imageFile); // Add image file only if updated
     }
 
     try {
-      const response = await addComboBox(formdata);
+      const response = await updateComboBox({ id, formdata });
       if (response.error) {
         toast.error(response.error.data.message);
-      } if (response.data) {
-        toast.success("ComboBox added successfully");
-        setImageFile(null);
-        setImageUrl(null);
-        form.resetFields();
+      } else if (response.data) {
+        toast.success("ComboBox updated successfully");
         navigate("/budboxes/combo-box");
       }
     } catch (error) {
-      console.error("Error adding item:", error);
+      console.error("Error updating ComboBox:", error);
       toast.error("Something went wrong");
     }
   };
@@ -81,7 +99,7 @@ const AddComboBox = () => {
         <Link to={"/budboxes"}>
           <IoChevronBack className="size-6" />
         </Link>
-        <h1 className="text-2xl font-semibold">Add ComboBox</h1>
+        <h1 className="text-2xl font-semibold">Edit ComboBox</h1>
       </div>
 
       {/* Image Upload Section */}
@@ -112,7 +130,17 @@ const AddComboBox = () => {
       />
 
       {/* Form Section */}
-      <Form form={form} layout="vertical" onFinish={onFinish} className="mt-5">
+      <Form
+        form={form}
+        layout="vertical"
+        onFinish={onFinish}
+        className="mt-5"
+        initialValues={{
+          comboBoxName: comboBoxData?.name,
+          comboBoxPrice: comboBoxData?.price,
+          discount: comboBoxData?.discount,
+        }}
+      >
         {/* ComboBox Name */}
         <Form.Item
           label="ComboBox Name"
@@ -139,17 +167,19 @@ const AddComboBox = () => {
             size="large"
             placeholder="Select products to include"
             options={productOptions}
-            loading={isProductLoading} // Show loading indicator while fetching products
+            loading={isProductLoading || isComboBoxLoading}
           />
         </Form.Item>
+
         {/* Discount */}
         <Form.Item
           label="Discount (%)"
           name="discount"
           rules={[{ required: false }]}
         >
-          <CustomInput type="number" min="1" placeholder="Enter discount percentage" />
+          <CustomInput type="number" placeholder="Enter discount percentage" />
         </Form.Item>
+
         {/* ComboBox Price */}
         <Form.Item
           label="ComboBox Price ($)"
@@ -159,15 +189,16 @@ const AddComboBox = () => {
           ]}
           className="w-full"
         >
-          <CustomInput type="number" placeholder="Enter ComboBox price" min="1"  />
+          <CustomInput type="number" placeholder="Enter ComboBox price" />
         </Form.Item>
+
         {/* Submit Button */}
         <CustomButton loading={isLoading} border className="w-full">
-          Add ComboBox
+          Update ComboBox
         </CustomButton>
       </Form>
     </div>
   );
 };
 
-export default AddComboBox;
+export default EditComboBox;

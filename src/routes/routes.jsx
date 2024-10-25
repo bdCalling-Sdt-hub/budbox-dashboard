@@ -23,6 +23,7 @@ import Notification from "../component/Main/Notification/Notification";
 import EditPersonalInformationPage from "../page/EditPersonalInformationPage/EditPersonalInformationPage";
 import ComboxBoxs from "../component/Main/ComboBoxs/ComboxBoxs";
 import AddComboBox from "../component/Main/AddComboBox/AddComboBox";
+import EditComboBox from "../component/Main/EditComboBox/EditComboBox";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "budboxes/add-combo-box",
         element: <AddComboBox />,
+      },
+      {
+        path: "budboxes/edit-combo-box/:id",
+        element: <EditComboBox />,
       },
       {
         path: "budboxes/add-box",
