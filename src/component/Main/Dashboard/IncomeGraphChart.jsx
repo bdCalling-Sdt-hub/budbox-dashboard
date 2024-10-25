@@ -1,4 +1,3 @@
-
 /* eslint-disable react/prop-types */
 import { DatePicker } from "antd";
 import {
@@ -10,21 +9,9 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-
-const data = [
-  { month: "Jan", income: 3000 },
-  { month: "Feb", income: 2000 },
-  { month: "Mar", income: 400 },
-  { month: "Apr", income: 6000 },
-  { month: "May", income: 100 },
-  { month: "Jun", income: 10000 },
-  { month: "Jul", income: 5000 },
-  { month: "Aug", income: 2000 },
-  { month: "Sep", income: 4000 },
-  { month: "Oct", income: 6000 },
-  { month: "Nov", income: 8000 },
-  { month: "Dec", income: 10000 }
-];
+import { useGetIncomeRatioQuery } from "../../../redux/features/dashboard/dashboardApi";
+import { useState } from "react";
+import dayjs from "dayjs";
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
@@ -35,20 +22,37 @@ const CustomTooltip = ({ active, payload, label }) => {
       </div>
     );
   }
-
   return null;
 };
 
 const IncomeGraphChart = () => {
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const { data: incomeData } = useGetIncomeRatioQuery(selectedYear);
+
+  const chartData = incomeData?.map((monthData) => ({
+    month: monthData.month,
+    income: monthData.totalEarnings,
+  }));
+
+  const handleDateChange = (date) => {
+    if (date) {
+      setSelectedYear(date.year());
+    }
+  };
+
   return (
     <section className="w-full col-span-full md:col-span-4 bg-white p-5 rounded-lg">
       <div className="flex justify-between items-center py-3">
         <h1 className="font-semibold">Income Ratio</h1>
-        <DatePicker />
+        <DatePicker
+          onChange={handleDateChange}
+          picker="year"
+          defaultValue={dayjs(selectedYear.toString())}
+        />
       </div>
       <ResponsiveContainer width="100%" height={270}>
         <BarChart
-          data={data}
+          data={chartData}
           margin={{
             top: 5,
             right: 30,
@@ -57,7 +61,10 @@ const IncomeGraphChart = () => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" />
+          <XAxis
+            dataKey="month"
+            interval={0} // Ensure all months are shown
+          />
           <YAxis />
           <Tooltip content={<CustomTooltip />} />
           <Bar dataKey="income" barSize={20} fill="#f7cc50" />

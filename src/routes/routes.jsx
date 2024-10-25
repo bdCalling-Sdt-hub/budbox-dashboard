@@ -25,6 +25,9 @@ import ComboxBoxs from "../component/Main/ComboBoxs/ComboxBoxs";
 import AddComboBox from "../component/Main/AddComboBox/AddComboBox";
 import EditComboBox from "../component/Main/EditComboBox/EditComboBox";
 import AdminRoutes from "./AdminRoutes";
+import EditPrivacyPolicy from "../page/EditPrivacyPolicy/EditPrivacyPolicy";
+import EditTermsConditions from "../page/EditTermsConditions/EditTermsConditions";
+import EditAboutUs from "../page/EditAboutUs/EditAboutUs";
 
 const router = createBrowserRouter([
   {
@@ -109,13 +112,25 @@ const router = createBrowserRouter([
         element: <PrivacyPolicyPage />,
       },
       {
+        path: "/settings/edit-privacy-policy/:id",
+        element: <EditPrivacyPolicy />,
+      },
+      {
         path: "settings/terms-conditions",
         element: <TermsconditionPage />,
+      },
+      {
+        path: "/settings/edit-terms-conditions/:id",
+        element: <EditTermsConditions />,
       },
       {
         path: "settings/about-us",
         element: <AboutUsPage />,
       },
+      {
+        path: "/settings/edit-about-us/:id",
+        element: <EditAboutUs/>
+      }
     ],
   },
   {
