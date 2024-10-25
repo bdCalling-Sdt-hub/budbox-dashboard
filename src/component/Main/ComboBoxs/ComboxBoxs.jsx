@@ -19,7 +19,7 @@ const ComboxBoxs = () => {
         Something went wrong
       </h3>
     );
-  } else if (!comboboxs?.length) {
+  } else if (!comboboxs?.results?.length) {
     content = (
       <div className="w-full text-center py-5 flex flex-col justify-center items-center">
         <img
@@ -39,6 +39,8 @@ const ComboxBoxs = () => {
       </div>
     );
   }
+
+  console.log(comboboxs)
   return (
     <>
       <div className="w-full flex justify-between gap-4 items-center">

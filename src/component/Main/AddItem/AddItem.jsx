@@ -32,7 +32,10 @@ const AddItem = () => {
   };
 
   const onFinish = async (values) => {
-    console.log(imageFile);
+    if(!imageFile){
+      toast.error("Please select an image");
+      return;
+    }
     const formdata = new FormData();
     formdata.append("name", values.productName);
     formdata.append("price", values.price);

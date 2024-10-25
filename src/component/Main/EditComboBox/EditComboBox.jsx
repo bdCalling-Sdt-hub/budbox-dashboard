@@ -67,19 +67,19 @@ const EditComboBox = () => {
 
   const onFinish = async (values) => {
     console.log("Products as JSON:", JSON.stringify(values.products));
-    
+
     const formdata = new FormData();
     formdata.append("name", values.comboBoxName);
     formdata.append("price", values.comboBoxPrice);
     formdata.append("products", JSON.stringify(values.products)); // Ensure this is valid JSON
     formdata.append("discount", values.discount || 0);
-  
+
     if (imageFile) {
       formdata.append("image", imageFile); // Add image file only if updated
     }
-  
+
     try {
-      const response = await updateComboBox({ id, formdata });
+      const response = await updateComboBox({ id, data: formdata });
       if (response.error) {
         toast.error(response.error.data.message);
       } else if (response.data) {
@@ -91,7 +91,6 @@ const EditComboBox = () => {
       toast.error("Something went wrong");
     }
   };
-  
 
   return (
     <div className="w-full">

@@ -125,7 +125,6 @@ const EditInformation = () => {
           <Form.Item
             label="Full Name"
             name="fullName"
-            rules={[{ required: true, message: "Please enter your full name" }]}
           >
             <CustomInput placeholder="Enter your full name" />
           </Form.Item>
@@ -134,10 +133,6 @@ const EditInformation = () => {
           <Form.Item
             label="Email"
             name="email"
-            rules={[
-              { required: true, message: "Please enter your email" },
-              { type: "email", message: "Please enter a valid email" },
-            ]}
           >
             <CustomInput placeholder="Enter your email" />
           </Form.Item>
@@ -146,9 +141,6 @@ const EditInformation = () => {
           <Form.Item
             label="Phone Number"
             name="phone"
-            rules={[
-              { required: true, message: "Please enter your phone number" },
-            ]}
           >
             <CustomInput type="number" placeholder="Enter your phone number" />
           </Form.Item>
