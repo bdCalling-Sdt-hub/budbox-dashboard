@@ -60,9 +60,11 @@ const ComboBoxCard = ({ item }) => {
             </div>
           ))}
         </div>
-        <h1 className="text-lg font-semibold py-2">Price : ${item?.mainPrice}</h1>
+       <div className="text-gray-800">
+       <h1 className="text-lg font-semibold py-2">Price : ${item?.mainPrice}</h1>
         <h1 className="text-lg font-semibold py-2">Discount : {item?.discount}%</h1>
 
+       </div>
         <div className="flex gap-10 mt-4 justify-between items-center">
           <button
             onClick={() => showDeleteConfirm(item.id)}
