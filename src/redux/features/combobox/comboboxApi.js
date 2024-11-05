@@ -3,10 +3,17 @@ import { baseApi } from "../../baseApi/baseApi";
 const comboboxApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllComboBox: builder.query({
-      query: (type) => ({
-        url: `/admin/budboxs?categoryType=${type}`,
-        method: "GET",
-      }),
+      query: (type) => {
+        const params = new URLSearchParams();
+        if (type) {
+          params.append("categoryType", type);
+        }
+        return {
+          url: `/admin/budboxs`,
+          method: "GET",
+          params,
+        };
+      },
       providesTags: ["ComboBox"],
       transformResponse: (response) => response?.data?.attributes,
     }),

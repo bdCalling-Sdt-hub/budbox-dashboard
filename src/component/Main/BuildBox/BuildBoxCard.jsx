@@ -11,7 +11,7 @@ const BuildBoxCard = ({ item }) => {
   const showDeleteConfirm = async (comboboxId) => {
     const result = await Swal.fire({
       title: "Are you sure?",
-      text: "Are you sure you want to delete this Combo Box? This action cannot be undone.",
+      text: "Are you sure you want to delete this Build Box? This action cannot be undone.",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d33",
@@ -31,10 +31,10 @@ const BuildBoxCard = ({ item }) => {
       if (res.error) {
         toast.error(res.error.data.message);
       } else {
-        toast.success("ComboBox deleted successfully");
+        toast.success("Build box deleted successfully");
       }
     } catch (error) {
-      toast.error("Failed to delete ComboBox");
+      toast.error("Failed to delete build box");
     }
   };
   return (
@@ -60,7 +60,14 @@ const BuildBoxCard = ({ item }) => {
             </div>
           ))}
         </div>
-        <h1 className="text-xl font-semibold py-3">${item?.price}</h1>
+        <div className="text-gray-800">
+          <h1 className="text-lg font-semibold py-2">
+            Price : ${item?.mainPrice}
+          </h1>
+          <h1 className="text-lg font-semibold py-2">
+            Discount : {item?.discount}%
+          </h1>
+        </div>
         <div className="flex gap-10 mt-4 justify-between items-center">
           <button
             onClick={() => showDeleteConfirm(item.id)}
@@ -68,7 +75,7 @@ const BuildBoxCard = ({ item }) => {
           >
             Delete
           </button>
-          <Link to={`/budboxes/edit-combo-box/${item?.id}`}>
+          <Link to={`/budboxes/edit-build-box/${item?.id}`}>
             <button className="px-10 py-2 border border-yellow-500 rounded-lg text-yellow-500">
               Edit
             </button>

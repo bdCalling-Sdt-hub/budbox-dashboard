@@ -30,6 +30,7 @@ import EditTermsConditions from "../page/EditTermsConditions/EditTermsConditions
 import EditAboutUs from "../page/EditAboutUs/EditAboutUs";
 import AddBuildBox from "../component/Main/AddBuildBox/AddBuildBox";
 import BuildBoxs from "../component/Main/BuildBox/BuildBoxs";
+import EditBuildBox from "../component/Main/EditBuildBox/EditBuildBox";
 
 const router = createBrowserRouter([
   {
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
       {
         path: "budboxes/edit-combo-box/:id",
         element: <EditComboBox />,
+      },
+      {
+        path: "budboxes/edit-build-box/:id",
+        element: <EditBuildBox />,
       },
       {
         path: "budboxes/add-build-box",

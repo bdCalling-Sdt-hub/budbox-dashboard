@@ -10,7 +10,7 @@ const ComboxBoxs = () => {
     isError,
     isLoading,
     error,
-  } = useGetAllComboBoxQuery();
+  } = useGetAllComboBoxQuery("combo-box");
   let content = null;
   if (isLoading) {
     content = (

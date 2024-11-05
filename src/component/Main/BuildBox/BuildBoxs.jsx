@@ -10,7 +10,7 @@ const BuildBoxs = () => {
     isError,
     isLoading,
     error,
-  } = useGetAllComboBoxQuery();
+  } = useGetAllComboBoxQuery("build-box");
   let content = null;
   if (isLoading) {
     content = (
@@ -32,7 +32,7 @@ const BuildBoxs = () => {
           alt="No results"
           className="w-[256px] mx-auto h-[256px] mb-4"
         />
-        <h2 className="text-xl font-bold mb-2">No Combo box Found</h2>
+        <h2 className="text-xl font-bold mb-2">No Build Box Found</h2>
       </div>
     );
   } else {

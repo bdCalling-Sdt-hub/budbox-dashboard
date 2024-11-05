@@ -48,8 +48,8 @@ const AddComboBox = () => {
       return;
     }
     const formdata = new FormData();
-    formdata.append("categoryType", "combo-box"); // static category
-    formdata.append("name", values.comboBoxName); // ComboBox Name
+    formdata.append("categoryType", "build-box"); // static category
+    formdata.append("name", values.buildBoxName); // ComboBox Name
     formdata.append("products", JSON.stringify(values.products)); // Products as array
     formdata.append("discount", values.discount || 0); // Discount
     if (imageFile) {
@@ -66,7 +66,7 @@ const AddComboBox = () => {
         setImageFile(null);
         setImageUrl(null);
         form.resetFields();
-        navigate("/budboxes/combo-box");
+        navigate("/budboxes/build-box");
       }
     } catch (error) {
       console.error("Error adding item:", error);
