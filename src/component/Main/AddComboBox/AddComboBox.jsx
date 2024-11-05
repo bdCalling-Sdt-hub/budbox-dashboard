@@ -50,7 +50,6 @@ const AddComboBox = () => {
     const formdata = new FormData();
     formdata.append("categoryType", "combo-box"); // static category
     formdata.append("name", values.comboBoxName); // ComboBox Name
-    formdata.append("price", values.comboBoxPrice); // ComboBox Price
     formdata.append("products", JSON.stringify(values.products)); // Products as array
     formdata.append("discount", values.discount || 0); // Discount
     if (imageFile) {
@@ -149,17 +148,6 @@ const AddComboBox = () => {
           rules={[{ required: false }]}
         >
           <CustomInput type="number" min="1" placeholder="Enter discount percentage" />
-        </Form.Item>
-        {/* ComboBox Price */}
-        <Form.Item
-          label="ComboBox Price ($)"
-          name="comboBoxPrice"
-          rules={[
-            { required: true, message: "Please enter the ComboBox price!" },
-          ]}
-          className="w-full"
-        >
-          <CustomInput type="number" placeholder="Enter ComboBox price" min="1"  />
         </Form.Item>
         {/* Submit Button */}
         <CustomButton loading={isLoading} border className="w-full">

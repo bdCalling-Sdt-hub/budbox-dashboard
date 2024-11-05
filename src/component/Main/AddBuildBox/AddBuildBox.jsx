@@ -3,12 +3,12 @@ import { useRef, useState } from "react";
 import { IoCameraOutline, IoChevronBack } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import CustomButton from "../../../utils/CustomButton";
-import CustomInput from "../../../utils/CustomInput";
 import { useAddComboBoxMutation } from "../../../redux/features/combobox/comboboxApi";
 import { useGetAllProductsQuery } from "../../../redux/features/product/productApi"; // Import the hook for fetching products
+import CustomButton from "../../../utils/CustomButton";
+import CustomInput from "../../../utils/CustomInput";
 
-const AddBuildBox = () => {
+const AddComboBox = () => {
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const fileInputRef = useRef(null);
@@ -44,13 +44,12 @@ const AddBuildBox = () => {
 
   const onFinish = async (values) => {
     if (!imageFile) {
-      toast.error("Please select an image for the ComboBox");
+      toast.error("Please select an image for the Build Box");
       return;
     }
     const formdata = new FormData();
     formdata.append("categoryType", "combo-box"); // static category
     formdata.append("name", values.comboBoxName); // ComboBox Name
-    formdata.append("price", values.comboBoxPrice); // ComboBox Price
     formdata.append("products", JSON.stringify(values.products)); // Products as array
     formdata.append("discount", values.discount || 0); // Discount
     if (imageFile) {
@@ -63,7 +62,7 @@ const AddBuildBox = () => {
         toast.error(response.error.data.message);
       }
       if (response.data) {
-        toast.success("ComboBox added successfully");
+        toast.success("Build Box added successfully");
         setImageFile(null);
         setImageUrl(null);
         form.resetFields();
@@ -82,7 +81,7 @@ const AddBuildBox = () => {
         <Link to={"/budboxes"}>
           <IoChevronBack className="size-6" />
         </Link>
-        <h1 className="text-2xl font-semibold">Add BuildBox</h1>
+        <h1 className="text-2xl font-semibold">Add Build Box</h1>
       </div>
 
       {/* Image Upload Section */}
@@ -143,6 +142,18 @@ const AddBuildBox = () => {
             loading={isProductLoading} // Show loading indicator while fetching products
           />
         </Form.Item>
+        {/* Discount */}
+        <Form.Item
+          label="Discount (%)"
+          name="discount"
+          rules={[{ required: false }]}
+        >
+          <CustomInput
+            type="number"
+            min="1"
+            placeholder="Enter discount percentage"
+          />
+        </Form.Item>
         {/* Submit Button */}
         <CustomButton loading={isLoading} border className="w-full">
           Add Build Box
@@ -152,4 +163,4 @@ const AddBuildBox = () => {
   );
 };
 
-export default AddBuildBox;
+export default AddComboBox;

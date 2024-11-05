@@ -60,8 +60,8 @@ const ComboBoxCard = ({ item }) => {
             </div>
           ))}
         </div>
-        <h1 className="font-semibold py-2">Price : ${item?.price}</h1>
-        <h1 className="font-semibold py-2">Discount : {item?.discount}%</h1>
+        <h1 className="text-lg font-semibold py-2">Price : ${item?.mainPrice}</h1>
+        <h1 className="text-lg font-semibold py-2">Discount : {item?.discount}%</h1>
 
         <div className="flex gap-10 mt-4 justify-between items-center">
           <button

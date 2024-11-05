@@ -41,7 +41,6 @@ const EditComboBox = () => {
     if (comboBoxData) {
       form.setFieldsValue({
         comboBoxName: comboBoxData.name,
-        comboBoxPrice: comboBoxData.price,
         discount: comboBoxData.discount,
         products: comboBoxData.products.map((product) => product.id),
       });
@@ -70,7 +69,6 @@ const EditComboBox = () => {
 
     const formdata = new FormData();
     formdata.append("name", values.comboBoxName);
-    formdata.append("price", values.comboBoxPrice);
     formdata.append("products", JSON.stringify(values.products)); // Ensure this is valid JSON
     formdata.append("discount", values.discount || 0);
 
@@ -191,19 +189,6 @@ const EditComboBox = () => {
                 placeholder="Enter discount percentage"
               />
             </Form.Item>
-
-            {/* ComboBox Price */}
-            <Form.Item
-              label="ComboBox Price ($)"
-              name="comboBoxPrice"
-              rules={[
-                { required: true, message: "Please enter the ComboBox price!" },
-              ]}
-              className="w-full"
-            >
-              <CustomInput type="number" placeholder="Enter ComboBox price" />
-            </Form.Item>
-
             {/* Submit Button */}
             <CustomButton loading={isLoading} border className="w-full">
               Update ComboBox

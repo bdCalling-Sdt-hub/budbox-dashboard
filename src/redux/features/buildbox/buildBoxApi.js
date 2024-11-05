@@ -1,55 +1,55 @@
 import { baseApi } from "../../baseApi/baseApi";
 
-const comboboxApi = baseApi.injectEndpoints({
+const buildBoxApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllComboBox: builder.query({
+    getAllBuildBox: builder.query({
       query: () => ({
-        url: "/admin/budboxs?categoryType=combo-box",
+        url: "/admin/budboxs?categoryType=build-box",
         method: "GET",
       }),
-      providesTags: ["ComboBox"],
+      providesTags: ["BuildBox"],
       transformResponse: (response) => response?.data?.attributes,
     }),
-    addComboBox: builder.mutation({
+    addBuildBox: builder.mutation({
       query: (data) => ({
         url: "/admin/budbox",
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["ComboBox"],
+      invalidatesTags: ["BuildBox"],
       transformResponse: (response) => response.data,
     }),
-    getComboBoxById: builder.query({
+    getBuildBoxById: builder.query({
       query: (id) => ({
         url: `/admin/budbox/${id}`,
         method: "GET",
       }),
-      providesTags: ["ComboBox"],
+      providesTags: ["BuildBox"],
       transformResponse: (response) => response?.data?.attributes,
     }),
-    updateComboBox: builder.mutation({
+    updateBuildBox: builder.mutation({
       query: ({ id, data }) => ({
         url: `/admin/budbox/${id}`,
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: ["ComboBox"],
+      invalidatesTags: ["BuildBox"],
       transformResponse: (response) => response.data,
     }),
-    deleteCombobox: builder.mutation({
+    deleteBuildBox: builder.mutation({
       query: (id) => ({
         url: `admin/budbox/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["ComboBox"],
+      invalidatesTags: ["BuildBox"],
     }),
   }),
 });
 
 export const {
-  useGetAllComboBoxQuery,
-  useAddComboBoxMutation,
-  useDeleteComboboxMutation,
-  useGetComboBoxByIdQuery,
-  useUpdateComboBoxMutation,
-} = comboboxApi;
+  useGetAllBuildBoxQuery,
+  useAddBuildBoxMutation,
+  useDeleteBuildBoxMutation,
+  useGetBuildBoxByIdQuery,
+  useUpdateBuildBoxMutation,
+} = buildBoxApi;
