@@ -1,4 +1,4 @@
-import { Form, Select } from "antd";
+import { Form, Select, Spin } from "antd";
 import { useRef, useState, useEffect } from "react";
 import { IoCameraOutline, IoChevronBack } from "react-icons/io5";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -93,111 +93,125 @@ const EditComboBox = () => {
   };
 
   return (
-    <div className="w-full">
-      {/* Header */}
-      <div className="flex gap-4 items-center my-6">
-        <Link to={"/budboxes"}>
-          <IoChevronBack className="size-6" />
-        </Link>
-        <h1 className="text-2xl font-semibold">Edit ComboBox</h1>
-      </div>
-
-      {/* Image Upload Section */}
-      <div
-        className="w-72 h-56 bg-[#e8ebf0] rounded-lg flex justify-center items-center cursor-pointer"
-        onClick={handleDivClick}
-      >
-        {imageUrl ? (
-          <img
-            src={imageUrl}
-            alt="Selected"
-            className="w-full h-full object-cover rounded-lg"
-          />
-        ) : (
-          <div className="bg-[#c6dadc] p-2 text-white">
-            <IoCameraOutline size={40} />
+    <>
+      {isComboBoxLoading ? (
+        <div className="w-full flex justify-center my-6">
+          <Spin />
+        </div>
+      ) : (
+        <div className="w-full">
+          {/* Header */}
+          <div className="flex gap-4 items-center my-6">
+            <Link to={"/budboxes/combo-box"}>
+              <IoChevronBack className="size-6" />
+            </Link>
+            <h1 className="text-2xl font-semibold">Edit ComboBox</h1>
           </div>
-        )}
-      </div>
 
-      {/* Hidden File Input */}
-      <input
-        type="file"
-        ref={fileInputRef}
-        onChange={handleImageChange}
-        accept="image/*"
-        style={{ display: "none" }}
-      />
+          {/* Image Upload Section */}
+          <div
+            className="w-72 h-56 bg-[#e8ebf0] rounded-lg flex justify-center items-center cursor-pointer"
+            onClick={handleDivClick}
+          >
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt="Selected"
+                className="w-full h-full object-cover rounded-lg"
+              />
+            ) : (
+              <div className="bg-[#c6dadc] p-2 text-white">
+                <IoCameraOutline size={40} />
+              </div>
+            )}
+          </div>
 
-      {/* Form Section */}
-      <Form
-        form={form}
-        layout="vertical"
-        onFinish={onFinish}
-        className="mt-5"
-        initialValues={{
-          comboBoxName: comboBoxData?.name,
-          comboBoxPrice: comboBoxData?.price,
-          discount: comboBoxData?.discount,
-        }}
-      >
-        {/* ComboBox Name */}
-        <Form.Item
-          label="ComboBox Name"
-          name="comboBoxName"
-          rules={[
-            { required: true, message: "Please enter the ComboBox name!" },
-          ]}
-          className="w-full"
-        >
-          <CustomInput placeholder="Enter ComboBox name" />
-        </Form.Item>
-
-        {/* Include Products Dropdown */}
-        <Form.Item
-          label="Include Products"
-          name="products"
-          rules={[
-            { required: true, message: "Please select at least one product!" },
-          ]}
-        >
-          <Select
-            mode="multiple"
-            allowClear
-            size="large"
-            placeholder="Select products to include"
-            options={productOptions}
-            loading={isProductLoading || isComboBoxLoading}
+          {/* Hidden File Input */}
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleImageChange}
+            accept="image/*"
+            style={{ display: "none" }}
           />
-        </Form.Item>
 
-        {/* Discount */}
-        <Form.Item
-          label="Discount (%)"
-          name="discount"
-          rules={[{ required: false }]}
-        >
-          <CustomInput type="number" placeholder="Enter discount percentage" />
-        </Form.Item>
+          {/* Form Section */}
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={onFinish}
+            className="mt-5"
+            initialValues={{
+              comboBoxName: comboBoxData?.name,
+              comboBoxPrice: comboBoxData?.price,
+              discount: comboBoxData?.discount,
+            }}
+          >
+            {/* ComboBox Name */}
+            <Form.Item
+              label="ComboBox Name"
+              name="comboBoxName"
+              rules={[
+                { required: true, message: "Please enter the ComboBox name!" },
+              ]}
+              className="w-full"
+            >
+              <CustomInput placeholder="Enter ComboBox name" />
+            </Form.Item>
 
-        {/* ComboBox Price */}
-        <Form.Item
-          label="ComboBox Price ($)"
-          name="comboBoxPrice"
-          rules={[
-            { required: true, message: "Please enter the ComboBox price!" },
-          ]}
-          className="w-full"
-        >
-          <CustomInput type="number" placeholder="Enter ComboBox price" />
-        </Form.Item>
+            {/* Include Products Dropdown */}
+            <Form.Item
+              label="Include Products"
+              name="products"
+              rules={[
+                {
+                  required: true,
+                  message: "Please select at least one product!",
+                },
+              ]}
+            >
+              <Select
+                mode="multiple"
+                allowClear
+                size="large"
+                placeholder="Select products to include"
+                options={productOptions}
+                loading={isProductLoading}
+              />
+            </Form.Item>
 
-        {/* Submit Button */}
-        <CustomButton loading={isLoading} border className="w-full">
-          Update ComboBox
-        </CustomButton>
-      </Form>
-    </div>
+            {/* Discount */}
+            <Form.Item
+              label="Discount (%)"
+              name="discount"
+              rules={[{ required: false }]}
+            >
+              <CustomInput
+                type="number"
+                placeholder="Enter discount percentage"
+              />
+            </Form.Item>
+
+            {/* ComboBox Price */}
+            <Form.Item
+              label="ComboBox Price ($)"
+              name="comboBoxPrice"
+              rules={[
+                { required: true, message: "Please enter the ComboBox price!" },
+              ]}
+              className="w-full"
+            >
+              <CustomInput type="number" placeholder="Enter ComboBox price" />
+            </Form.Item>
+
+            {/* Submit Button */}
+            <CustomButton loading={isLoading} border className="w-full">
+              Update ComboBox
+            </CustomButton>
+          </Form>
+        </div>
+      )}
+    </>
   );
 };
 

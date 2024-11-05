@@ -3,9 +3,27 @@ import { toast } from "sonner";
 import { imageBaseUrl } from "../../../config/imageBaseUrl";
 import { useDeleteComboboxMutation } from "../../../redux/features/combobox/comboboxApi";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const ComboBoxCard = ({ item }) => {
   const [deleteComboBox] = useDeleteComboboxMutation();
+
+  const showDeleteConfirm = async (comboboxId) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "Are you sure you want to delete this Combo Box? This action cannot be undone.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel",
+    });
+
+    if (result.isConfirmed) {
+      handleDelete(comboboxId); // Proceed with deletion if confirmed
+    }
+  };
   const handleDelete = async (comboboxId) => {
     try {
       const res = await deleteComboBox(comboboxId);
@@ -38,20 +56,20 @@ const ComboBoxCard = ({ item }) => {
             >
               <h1>{i + 1}.</h1>
               <h1>{product?.name}</h1>
+              <p className="text-sm font-semibold">{`($${product.price})`}</p>
             </div>
           ))}
         </div>
         <h1 className="text-xl font-semibold py-3">${item?.price}</h1>
-        <div className="flex gap-10">
+        <div className="flex gap-10 mt-4 justify-between items-center">
           <button
-            onClick={() => handleDelete(item.id)}
-            className="px-16 py-3 bg-yellow-500 rounded-lg text-white"
+            onClick={() => showDeleteConfirm(item.id)}
+            className="px-8 py-2 bg-yellow-500 rounded-lg text-white"
           >
             Delete
           </button>
           <Link to={`/budboxes/edit-combo-box/${item?.id}`}>
-            {" "}
-            <button className="px-16 py-3 border border-yellow-500 rounded-lg text-yellow-500">
+            <button className="px-10 py-2 border border-yellow-500 rounded-lg text-yellow-500">
               Edit
             </button>
           </Link>

@@ -2,24 +2,29 @@
 import { Link } from "react-router-dom";
 import { imageBaseUrl } from "../../../config/imageBaseUrl";
 import { useDeleteCategoryMutation } from "../../../redux/features/category/categoryApi";
+import Swal from "sweetalert2"; // Import SweetAlert
 import { toast } from "sonner";
-import { Modal } from "antd"; // Import Ant Design's Modal component
 
 const BudboxesCard = ({ item }) => {
   const [deleteBox] = useDeleteCategoryMutation();
   const { id, name, image, type } = item;
 
-  // Handle delete confirmation
-  const showDeleteConfirm = (boxId) => {
-    Modal.confirm({
-      title: "Are you sure you want to delete this BudBox?",
-      content: "This action cannot be undone.",
-      okText: "Yes",
-      okType: "danger",
-      cancelText: "No",
-      centered: true,
-      onOk: () => handleDelete(boxId), // Proceed with deletion on confirmation
+  // Handle delete confirmation using Swal
+  const showDeleteConfirm = async (boxId) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "Are you sure you want to delete this BudBox? This action cannot be undone.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel",
     });
+
+    if (result.isConfirmed) {
+      handleDelete(boxId); // Proceed with deletion if confirmed
+    }
   };
 
   const handleDelete = async (boxId) => {
@@ -29,7 +34,9 @@ const BudboxesCard = ({ item }) => {
         toast.error(res.error.data.message);
         return;
       }
-      toast.success("BudBox deleted successfully");
+      if (res.data) {
+        toast.success("BudBox deleted successfully");
+      }
     } catch (error) {
       toast.error("Failed to delete BudBox");
     }
@@ -49,15 +56,15 @@ const BudboxesCard = ({ item }) => {
         <div>
           <h1 className="text-2xl font-semibold ">{name}</h1>
         </div>
-        <div className="flex justify-between items-center gap-5 ">
+        <div className="flex flex-wrap justify-between items-center gap-5 my-5">
           <button
             onClick={() => showDeleteConfirm(id)} // Show confirmation dialog
-            className="px-10 py-3 bg-[#f7cc50] text-white rounded text-sm"
+            className="px-8 py-2 bg-[#f7cc50] text-white rounded text-sm"
           >
             Delete
           </button>
           <Link to={`/budboxes/edit-box/${id}`}>
-            <button className="px-12 py-3 border border-[#f7cc50] text-[#f7cc50] rounded text-sm">
+            <button className="px-10 py-2 border border-[#f7cc50] text-[#f7cc50] rounded text-sm">
               Edit
             </button>
           </Link>

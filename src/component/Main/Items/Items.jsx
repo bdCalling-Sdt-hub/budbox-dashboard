@@ -2,6 +2,7 @@ import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import ItemCard from "./ItemCard";
 import { useGetAllProductsQuery } from "../../../redux/features/product/productApi";
+import { Spin } from "antd";
 
 const Items = () => {
   const {
@@ -12,7 +13,11 @@ const Items = () => {
   } = useGetAllProductsQuery();
   let content = null;
   if (isLoading) {
-    content = <h1>Loading....</h1>;
+    content = (
+      <div className="w-full flex justify-center py-10">
+        <Spin />
+      </div>
+    );
   } else if (isError && error) {
     content = (
       <h3 className="font-semibold text-rose-500 text-center py-5">

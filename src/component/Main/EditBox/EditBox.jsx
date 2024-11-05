@@ -1,4 +1,4 @@
-import { Form, Select } from "antd";
+import { Form, Select, Spin } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { IoCameraOutline, IoChevronBack } from "react-icons/io5";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -20,7 +20,8 @@ const EditBox = () => {
   const navigate = useNavigate();
 
   const [form] = Form.useForm();
-  const { data: budBoxData } = useGetCategoryByIdQuery(id); // Fetch the existing BudBox data
+  const { data: budBoxData, isLoading: singleCategoryLoading } =
+    useGetCategoryByIdQuery(id); // Fetch the existing BudBox data
   const [updateBox, { isLoading }] = useUpdateCategoryMutation();
 
   useEffect(() => {
@@ -73,84 +74,94 @@ const EditBox = () => {
   };
 
   return (
-    <div className="w-full">
-      {/* Header */}
-      <div className="flex gap-4 items-center my-6">
-        <Link to="/budboxes">
-          <IoChevronBack className="size-6" />
-        </Link>
-        <h1 className="text-2xl font-semibold">Edit BudBox</h1>
-      </div>
-
-      {/* Image Upload Section */}
-      <div
-        className="w-72 h-56 bg-[#e8ebf0] rounded-lg flex justify-center items-center cursor-pointer"
-        onClick={handleDivClick}
-      >
-        {imageUrl ? (
-          <img
-            src={imageUrl}
-            alt="Selected"
-            className="w-full h-full object-cover rounded-lg"
-          />
-        ) : (
-          <div className="bg-[#c6dadc] p-2 text-white">
-            <IoCameraOutline size={40} />
+    <>
+      {singleCategoryLoading ? (
+        <div className="w-full flex justify-center my-6">
+          <Spin />
+        </div>
+      ) : (
+        <div className="w-full">
+          {/* Header */}
+          <div className="flex gap-4 items-center my-6">
+            <Link to="/budboxes">
+              <IoChevronBack className="size-6" />
+            </Link>
+            <h1 className="text-2xl font-semibold">Edit BudBox</h1>
           </div>
-        )}
-      </div>
 
-      {/* Hidden File Input */}
-      <input
-        type="file"
-        ref={fileInputRef}
-        onChange={handleImageChange}
-        accept="image/*"
-        style={{ display: "none" }}
-      />
+          {/* Image Upload Section */}
+          <div
+            className="w-72 h-56 bg-[#e8ebf0] rounded-lg flex justify-center items-center cursor-pointer"
+            onClick={handleDivClick}
+          >
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt="Selected"
+                className="w-full h-full object-cover rounded-lg"
+              />
+            ) : (
+              <div className="bg-[#c6dadc] p-2 text-white">
+                <IoCameraOutline size={40} />
+              </div>
+            )}
+          </div>
 
-      {/* Form Section */}
-      <Form
-        form={form}
-        layout="vertical"
-        onFinish={onFinish}
-        className="mt-5"
-        initialValues={{
-          budBoxName: budBoxData?.name,
-          type: budBoxData?.type,
-        }}
-      >
-        {/* BudBox Name */}
-        <Form.Item
-          label="BudBox Name"
-          name="budBoxName"
-          rules={[{ required: true, message: "Please enter the budbox name!" }]}
-          className="w-full"
-        >
-          <CustomInput placeholder="Enter your budbox name" />
-        </Form.Item>
+          {/* Hidden File Input */}
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleImageChange}
+            accept="image/*"
+            style={{ display: "none" }}
+          />
 
-        {/* BudBox Type */}
-        <Form.Item
-          label="Type"
-          name="type"
-          rules={[
-            { required: true, message: "Please select the budbox type!" },
-          ]}
-          className="w-full"
-        >
-          <Select size="large" placeholder="Enter your budbox type">
-            <Select.Option value="combo-box">Combo Box</Select.Option>
-            <Select.Option value="build-box">Build Box</Select.Option>
-          </Select>
-        </Form.Item>
+          {/* Form Section */}
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={onFinish}
+            className="mt-5"
+            initialValues={{
+              budBoxName: budBoxData?.name,
+              type: budBoxData?.type,
+            }}
+          >
+            {/* BudBox Name */}
+            <Form.Item
+              label="BudBox Name"
+              name="budBoxName"
+              rules={[
+                { required: true, message: "Please enter the budbox name!" },
+              ]}
+              className="w-full"
+            >
+              <CustomInput placeholder="Enter your budbox name" />
+            </Form.Item>
 
-        {/* Submit Button */}
-        <CustomButton loading={isLoading} className="w-full">
-          Update BudBox
-        </CustomButton>
-      </Form>
-    </div>
+            {/* BudBox Type */}
+            <Form.Item
+              label="Type"
+              name="type"
+              rules={[
+                { required: true, message: "Please select the budbox type!" },
+              ]}
+              className="w-full"
+            >
+              <Select size="large" placeholder="Enter your budbox type">
+                <Select.Option value="combo-box">Combo Box</Select.Option>
+                <Select.Option value="build-box">Build Box</Select.Option>
+              </Select>
+            </Form.Item>
+
+            {/* Submit Button */}
+            <CustomButton loading={isLoading} className="w-full">
+              Update BudBox
+            </CustomButton>
+          </Form>
+        </div>
+      )}
+    </>
   );
 };
 

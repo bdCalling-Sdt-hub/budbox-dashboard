@@ -3,6 +3,7 @@ import { FaPlus } from "react-icons/fa6";
 import { useGetAllComboBoxQuery } from "../../../redux/features/combobox/comboboxApi";
 import ComboBoxCard from "./ComboBoxCard";
 import { IoChevronBack } from "react-icons/io5";
+import { Spin } from "antd";
 const ComboxBoxs = () => {
   const {
     data: comboboxs,
@@ -12,7 +13,11 @@ const ComboxBoxs = () => {
   } = useGetAllComboBoxQuery();
   let content = null;
   if (isLoading) {
-    content = <h1>Loading....</h1>;
+    content = (
+      <div className="w-full flex justify-center py-10">
+        <Spin />
+      </div>
+    );
   } else if (isError && error) {
     content = (
       <h3 className="font-semibold text-rose-500 text-center py-5">
@@ -40,7 +45,7 @@ const ComboxBoxs = () => {
     );
   }
 
-  console.log(comboboxs)
+  console.log(comboboxs);
   return (
     <>
       <div className="w-full flex justify-between gap-4 items-center">
