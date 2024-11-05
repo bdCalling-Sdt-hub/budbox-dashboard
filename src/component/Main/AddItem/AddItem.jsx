@@ -40,6 +40,7 @@ const AddItem = () => {
     formdata.append("name", values.productName);
     formdata.append("price", values.price);
     formdata.append("weight", values.weight);
+    formdata.append("stockQuantity", values.quantity);
     formdata.append("image", imageFile);
 
     try {
