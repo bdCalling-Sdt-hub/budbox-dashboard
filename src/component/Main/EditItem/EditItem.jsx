@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Form } from "antd";
+import { Form, Spin } from "antd";
 import { IoCameraOutline, IoChevronBack } from "react-icons/io5";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
@@ -19,9 +19,10 @@ const EditItem = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const { id } = useParams(); // Get the item id from the route
-  const { data: product } = useGetProductByIdQuery(id, {
-    skip: !id,
-  });
+  const { data: product, isLoading: singleProductLoading } =
+    useGetProductByIdQuery(id, {
+      skip: !id,
+    });
 
   useEffect(() => {
     if (product) {
@@ -78,84 +79,111 @@ const EditItem = () => {
   };
 
   return (
-    <div className="w-full">
-      {/* Header */}
-      <div className="flex gap-4 items-center my-6">
-        <Link to={"/items"}>
-          <IoChevronBack className="size-6" />
-        </Link>
-        <h1 className="text-2xl font-semibold">Edit Item</h1>
-      </div>
-
-      {/* Image Upload Section */}
-      <div
-        className="w-72 h-56 bg-[#e8ebf0] rounded-lg flex justify-center items-center cursor-pointer"
-        onClick={handleDivClick}
-      >
-        {imageUrl ? (
-          <img
-            src={imageUrl}
-            alt="Selected"
-            className="w-full h-full object-cover rounded-lg"
-          />
-        ) : (
-          <div className="bg-[#c6dadc] p-2 text-white">
-            <IoCameraOutline size={40} />
-          </div>
-        )}
-      </div>
-
-      {/* Hidden File Input */}
-      <input
-        type="file"
-        ref={fileInputRef}
-        onChange={handleImageChange}
-        accept="image/*"
-        style={{ display: "none" }} // Hidden input
-      />
-
-      {/* Form Section */}
-      <Form form={form} layout="vertical" onFinish={onFinish} className="mt-5">
-        <div className="w-full flex justify-between items-center gap-5 mb-4">
-          {/* Product Name */}
-          <Form.Item
-            label="Product Name"
-            name="productName"
-            rules={[
-              { required: true, message: "Please enter the product name!" },
-            ]}
-            className="w-full"
-          >
-            <CustomInput placeholder="example wood" />
-          </Form.Item>
-
-          {/* Price */}
-          <Form.Item
-            label="Price"
-            name="price"
-            rules={[{ required: true, message: "Please enter the price!" }]}
-            className="w-full"
-          >
-            <CustomInput type="number" placeholder="example $100" />
-          </Form.Item>
+    <>
+      {singleProductLoading ? (
+        <div className="flex justify-center items-center my-6">
+          <Spin />{" "}
         </div>
+      ) : (
+        <div className="w-full">
+          {/* Header */}
+          <div className="flex gap-4 items-center my-6">
+            <Link to={"/items"}>
+              <IoChevronBack className="size-6" />
+            </Link>
+            <h1 className="text-2xl font-semibold">Edit Item</h1>
+          </div>
 
-        {/* Weight */}
-        <Form.Item
-          label="Weight"
-          name="weight"
-          rules={[{ required: true, message: "Please enter the weight!" }]}
-          className="w-full"
-        >
-          <CustomInput type="number" placeholder="example 15grm" />
-        </Form.Item>
+          {/* Image Upload Section */}
+          <div
+            className="w-72 h-56 bg-[#e8ebf0] rounded-lg flex justify-center items-center cursor-pointer"
+            onClick={handleDivClick}
+          >
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt="Selected"
+                className="w-full h-full object-cover rounded-lg"
+              />
+            ) : (
+              <div className="bg-[#c6dadc] p-2 text-white">
+                <IoCameraOutline size={40} />
+              </div>
+            )}
+          </div>
 
-        {/* Submit Button */}
-        <CustomButton loading={isLoading} border className="w-full">
-          Update Item
-        </CustomButton>
-      </Form>
-    </div>
+          {/* Hidden File Input */}
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleImageChange}
+            accept="image/*"
+            style={{ display: "none" }} // Hidden input
+          />
+
+          {/* Form Section */}
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={onFinish}
+            className="mt-5"
+          >
+            <div className="w-full flex justify-between items-center gap-5 mb-4">
+              {/* Product Name */}
+              <Form.Item
+                label="Product Name"
+                name="productName"
+                rules={[
+                  { required: true, message: "Please enter the product name!" },
+                ]}
+                className="w-full"
+              >
+                <CustomInput placeholder="example wood" />
+              </Form.Item>
+
+              {/* Price */}
+              <Form.Item
+                label="Price"
+                name="price"
+                rules={[{ required: true, message: "Please enter the price!" }]}
+                className="w-full"
+              >
+                <CustomInput type="number" placeholder="example $100" />
+              </Form.Item>
+            </div>
+
+            <div className="w-full flex justify-between items-center gap-5 mb-4">
+              {/* Weight */}
+              <Form.Item
+                label="Weight"
+                name="weight"
+                rules={[
+                  { required: true, message: "Please enter the weight!" },
+                ]}
+                className="w-full"
+              >
+                <CustomInput type="number" placeholder="example 15grm" />
+              </Form.Item>
+              <Form.Item
+                label="Quantity"
+                name="quantity"
+                rules={[
+                  { required: true, message: "Please enter the quantity!" },
+                ]}
+                className="w-full"
+              >
+                <CustomInput type="number" placeholder="Quantity" />
+              </Form.Item>
+            </div>
+
+            {/* Submit Button */}
+            <CustomButton loading={isLoading} border className="w-full">
+              Update Item
+            </CustomButton>
+          </Form>
+        </div>
+      )}
+    </>
   );
 };
 

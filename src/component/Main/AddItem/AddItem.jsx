@@ -32,7 +32,7 @@ const AddItem = () => {
   };
 
   const onFinish = async (values) => {
-    if(!imageFile){
+    if (!imageFile) {
       toast.error("Please select an image");
       return;
     }
@@ -108,7 +108,7 @@ const AddItem = () => {
             ]}
             className="w-full"
           >
-            <CustomInput placeholder="example wood" />
+            <CustomInput placeholder="Product Name" />
           </Form.Item>
 
           {/* Price */}
@@ -118,19 +118,28 @@ const AddItem = () => {
             rules={[{ required: true, message: "Please enter the price!" }]}
             className="w-full"
           >
-            <CustomInput type="number" placeholder="example $100" />
+            <CustomInput type="number" placeholder="$100" />
           </Form.Item>
         </div>
-
+        <div className="w-full flex justify-between items-center gap-5 mb-4">
+          <Form.Item
+            label="Weight"
+            name="weight"
+            rules={[{ required: true, message: "Please enter the weight!" }]}
+            className="w-full"
+          >
+            <CustomInput type="number" placeholder="15grm" />
+          </Form.Item>
+          <Form.Item
+            label="Quantity"
+            name="quantity"
+            rules={[{ required: true, message: "Please enter the quantity!" }]}
+            className="w-full"
+          >
+            <CustomInput type="number" placeholder="Quantity" />
+          </Form.Item>
+        </div>
         {/* Weight */}
-        <Form.Item
-          label="Weight"
-          name="weight"
-          rules={[{ required: true, message: "Please enter the weight!" }]}
-          className="w-full"
-        >
-          <CustomInput type="number" placeholder="example 15grm" />
-        </Form.Item>
 
         {/* Submit Button */}
         <CustomButton loading={isLoading} border className="w-full">

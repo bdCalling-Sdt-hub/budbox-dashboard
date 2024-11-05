@@ -3,23 +3,28 @@ import { Link } from "react-router-dom";
 import { imageBaseUrl } from "../../../config/imageBaseUrl";
 import { useDeleteProductMutation } from "../../../redux/features/product/productApi";
 import { toast } from "sonner";
-import { Modal } from "antd"; // Import Ant Design's Modal component
+import Swal from "sweetalert2";
 
 const ItemCard = ({ item }) => {
   const [deleteProduct] = useDeleteProductMutation();
   const { id, name, price, image, weight } = item;
 
   // Show confirmation modal
-  const showDeleteConfirm = (productId) => {
-    Modal.confirm({
-      title: "Are you sure you want to delete this item?",
-      content: "This action cannot be undone.",
-      okText: "Yes",
-      okType: "danger",
-      cancelText: "No",
-      centered: true, // Centers the modal
-      onOk: () => handleDelete(productId), // Delete item if confirmed
+  const showDeleteConfirm = async (productId) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "Are you sure you want to delete this Item? This action cannot be undone.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel",
     });
+
+    if (result.isConfirmed) {
+      handleDelete(productId); // Proceed with deletion if confirmed
+    }
   };
 
   const handleDelete = async (productId) => {
@@ -45,13 +50,13 @@ const ItemCard = ({ item }) => {
             : "/images/default.png"
         }
         alt={name || "Product Image"}
-        className="w-full h-56 rounded-t-lg object-cover"
+        className="w-full h-64 rounded-t-lg object-cover"
       />
 
       <div className="p-5 space-y-2">
         <h1 className="font-semibold text-lg">{name || "Unnamed Item"}</h1>
         <h1 className="text-xl font-semibold">
-          {price ? `$${price.toFixed(2)}` : "Price Not Available"}
+          {price ? `$${price}` : "Price Not Available"}
         </h1>
         <p>{weight ? `${weight} grm` : "Weight Not Specified"}</p>
       </div>
