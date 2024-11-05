@@ -28,6 +28,8 @@ import AdminRoutes from "./AdminRoutes";
 import EditPrivacyPolicy from "../page/EditPrivacyPolicy/EditPrivacyPolicy";
 import EditTermsConditions from "../page/EditTermsConditions/EditTermsConditions";
 import EditAboutUs from "../page/EditAboutUs/EditAboutUs";
+import AddBuildBox from "../component/Main/AddBuildBox/AddBuildBox";
+import BuildBoxs from "../component/Main/BuildBox/BuildBoxs";
 
 const router = createBrowserRouter([
   {
@@ -52,8 +54,12 @@ const router = createBrowserRouter([
         element: <BudboxesPage />,
       },
       {
-        path: "budboxes/:type",
+        path: "budboxes/combo-box",
         element: <ComboxBoxs />,
+      },
+      {
+        path: "budboxes/build-box",
+        element: <BuildBoxs />,
       },
       {
         path: "budboxes/add-combo-box",
@@ -62,6 +68,10 @@ const router = createBrowserRouter([
       {
         path: "budboxes/edit-combo-box/:id",
         element: <EditComboBox />,
+      },
+      {
+        path: "budboxes/add-build-box",
+        element: <AddBuildBox />,
       },
       {
         path: "budboxes/add-box",

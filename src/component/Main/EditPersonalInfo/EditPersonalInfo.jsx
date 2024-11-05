@@ -134,7 +134,7 @@ const EditInformation = () => {
             label="Email"
             name="email"
           >
-            <CustomInput placeholder="Enter your email" />
+            <CustomInput placeholder="Enter your email" readOnly />
           </Form.Item>
 
           {/* Phone Number */}

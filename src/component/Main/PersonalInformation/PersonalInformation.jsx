@@ -2,10 +2,22 @@ import { IoChevronBack } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { imageBaseUrl } from "../../../config/imageBaseUrl";
 import { useSelector } from "react-redux";
+import { Form } from "antd";
+import { useEffect } from "react";
+import CustomInput from "../../../utils/CustomInput";
 
 const PersonalInformation = () => {
   const { user } = useSelector((state) => state.auth);
-
+  const [form] = Form.useForm();
+  useEffect(() => {
+    if (user) {
+      form.setFieldsValue({
+        fullName: user.fullName,
+        email: user.email,
+        phone: user.phone,
+      });
+    }
+  }, [user, form]);
   return (
     <div className="w-full">
       {/* Back Button and Title */}
@@ -37,35 +49,30 @@ const PersonalInformation = () => {
         </div>
 
         {/* Personal Details */}
-        <form className="w-full col-span-full md:col-span-9 space-y-6">
-          <div className="space-y-3">
-            <label className="block text-sm font-semibold">Name</label>
-            <input
-              type="text"
-              defaultValue={user?.fullName}
+        <Form
+          form={form}
+          layout="vertical"
+          className="w-full col-span-full md:col-span-9 space-y-6 mt-10"
+        >
+          {/* Full Name */}
+          <Form.Item label="Full Name" name="fullName">
+            <CustomInput placeholder="Enter your full name" readOnly />
+          </Form.Item>
+
+          {/* Email */}
+          <Form.Item label="Email" name="email">
+            <CustomInput placeholder="Enter your email" readOnly />
+          </Form.Item>
+
+          {/* Phone Number */}
+          <Form.Item label="Phone Number" name="phone">
+            <CustomInput
+              type="number"
+              placeholder="Enter your phone number"
               readOnly
-              className="w-full border border-gray-300 rounded-lg px-5 py-3 bg-white outline-none"
             />
-          </div>
-          <div className="space-y-3">
-            <label className="block text-sm font-semibold">Email</label>
-            <input
-              type="email"
-              defaultValue={user?.email}
-              readOnly
-              className="w-full border border-gray-300 rounded-lg px-5 py-3 bg-white outline-none"
-            />
-          </div>
-          <div className="space-y-3">
-            <label className="block text-sm font-semibold">Phone Number</label>
-            <input
-              type="text"
-              defaultValue={user?.phone}
-              readOnly
-              className="w-full border border-gray-300 rounded-lg px-5 py-3 bg-white outline-none"
-            />
-          </div>
-        </form>
+          </Form.Item>
+        </Form>
       </div>
     </div>
   );

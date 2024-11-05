@@ -5,7 +5,7 @@ import { useDeleteComboboxMutation } from "../../../redux/features/combobox/comb
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const ComboBoxCard = ({ item }) => {
+const BuildBoxCard = ({ item }) => {
   const [deleteComboBox] = useDeleteComboboxMutation();
 
   const showDeleteConfirm = async (comboboxId) => {
@@ -60,9 +60,7 @@ const ComboBoxCard = ({ item }) => {
             </div>
           ))}
         </div>
-        <h1 className="font-semibold py-2">Price : ${item?.price}</h1>
-        <h1 className="font-semibold py-2">Discount : {item?.discount}%</h1>
-
+        <h1 className="text-xl font-semibold py-3">${item?.price}</h1>
         <div className="flex gap-10 mt-4 justify-between items-center">
           <button
             onClick={() => showDeleteConfirm(item.id)}
@@ -81,4 +79,4 @@ const ComboBoxCard = ({ item }) => {
   );
 };
 
-export default ComboBoxCard;
+export default BuildBoxCard;
