@@ -56,7 +56,7 @@ const ComboBoxCard = ({ item }) => {
             >
               <h1>{i + 1}.</h1>
               <h1>{product?.name}</h1>
-              <p className="text-sm font-semibold">{`($${product.price})`}</p>
+              <p className="font-semibold">{`($${product.price})`}</p>
             </div>
           ))}
         </div>
