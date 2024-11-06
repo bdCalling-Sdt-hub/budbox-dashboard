@@ -43,7 +43,7 @@ const IncomeGraphChart = () => {
   return (
     <section className="w-full col-span-full md:col-span-4 bg-white p-5 rounded-lg">
       <div className="flex justify-between items-center py-3">
-        <h1 className="font-semibold">Income Ratio</h1>
+        <h1 className="font-semibold">Revenue For User</h1>
         <DatePicker
           onChange={handleDateChange}
           picker="year"
