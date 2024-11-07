@@ -7,8 +7,8 @@ import Swal from "sweetalert2";
 
 const ItemCard = ({ item }) => {
   const [deleteProduct] = useDeleteProductMutation();
-  const { id, name, price, image, weight } = item;
-
+  console.log(item)
+  const { id, name, price, image, weight,stockQuantity } = item;
   // Show confirmation modal
   const showDeleteConfirm = async (productId) => {
     const result = await Swal.fire({
@@ -59,6 +59,7 @@ const ItemCard = ({ item }) => {
           {price ? `$${price}` : "Price Not Available"}
         </h1>
         <p>{weight ? `${weight} grm` : "Weight Not Specified"}</p>
+        <p>{stockQuantity ? `${stockQuantity}` : "Weight Not Specified"}</p>
       </div>
 
       {/* Buttons */}
