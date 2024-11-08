@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 const ItemCard = ({ item }) => {
   const [deleteProduct] = useDeleteProductMutation();
   // eslint-disable-next-line react/prop-types
-  const { id, name, price, image, weight,stockQuantity } = item;
+  const { id, name, price, image, weight, stockQuantity, description } = item;
   // Show confirmation modal
   const showDeleteConfirm = async (productId) => {
     const result = await Swal.fire({
@@ -54,12 +54,19 @@ const ItemCard = ({ item }) => {
       />
 
       <div className="p-5 space-y-2">
-        <h1 className="font-semibold text-lg">{name || "Unnamed Item"}</h1>
-        <h1 className="text-xl font-semibold">
-          {price ? `$${price}` : "Price Not Available"}
-        </h1>
-        <p>{weight ? `${weight} grm` : "Weight Not Specified"}</p>
-        <p>{stockQuantity ? `${stockQuantity}` : "Weight Not Specified"}</p>
+        <div className="flex justify-between items-center gap-4">
+          <h1 className="font-semibold text-xl">{name || "Unnamed Item"}</h1>
+          <h1 className="text-xl font-semibold">
+            {price ? `$${price}` : "Price Not Available"}
+          </h1>
+        </div>
+        <p>{description ? `${description}` : "Description Not Available"}</p>
+
+        <p className="text-sm font-semibold">Weight : {weight ? `${weight} grm` : "Weight Not Specified"}</p>
+        <p className="text-sm font-semibold">
+          Stock Quantity :{" "}
+          {stockQuantity ? `${stockQuantity}` : "Weight Not Specified"}
+        </p>
       </div>
 
       {/* Buttons */}

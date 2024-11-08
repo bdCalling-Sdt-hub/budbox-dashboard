@@ -130,7 +130,14 @@ const AddComboBox = () => {
           label="Include Products"
           name="products"
           rules={[
-            { required: true, message: "Please select at least one product!" },
+            {
+              validator: (_, value) =>
+                value && value.length >= 3
+                  ? Promise.resolve()
+                  : Promise.reject(
+                      new Error("Please select at least 3 products")
+                    ),
+            },
           ]}
         >
           <Select
@@ -142,6 +149,7 @@ const AddComboBox = () => {
             loading={isProductLoading} // Show loading indicator while fetching products
           />
         </Form.Item>
+
         {/* Discount */}
         <Form.Item
           label="Discount (%)"
@@ -154,6 +162,7 @@ const AddComboBox = () => {
             placeholder="Enter discount percentage"
           />
         </Form.Item>
+
         {/* Submit Button */}
         <CustomButton loading={isLoading} border className="w-full">
           Add Build Box

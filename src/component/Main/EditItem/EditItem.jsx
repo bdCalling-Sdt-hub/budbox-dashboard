@@ -10,45 +10,44 @@ import {
 import CustomButton from "../../../utils/CustomButton";
 import CustomInput from "../../../utils/CustomInput";
 import { imageBaseUrl } from "../../../config/imageBaseUrl";
+import { MdOutlineAddAPhoto } from "react-icons/md";
 
 const EditItem = () => {
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
-  const fileInputRef = useRef(null); // Reference to hidden file input
+  const fileInputRef = useRef(null);
   const [updateItem, { isLoading }] = useUpdateProductMutation();
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const { id } = useParams(); // Get the item id from the route
+  const { id } = useParams();
   const { data: product, isLoading: singleProductLoading } =
-    useGetProductByIdQuery(id, {
-      skip: !id,
-    });
+    useGetProductByIdQuery(id, { skip: !id });
 
   useEffect(() => {
     if (product) {
-      // Pre-fill the form with the current item data
       form.setFieldsValue({
         productName: product?.name,
         price: product?.price,
         weight: product?.weight,
+        stockQuantity: product?.stockQuantity,
+        description: product?.description,
       });
-      setImageUrl(`${imageBaseUrl}${product.image?.url}`); // Set existing image URL if available
+      setImageUrl(`${imageBaseUrl}${product.image?.url}`);
     }
   }, [product, form]);
 
-  // Handle image change (preview the image)
   const handleImageChange = (event) => {
     const file = event.target.files && event.target.files[0];
     if (file) {
       const newImageUrl = URL.createObjectURL(file);
       setImageFile(file);
-      setImageUrl(newImageUrl); // Set the image URL for preview
+      setImageUrl(newImageUrl);
     }
   };
 
   const handleDivClick = () => {
     if (fileInputRef.current) {
-      fileInputRef.current.click(); // Open file dialog
+      fileInputRef.current.click();
     }
   };
 
@@ -57,8 +56,10 @@ const EditItem = () => {
     formdata.append("name", values.productName);
     formdata.append("price", values.price);
     formdata.append("weight", values.weight);
+    formdata.append("stockQuantity", values.stockQuantity);
+    formdata.append("description", values.description);
     if (imageFile) {
-      formdata.append("image", imageFile); // Add the new image if it's changed
+      formdata.append("image", imageFile);
     }
 
     try {
@@ -82,7 +83,7 @@ const EditItem = () => {
     <>
       {singleProductLoading ? (
         <div className="flex justify-center items-center my-6">
-          <Spin />{" "}
+          <Spin />
         </div>
       ) : (
         <div className="w-full">
@@ -96,15 +97,23 @@ const EditItem = () => {
 
           {/* Image Upload Section */}
           <div
-            className="w-72 h-56 bg-[#e8ebf0] rounded-lg flex justify-center items-center cursor-pointer"
+            className="relative w-72 h-56 bg-[#e8ebf0] rounded-lg flex justify-center items-center cursor-pointer"
             onClick={handleDivClick}
           >
             {imageUrl ? (
-              <img
-                src={imageUrl}
-                alt="Selected"
-                className="w-full h-full object-cover rounded-lg"
-              />
+              <>
+                <img
+                  src={imageUrl}
+                  alt="Selected"
+                  className="w-full h-full object-cover rounded-lg"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg">
+                  <span className="text-white font-semibold flex flex-col gap-3 justify-center items-center">
+                    <MdOutlineAddAPhoto size={28} />
+                    Change Image
+                  </span>
+                </div>
+              </>
             ) : (
               <div className="bg-[#c6dadc] p-2 text-white">
                 <IoCameraOutline size={40} />
@@ -118,7 +127,7 @@ const EditItem = () => {
             ref={fileInputRef}
             onChange={handleImageChange}
             accept="image/*"
-            style={{ display: "none" }} // Hidden input
+            style={{ display: "none" }}
           />
 
           {/* Form Section */}
@@ -152,6 +161,21 @@ const EditItem = () => {
               </Form.Item>
             </div>
 
+            {/* Description */}
+            <Form.Item
+              label="Description"
+              name="description"
+              rules={[
+                { required: true, message: "Please enter a description!" },
+              ]}
+            >
+              <CustomInput
+                placeholder="Product description"
+                isTextArea
+                rows={4}
+              />
+            </Form.Item>
+
             <div className="w-full flex justify-between items-center gap-5 mb-4">
               {/* Weight */}
               <Form.Item
@@ -164,15 +188,20 @@ const EditItem = () => {
               >
                 <CustomInput type="number" placeholder="example 15grm" />
               </Form.Item>
+
+              {/* Stock Quantity */}
               <Form.Item
-                label="Quantity"
-                name="quantity"
+                label="Stock Quantity"
+                name="stockQuantity"
                 rules={[
-                  { required: true, message: "Please enter the quantity!" },
+                  {
+                    required: true,
+                    message: "Please enter the stock quantity!",
+                  },
                 ]}
                 className="w-full"
               >
-                <CustomInput type="number" placeholder="Quantity" />
+                <CustomInput type="number" placeholder="Stock quantity" />
               </Form.Item>
             </div>
 

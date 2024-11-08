@@ -65,8 +65,6 @@ const EditBuildBox = () => {
   };
 
   const onFinish = async (values) => {
-    console.log("Products as JSON:", JSON.stringify(values.products));
-
     const formdata = new FormData();
     formdata.append("name", values.buildBoxName);
     formdata.append("products", JSON.stringify(values.products)); // Ensure this is valid JSON
@@ -139,11 +137,6 @@ const EditBuildBox = () => {
             layout="vertical"
             onFinish={onFinish}
             className="mt-5"
-            initialValues={{
-              comboBoxName: comboBoxData?.name,
-              comboBoxPrice: comboBoxData?.price,
-              discount: comboBoxData?.discount,
-            }}
           >
             {/* ComboBox Name */}
             <Form.Item
@@ -163,8 +156,12 @@ const EditBuildBox = () => {
               name="products"
               rules={[
                 {
-                  required: true,
-                  message: "Please select at least one product!",
+                  validator: (_, value) =>
+                    value && value.length >= 3
+                      ? Promise.resolve()
+                      : Promise.reject(
+                          new Error("Please select at least 3 products")
+                        ),
                 },
               ]}
             >
@@ -189,6 +186,7 @@ const EditBuildBox = () => {
                 placeholder="Enter discount percentage"
               />
             </Form.Item>
+
             {/* Submit Button */}
             <CustomButton loading={isLoading} border className="w-full">
               Update ComboBox

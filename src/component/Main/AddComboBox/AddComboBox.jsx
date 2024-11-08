@@ -43,7 +43,7 @@ const AddComboBox = () => {
   };
 
   const onFinish = async (values) => {
-    if(!imageFile){
+    if (!imageFile) {
       toast.error("Please select an image for the ComboBox");
       return;
     }
@@ -60,7 +60,8 @@ const AddComboBox = () => {
       const response = await addComboBox(formdata);
       if (response.error) {
         toast.error(response.error.data.message);
-      } if (response.data) {
+      }
+      if (response.data) {
         toast.success("ComboBox added successfully");
         setImageFile(null);
         setImageUrl(null);
@@ -116,9 +117,7 @@ const AddComboBox = () => {
         <Form.Item
           label="ComboBox Name"
           name="comboBoxName"
-          rules={[
-            { required: true, message: "Please enter the ComboBox name!" },
-          ]}
+          rules={[{ required: true, message: "Please enter the ComboBox name!" }]}
           className="w-full"
         >
           <CustomInput placeholder="Enter ComboBox name" />
@@ -129,7 +128,12 @@ const AddComboBox = () => {
           label="Include Products"
           name="products"
           rules={[
-            { required: true, message: "Please select at least one product!" },
+            {
+              validator: (_, value) =>
+                value && value.length >= 3
+                  ? Promise.resolve()
+                  : Promise.reject(new Error("Please select at least 3 products")),
+            },
           ]}
         >
           <Select
@@ -141,6 +145,7 @@ const AddComboBox = () => {
             loading={isProductLoading} // Show loading indicator while fetching products
           />
         </Form.Item>
+
         {/* Discount */}
         <Form.Item
           label="Discount (%)"
@@ -149,6 +154,7 @@ const AddComboBox = () => {
         >
           <CustomInput type="number" min="1" placeholder="Enter discount percentage" />
         </Form.Item>
+
         {/* Submit Button */}
         <CustomButton loading={isLoading} border className="w-full">
           Add ComboBox

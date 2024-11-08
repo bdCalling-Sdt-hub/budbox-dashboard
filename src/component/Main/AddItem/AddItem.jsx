@@ -10,9 +10,9 @@ import CustomInput from "../../../utils/CustomInput";
 const AddItem = () => {
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
-  const fileInputRef = useRef(null); // To reference the hidden file input
+  const fileInputRef = useRef(null);
   const [addItem, { isLoading }] = useAddProductMutation();
-  const [form] = Form.useForm(); // Ant Design form instance
+  const [form] = Form.useForm();
   const navigate = useNavigate();
 
   // Handle image change (preview the image)
@@ -21,13 +21,13 @@ const AddItem = () => {
     if (file) {
       const newImageUrl = URL.createObjectURL(file);
       setImageFile(file);
-      setImageUrl(newImageUrl); // Set the image URL for preview
+      setImageUrl(newImageUrl);
     }
   };
 
   const handleDivClick = () => {
     if (fileInputRef.current) {
-      fileInputRef.current.click(); // Open file dialog
+      fileInputRef.current.click();
     }
   };
 
@@ -41,6 +41,7 @@ const AddItem = () => {
     formdata.append("price", values.price);
     formdata.append("weight", values.weight);
     formdata.append("stockQuantity", values.quantity);
+    formdata.append("description", values.description); // Add description to form data
     formdata.append("image", imageFile);
 
     try {
@@ -94,7 +95,7 @@ const AddItem = () => {
         ref={fileInputRef}
         onChange={handleImageChange}
         accept="image/*"
-        style={{ display: "none" }} // Hidden input
+        style={{ display: "none" }}
       />
 
       {/* Form Section */}
@@ -104,9 +105,7 @@ const AddItem = () => {
           <Form.Item
             label="Product Name"
             name="productName"
-            rules={[
-              { required: true, message: "Please enter the product name!" },
-            ]}
+            rules={[{ required: true, message: "Please enter the product name!" }]}
             className="w-full"
           >
             <CustomInput placeholder="Product Name" />
@@ -122,7 +121,19 @@ const AddItem = () => {
             <CustomInput type="number" placeholder="$100" />
           </Form.Item>
         </div>
+        
+        {/* Description Field */}
+        <Form.Item
+          label="Description"
+          name="description"
+          rules={[{ required: true, message: "Please enter a description!" }]}
+          className="mb-4"
+        >
+          <CustomInput  isTextArea placeholder="Description" />
+        </Form.Item>
+
         <div className="w-full flex justify-between items-center gap-5 mb-4">
+          {/* Weight */}
           <Form.Item
             label="Weight"
             name="weight"
@@ -131,6 +142,8 @@ const AddItem = () => {
           >
             <CustomInput type="number" placeholder="15grm" />
           </Form.Item>
+
+          {/* Quantity */}
           <Form.Item
             label="Quantity"
             name="quantity"
@@ -140,7 +153,6 @@ const AddItem = () => {
             <CustomInput type="number" placeholder="Quantity" />
           </Form.Item>
         </div>
-        {/* Weight */}
 
         {/* Submit Button */}
         <CustomButton loading={isLoading} border className="w-full">

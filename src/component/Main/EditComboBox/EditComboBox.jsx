@@ -8,12 +8,12 @@ import CustomInput from "../../../utils/CustomInput";
 import {
   useGetComboBoxByIdQuery,
   useUpdateComboBoxMutation,
-} from "../../../redux/features/combobox/comboboxApi"; // Add update and fetch query hooks
+} from "../../../redux/features/combobox/comboboxApi";
 import { useGetAllProductsQuery } from "../../../redux/features/product/productApi";
 import { imageBaseUrl } from "../../../config/imageBaseUrl";
 
 const EditComboBox = () => {
-  const { id } = useParams(); // Get ComboBox ID from URL
+  const { id } = useParams();
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const fileInputRef = useRef(null);
@@ -60,20 +60,18 @@ const EditComboBox = () => {
 
   const handleDivClick = () => {
     if (fileInputRef.current) {
-      fileInputRef.current.click(); // Open file dialog
+      fileInputRef.current.click();
     }
   };
 
   const onFinish = async (values) => {
-    console.log("Products as JSON:", JSON.stringify(values.products));
-
     const formdata = new FormData();
     formdata.append("name", values.comboBoxName);
-    formdata.append("products", JSON.stringify(values.products)); // Ensure this is valid JSON
+    formdata.append("products", JSON.stringify(values.products));
     formdata.append("discount", values.discount || 0);
 
     if (imageFile) {
-      formdata.append("image", imageFile); // Add image file only if updated
+      formdata.append("image", imageFile);
     }
 
     try {
@@ -139,11 +137,6 @@ const EditComboBox = () => {
             layout="vertical"
             onFinish={onFinish}
             className="mt-5"
-            initialValues={{
-              comboBoxName: comboBoxData?.name,
-              comboBoxPrice: comboBoxData?.price,
-              discount: comboBoxData?.discount,
-            }}
           >
             {/* ComboBox Name */}
             <Form.Item
@@ -163,8 +156,12 @@ const EditComboBox = () => {
               name="products"
               rules={[
                 {
-                  required: true,
-                  message: "Please select at least one product!",
+                  validator: (_, value) =>
+                    value && value.length >= 3
+                      ? Promise.resolve()
+                      : Promise.reject(
+                          new Error("Please select at least 3 products")
+                        ),
                 },
               ]}
             >
@@ -189,6 +186,7 @@ const EditComboBox = () => {
                 placeholder="Enter discount percentage"
               />
             </Form.Item>
+
             {/* Submit Button */}
             <CustomButton loading={isLoading} border className="w-full">
               Update ComboBox
