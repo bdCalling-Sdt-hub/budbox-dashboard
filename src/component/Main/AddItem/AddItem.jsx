@@ -1,4 +1,4 @@
-import { Form } from "antd";
+import { Form, Select } from "antd";
 import { useRef, useState } from "react";
 import { IoCameraOutline, IoChevronBack } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
@@ -40,6 +40,7 @@ const AddItem = () => {
     formdata.append("name", values.productName);
     formdata.append("price", values.price);
     formdata.append("weight", values.weight);
+    formdata.append("weightUnit", values.weightUnit); 
     formdata.append("stockQuantity", values.quantity);
     formdata.append("description", values.description); // Add description to form data
     formdata.append("image", imageFile);
@@ -121,7 +122,7 @@ const AddItem = () => {
             <CustomInput type="number" placeholder="$100" />
           </Form.Item>
         </div>
-        
+
         {/* Description Field */}
         <Form.Item
           label="Description"
@@ -129,7 +130,7 @@ const AddItem = () => {
           rules={[{ required: true, message: "Please enter a description!" }]}
           className="mb-4"
         >
-          <CustomInput  isTextArea placeholder="Description" />
+          <CustomInput isTextArea placeholder="Description" />
         </Form.Item>
 
         <div className="w-full flex justify-between items-center gap-5 mb-4">
@@ -140,7 +141,21 @@ const AddItem = () => {
             rules={[{ required: true, message: "Please enter the weight!" }]}
             className="w-full"
           >
-            <CustomInput type="number" placeholder="15grm" />
+            <CustomInput type="number" placeholder="Weight" />
+          </Form.Item>
+          <Form.Item
+            label="Weight Unit"
+            name="weightUnit"
+            rules={[
+              { required: true, message: "Please select a weight unit!" },
+            ]}
+            className="w-full"
+          >
+            <Select size="large" placeholder="Select Unit">
+              <Select.Option value="g">g</Select.Option>
+              <Select.Option value="mg">mg</Select.Option>
+              <Select.Option value="oz">oz</Select.Option>
+            </Select>
           </Form.Item>
 
           {/* Quantity */}
