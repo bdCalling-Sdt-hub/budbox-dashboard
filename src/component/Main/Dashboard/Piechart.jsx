@@ -40,7 +40,7 @@ const Piechart = () => {
     <div className='w-full col-span-full md:col-span-2 bg-white rounded-lg p-5'>
       <div className='flex justify-between items-center py-2 mx-6'>
         <div>
-          <h1 className='font-medium text-6'>User Ratio for {userRatio.month}</h1>
+          <h1 className='font-medium text-6'>Revenue For User  {userRatio.month}</h1>
         </div>
         <div>
           <Select

@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 
 const ItemCard = ({ item }) => {
   const [deleteProduct] = useDeleteProductMutation();
-  console.log(item)
+  // eslint-disable-next-line react/prop-types
   const { id, name, price, image, weight,stockQuantity } = item;
   // Show confirmation modal
   const showDeleteConfirm = async (productId) => {
