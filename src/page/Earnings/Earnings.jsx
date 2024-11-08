@@ -5,6 +5,7 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import { IoIosSearch } from "react-icons/io";
 import moment from "moment";
 import { PiCurrencyCircleDollar } from "react-icons/pi";
+import { useGetEarningsQuery } from "../../redux/features/earnings/earningsApi";
 
 const { Item } = Form;
 
@@ -14,41 +15,26 @@ const Earnings = () => {
   const [searchText, setSearchText] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
 
-  const dataSource = [
-    {
-      key: "1",
-      trxId: "#12345678",
-      userName: "tom",
-      date: "22 Jan, 2024",
-      amount: "$202",
-      boxName: "Budboxes",
-      user: {
-        name: "Tom",
-        email: "tom@example.com",
-        phone: "555-1234",
-        address: "123 Main St",
-        gender: "Male",
-        createdAt: "2024-01-22",
-      },
+  // Fetch data from the API
+  const { data: earningsData } = useGetEarningsQuery();
+
+  // Transform data to match the table's structure
+  const dataSource = earningsData?.map((record, index) => ({
+    key: index + 1,
+    trxId: record.id,
+    userName: record.userId.fullName,
+    date: moment(record.createdAt).format("DD MMM, YYYY"),
+    amount: `$${record.amount}`,
+    boxName: record.budboxs.map((box) => box.name).join(", "),
+    user: {
+      name: record.userId.fullName,
+      email: record.userId.email,
+      phone: record.userId.phone,
+      address: `${record.userId.address_line1}, ${record.userId.city_locality}`,
+      gender: record.userId.gender || "N/A",
+      createdAt: record.userId.createdAt,
     },
-    {
-      key: "2",
-      trxId: "#87654321",
-      userName: "jane",
-      date: "23 Jan, 2024",
-      amount: "$300",
-      boxName: "Flowerboxes",
-      user: {
-        name: "Jane",
-        email: "jane@example.com",
-        phone: "555-5678",
-        address: "456 Maple Ave",
-        gender: "Female",
-        createdAt: "2024-01-23",
-      },
-    },
-    // Add more entries as needed
-  ];
+  })) || [];
 
   const columns = [
     {
@@ -109,7 +95,7 @@ const Earnings = () => {
 
   return (
     <section>
-      <div className="bg-black text-white w-72 p-5 rounded-md my-6 flex  gap-2">
+      <div className="bg-black text-white w-72 p-5 rounded-md my-6 flex gap-2">
         <PiCurrencyCircleDollar className="size-16 text-[#f7cc50]" />
         <div className="space-y-2">
           <p className="text-[16px] font-semibold">Total Earnings</p>

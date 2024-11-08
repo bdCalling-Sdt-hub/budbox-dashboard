@@ -37,7 +37,7 @@ const ComboxBoxs = () => {
     );
   } else {
     content = (
-      <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-5 pb-10">
         {comboboxs?.results?.map((box, i) => (
           <ComboBoxCard key={i} item={box} />
         ))}
@@ -45,7 +45,6 @@ const ComboxBoxs = () => {
     );
   }
 
-  console.log(comboboxs);
   return (
     <>
       <div className="w-full flex justify-between gap-4 items-center">
