@@ -121,7 +121,7 @@ const Orders = () => {
       key: "status",
       render: (status) => (
         <button
-          className={` w-24 px-3 py-1 text-white rounded-lg ${
+          className={`px-3 py-1 text-white rounded-lg ${
             status === "Completed"
               ? "bg-green-600"
               : status === "Pending"
@@ -171,16 +171,20 @@ const Orders = () => {
 
   return (
     <section className="w-full py-5">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-xl font-semibold">Orders</h1>
-        <Form layout="inline" onFinish={onFinish}>
-          <Item>
+      <div className="flex flex-wrap justify-between items-center mb-4">
+        <h1 className="text-xl font-semibold mb-2 sm:mb-0">Orders</h1>
+        <Form
+          layout="inline"
+          onFinish={onFinish}
+          className="flex flex-wrap gap-2"
+        >
+          <Item className="w-full sm:w-auto">
             <DatePicker placeholder="Date" onChange={handleDate} />
           </Item>
-          <Item name="username">
+          <Item name="username" className="w-full sm:w-auto">
             <Input placeholder="User name" />
           </Item>
-          <Item>
+          <Item className="w-full sm:w-auto">
             <button
               type="submit"
               className="rounded-full flex justify-center items-center bg-[#111111] text-white p-2"
@@ -202,17 +206,21 @@ const Orders = () => {
           },
         }}
       >
-        <Table
-          pagination={{
-            position: ["bottomCenter"],
-            pageSize: 5,
-            current: currentPage,
-            onChange: setCurrentPage,
-          }}
-          columns={columns}
-          dataSource={dataSource}
-          rowKey="orderId"
-        />
+        <div className="overflow-x-auto">
+          <Table
+            pagination={{
+              position: ["bottomCenter"],
+              pageSize: 5,
+              current: currentPage,
+              onChange: setCurrentPage,
+            }}
+            columns={columns}
+            dataSource={dataSource}
+            rowKey="orderId"
+            scroll={{ x: "max-content" }} // Enables horizontal scrolling
+            responsive={{ xs: true, sm: true, md: true, lg: true, xl: true }} // Adjust the responsiveness of columns
+          />
+        </div>
       </ConfigProvider>
 
       <Modal

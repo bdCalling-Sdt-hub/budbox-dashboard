@@ -19,22 +19,23 @@ const Earnings = () => {
   const { data: earningsData } = useGetEarningsQuery();
 
   // Transform data to match the table's structure
-  const dataSource = earningsData?.map((record, index) => ({
-    key: index + 1,
-    trxId: record.id,
-    userName: record.userId.fullName,
-    date: moment(record.createdAt).format("DD MMM, YYYY"),
-    amount: `$${record.amount}`,
-    boxName: record.budboxs.map((box) => box.name).join(", "),
-    user: {
-      name: record.userId.fullName,
-      email: record.userId.email,
-      phone: record.userId.phone,
-      address: `${record.userId.address_line1}, ${record.userId.city_locality}`,
-      gender: record.userId.gender || "N/A",
-      createdAt: record.userId.createdAt,
-    },
-  })) || [];
+  const dataSource =
+    earningsData?.map((record, index) => ({
+      key: index + 1,
+      trxId: record.id,
+      userName: record.userId.fullName,
+      date: moment(record.createdAt).format("DD MMM, YYYY"),
+      amount: `$${record.amount}`,
+      boxName: record.budboxs.map((box) => box.name).join(", "),
+      user: {
+        name: record.userId.fullName,
+        email: record.userId.email,
+        phone: record.userId.phone,
+        address: `${record.userId.address_line1}, ${record.userId.city_locality}`,
+        gender: record.userId.gender || "N/A",
+        createdAt: record.userId.createdAt,
+      },
+    })) || [];
 
   const columns = [
     {
@@ -143,6 +144,8 @@ const Earnings = () => {
             dataSource={dataSource}
             columns={columns}
             pagination={{ pageSize: 5, position: ["bottomCenter"] }}
+            scroll={{ x: "max-content" }} // Enables horizontal scroll for small screens
+            responsive={true} // Make the table responsive
           />
         </ConfigProvider>
       </div>
