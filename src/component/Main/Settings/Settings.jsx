@@ -1,15 +1,13 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import { Button, Form, Input, Modal, Switch } from "antd";
-import { useEffect, useState } from "react";
-import { GoArrowLeft } from "react-icons/go";
-import { HiOutlineLockClosed, HiOutlineMailOpen } from "react-icons/hi";
-import { ImSpinner6 } from "react-icons/im";
+import {Form, Modal, Switch } from "antd";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import OTPInput from "react-otp-input";
 // import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-// import { useChangePasswordMutation, useChangePasswordUseingOldPasswordMutation, useForgotPasswordMutation, useVerifyOtpMutation } from "../../../redux/features/auth/authApi";
+import CustomInput from "../../../utils/CustomInput";
+import CustomButton from "../../../utils/CustomButton";
+import { useState } from "react";
 
 const Settings = () => {
   // const { user } = useSelector(state => state?.auth)
@@ -18,17 +16,6 @@ const Settings = () => {
   const [modelTitle, setModelTitle] = useState("");
   const [otp, setOtp] = useState("");
   const [form] = Form.useForm();
-
-  //change password useing old password rtk query api
-
-  // const [changePassWithOldPass, { data, isLoading, isError, error }] = useChangePasswordUseingOldPasswordMutation()
-
-  // //forgot password rtk query api
-  // const [forgotPassword, { data: forgotPasswordData, isLoading: forgotPasswordLoading, isError: forgotPasswordIsError, error: forgotPasswordError }] = useForgotPasswordMutation()
-  // //verify opt rtk query api
-  // const [verifyOtp, { data: verifyOtpData, isLoading: verifyOtpLoading, isError: verifyOtpIsError, error: verifyOtpError }] = useVerifyOtpMutation()
-  // //change password rtk query api
-  // const [changePassword, { data: changePassRes, isLoading: changePassLoading, isError: changePassIsError, error: changePassError }] = useChangePasswordMutation()
   const onChange = (checked) => {
     console.log(`switch to ${checked}`);
   };
@@ -56,13 +43,6 @@ const Settings = () => {
     if (value === "notification") {
       return;
     }
-    // else if (value === "hidden-fee") {
-    //   return;
-    // }
-    // else if (value === "hidden-fee-percentage") {
-    //   setModelTitle("Set hidden fee percentage");
-    //   setIsModalOpen(true);
-    // }
     else if (value === "change-password") {
       setModelTitle("Change password");
       setIsModalOpen(true);
@@ -72,8 +52,8 @@ const Settings = () => {
   };
 
   const handleChangePassword = async (values) => {
-    const { oldPassword, newPassword } = values;
-    changePassWithOldPass({ oldPassword, newPassword });
+    return console.log(values);
+    // const { oldPassword, newPassword } = values;
   };
   const handleForgetPassword = async (values) => {
     forgotPassword(values);
@@ -88,85 +68,6 @@ const Settings = () => {
   const handleResetPassword = async (values) => {
     changePassword({ email: user?.email, password: values?.password });
   };
-
-  // useEffect(() => {
-  //     if (isError && error) {
-  //         Swal.fire({
-  //             icon: "error",
-  //             title: error?.data?.message,
-  //             footer: '<a href="#">Why do I have this issue?</a>',
-  //         });
-  //     } else if (data?.statusCode === 200 && data?.data) {
-  //         Swal.fire({
-  //             position: "top-center",
-  //             icon: "success",
-  //             title: data?.message,
-  //             showConfirmButton: false,
-  //             timer: 1500,
-  //         });
-  //         setIsModalOpen(false);
-
-  //     }
-  // }, [data, isError, error])
-  // useEffect(() => {
-  //     if (forgotPasswordIsError && forgotPasswordError) {
-  //         Swal.fire({
-  //             icon: "error",
-  //             title: forgotPasswordError?.data?.message,
-  //             footer: '<a href="#">Why do I have this issue?</a>',
-  //         });
-  //     } else if (forgotPasswordData?.statusCode === 200 && forgotPasswordData?.data) {
-  //         Swal.fire({
-  //             position: "top-center",
-  //             icon: "success",
-  //             title: forgotPasswordData?.message,
-  //             showConfirmButton: false,
-  //             timer: 1500,
-  //         });
-  //         setModelTitle("Verify OTP")
-
-  //     }
-  // }, [forgotPasswordData, forgotPasswordIsError, forgotPasswordError])
-  // useEffect(() => {
-  //     if (verifyOtpIsError && verifyOtpError) {
-  //         Swal.fire({
-  //             icon: "error",
-  //             title: verifyOtpError?.data?.message,
-  //             footer: '<a href="#">Why do I have this issue?</a>',
-  //         });
-  //     } else if (verifyOtpData?.statusCode === 200 && verifyOtpData?.data) {
-  //         Swal.fire({
-  //             position: "top-center",
-  //             icon: "success",
-  //             title: verifyOtpData?.message,
-  //             showConfirmButton: false,
-  //             timer: 1500,
-  //         });
-  //         setModelTitle("Reset Password");
-
-  //     }
-
-  // }, [verifyOtpData, verifyOtpIsError, verifyOtpError])
-  // useEffect(() => {
-  //     if (changePassError && changePassIsError) {
-  //         Swal.fire({
-  //             icon: "error",
-  //             title: changePassError?.data?.message,
-  //             footer: '<a href="#">Why do I have this issue?</a>',
-  //         });
-  //     } else if (changePassRes?.status === 'OK' && changePassRes?.statusCode === 200 && changePassRes?.data) {
-  //         Swal.fire({
-  //             position: "top-center",
-  //             icon: "success",
-  //             title: changePassRes?.message,
-  //             showConfirmButton: false,
-  //             timer: 1500,
-  //         });
-  //         setIsModalOpen(false);
-
-  //     }
-
-  // }, [changePassRes, changePassIsError, changePassError, navigate])
   return (
     <section className="w-full py-6">
       {settingsItem.map((setting, index) => (
@@ -225,13 +126,7 @@ const Settings = () => {
                   },
                 ]}
               >
-                <Input.Password
-                  size="large"
-                  // onChange={handleChange}
-                  placeholder="Enter Your old Password"
-                  name="oldPassword"
-                  className="w-full px-3 py-2"
-                />
+                <CustomInput placeholder="Enter Your old Password" isPassword />
               </Form.Item>
 
               <Form.Item
@@ -243,12 +138,7 @@ const Settings = () => {
                   },
                 ]}
               >
-                <Input.Password
-                  size="large"
-                  placeholder="Set Your New Password"
-                  name="newPassword"
-                  className="w-full px-3 py-2"
-                />
+                <CustomInput placeholder="Set Your New Password" isPassword />
               </Form.Item>
 
               {/* Field */}
@@ -274,33 +164,15 @@ const Settings = () => {
                   }),
                 ]}
               >
-                <Input.Password
-                  size="large"
-                  placeholder="Re-enter password"
-                  name="re_enter_password"
-                  className="w-full px-3 py-2"
-                />
+                <CustomInput placeholder="Re-enter password" isPassword />
               </Form.Item>
               <p className=" text-secondary font-medium">
                 <button onClick={() => setModelTitle("Forget password")}>
                   <h1 className="underline text-blue-500"> Forget Password</h1>
                 </button>
               </p>
-              <Form.Item>
-                <button
-                  type="submit"
-                  className="w-full px-5 py-4  mt-2 text-white bg-[#f7cc50] rounded-lg"
-                >
-                  {/* {isLoading ? (
-                    <h1 className="flex justify-center items-center gap-1">
-                      <ImSpinner6 className="animate-spin size-5" />{" "}
-                      <span>Update password</span>
-                    </h1>
-                  ) : (
-                    "Update password"
-                  )} */}
-                  Update Password
-                </button>
+              <Form.Item className="w-full">
+                <CustomButton className="w-full">Update Password</CustomButton>
               </Form.Item>
             </Form>
           </div>
@@ -324,29 +196,11 @@ const Settings = () => {
                     },
                   ]}
                 >
-                  <Input
-                    size="large"
-                    placeholder="Enter your email"
-                    name="email"
-                    className="w-full px-3 py-2"
-                  />
+                  <CustomInput type="email" placeholder="Enter your email" />
                 </Form.Item>
               </div>
               <Form.Item>
-              <button
-                  type="submit"
-                  className="w-full px-5 py-4  mt-2 text-white bg-[#f7cc50] rounded-lg"
-                >
-                  {/* {isLoading ? (
-                    <h1 className="flex justify-center items-center gap-1">
-                      <ImSpinner6 className="animate-spin size-5" />{" "}
-                      <span>Update password</span>
-                    </h1>
-                  ) : (
-                    "Update password"
-                  )} */}
-                  Send OTP
-                </button>
+                <CustomButton className="w-full">Send OTP</CustomButton>
               </Form.Item>
             </Form>
           </div>
@@ -377,24 +231,7 @@ const Settings = () => {
                   <button className="font-medium text-">Resend</button>
                 </p>
               </div>
-
-              <button
-                type="submit"
-                style={{
-                  backgroundColor: "#95C343",
-                  color: "#fff",
-                  size: "18px",
-                  height: "56px",
-                }}
-                className="bg-secondary
-                w-full
-                text-white mt-5 py-3 rounded-lg duration-200"
-              >
-                {/* {
-                                    verifyOtpLoading ? <h1 className="flex justify-center items-center gap-1"><ImSpinner6 className="animate-spin size-5" /> <span>Verify</span></h1> : 'Verify'
-                                } */}
-                Verify
-              </button>
+              <CustomButton>Verify</CustomButton>
             </form>
           </div>
         )}
@@ -412,43 +249,27 @@ const Settings = () => {
               onFinish={handleResetPassword}
             >
               <Form.Item
-                name="enter_password"
+                name="new_password"
                 rules={[
                   {
                     required: true,
                   },
                 ]}
               >
-                <Input.Password
-                  size="large"
-                  // onChange={handleChange}
-                  placeholder="Set your password"
-                  name="set_password"
-                  prefix={
-                    <HiOutlineLockClosed
-                      className="bg-white rounded-full p-[6px]"
-                      size={28}
-                    />
-                  }
-                  className="bg-primary
-                        rounded w-full 
-                        justify-start 
-                        mt-[12px]
-                         outline-none focus:border-none border-secondary"
-                />
+                <CustomInput placeholder="New Password" isPassword />
               </Form.Item>
 
               {/* Field */}
               <Form.Item
-                name="password"
-                dependencies={["password"]}
+                name="confirm_password"
+                dependencies={["new_password"]}
                 rules={[
                   {
                     required: true,
                   },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
-                      if (!value || getFieldValue("enter_password") === value) {
+                      if (!value || getFieldValue("new_password") === value) {
                         return Promise.resolve();
                       }
                       return Promise.reject(
@@ -460,39 +281,10 @@ const Settings = () => {
                   }),
                 ]}
               >
-                <Input.Password
-                  size="large"
-                  placeholder="Re-enter password"
-                  name="re_enter_password"
-                  prefix={
-                    <HiOutlineLockClosed
-                      className="bg-white rounded-full p-[6px]"
-                      size={28}
-                    />
-                  }
-                  className="p-4 bg-primary
-                    rounded w-full 
-                    justify-start 
-                    mt-[12px]
-                     outline-none focus:border-none border-secondary"
-                />
+                <CustomInput placeholder="Confirm Password" isPassword />
               </Form.Item>
               <Form.Item>
-                <Button
-                  style={{
-                    backgroundColor: "#95C343",
-                    color: "#fff",
-                    size: "18px",
-                    height: "56px",
-                  }}
-                  htmlType="submit"
-                  className="block w-full h-[56px] px-2 py-4 mt-2 text-white bg-secondary rounded-lg"
-                >
-                  {/* {
-                                        changePassLoading ? <h1 className="flex justify-center items-center gap-1"><ImSpinner6 className="animate-spin size-5" /> <span> Update password</span></h1> : 'Update password'
-                                    } */}
-                  Update password
-                </Button>
+                <CustomButton>Update password</CustomButton>
               </Form.Item>
             </Form>
           </div>
