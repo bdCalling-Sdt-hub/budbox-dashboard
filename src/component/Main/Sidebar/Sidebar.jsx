@@ -62,9 +62,9 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
   return (
     <div>
       {/* Desktop Sidebar */}
-      <div className="hidden md:block w-[350px] h-full bg-[#111111] fixed">
+      <div className="hidden md:block w-full md:w-[200px] lg:w-[250px] xl:w-[280px] h-full bg-[#111111] fixed sidebar">
         <div className="flex flex-col justify-center items-center pt-5 gap-2 text-white">
-          <img src={logo} alt="logo" className="w-56 h-24 mb-5" />
+          <img src={logo} alt="logo" className="w-full md:w-36 h-20 mb-5" />
         </div>
         <div className="w-full h-[2px] bg-[#f7cc50] mb-5" />
         <ul className="w-full flex flex-col gap-3">
@@ -124,7 +124,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
             handleLogout();
             toggleSidebar()
           }}
-          className="flex items-center gap-2 px-10 py-4 text-rose-500 mt-16"
+          className="flex items-center gap-2 px-10 py-4 text-rose-500 mt-8"
         >
           <IoIosLogOut className="size-8" />
           <span>Logout</span>
