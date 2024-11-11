@@ -41,6 +41,7 @@ const RecentTransactions = () => {
       title: "#Tr.ID",
       dataIndex: "transactionId",
       key: "transactionId",
+      responsive: ["sm"],
     },
     {
       title: "User Name",
@@ -51,17 +52,20 @@ const RecentTransactions = () => {
       title: "Box Package",
       dataIndex: "boxPackage",
       key: "boxPackage",
+      responsive: ["md"],
     },
     {
       title: "Amount",
       dataIndex: "amount",
       key: "amount",
+      responsive: ["sm"],
     },
     {
       title: "Date",
       dataIndex: "date",
       key: "date",
       render: (text) => (text ? moment(text).format("DD MMM YYYY") : "N/A"),
+      responsive: ["md"],
     },
     {
       title: "Action",
@@ -84,6 +88,7 @@ const RecentTransactions = () => {
         columns={columns}
         dataSource={transformedData}
         pagination={false}
+        scroll={{ x: 500 }} /* Enables horizontal scrolling on small screens */
       />
 
       {/* Modal */}
@@ -93,6 +98,7 @@ const RecentTransactions = () => {
         onCancel={handleCancel}
         footer={null}
         centered
+        bodyStyle={{ padding: "15px" }}
       >
         <div className="text-black bg-primary">
           <h1 className="text-center text-2xl font-semibold my-2">

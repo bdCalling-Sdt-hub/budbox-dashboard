@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import {
   ConfigProvider,
@@ -26,7 +27,6 @@ const Users = () => {
   const { data, isFetching, isError, error } = useGetAllUsersQuery(params);
 
   const handleView = (record) => {
-    console.log(record);
     setUser(record);
     setIsModalOpen(true);
   };
@@ -47,6 +47,7 @@ const Users = () => {
       title: "#SI",
       dataIndex: "si",
       key: "index",
+      responsive: ["lg"], // Hide in mobile view
     },
     {
       title: "User Name",
@@ -99,6 +100,7 @@ const Users = () => {
   const handleDate = (date, dateString) => {
     setDate(dateString);
   };
+
   useEffect(() => {
     if (isError && error) {
       setAllUser([]);
@@ -108,23 +110,27 @@ const Users = () => {
   }, [data, isError, error]);
 
   return (
-    <section>
-      <div className="flex justify-between items-center">
+    <section className="w-full">
+      <div className="flex flex-col md:flex-row md:justify-between items-center space-y-4 md:space-y-0">
         <h1 className="text-2xl font-semibold">Users List</h1>
         <Form
-          className="flex px-3 py-[22px] justify-between items-center"
+          className="flex flex-col md:flex-row gap-3 px-3 py-2 md:py-[22px]"
           layout="inline"
           onFinish={onFinish}
         >
           <Item>
-            <DatePicker placeholder="Date" onChange={handleDate} />
+            <DatePicker
+              placeholder="Date"
+              onChange={handleDate}
+              className="w-full md:w-auto"
+            />
           </Item>
           <Item name="username">
-            <Input placeholder="User name" />
+            <Input placeholder="User name" className="w-full md:w-auto" />
           </Item>
           <Item>
-            <button className=" size-8 rounded-full flex justify-center items-center bg-[#111111] text-white">
-              <IoIosSearch className="size-5" />
+            <button className="w-full md:w-auto rounded-full p-2 bg-[#111111] text-white flex justify-center items-center">
+              <IoIosSearch size={20} />
             </button>
           </Item>
         </Form>
@@ -150,6 +156,7 @@ const Users = () => {
           columns={columns}
           dataSource={dataSource}
           rowKey="id"
+          scroll={{ x: "max-content" }} // Enable horizontal scroll on mobile
         />
       </ConfigProvider>
       <Modal
@@ -159,12 +166,11 @@ const Users = () => {
         footer={null}
         centered
       >
-        <div className="text-black bg-primary">
+        <div className="text-black">
           <img
-            className="size-28 mx-auto rounded-full"
+            className="w-28 h-28 mx-auto rounded-full"
             src={`${imageBaseUrl}${user?.image}`}
-            alt=""
-
+            alt="User"
           />
           <h1 className="text-center text-2xl font-semibold my-2">
             User Details
