@@ -61,7 +61,7 @@ const AddBox = () => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full pb-10 ">
       {/* Header */}
       <div className="flex gap-4 items-center my-6">
         <Link to={"/budboxes"}>
@@ -72,7 +72,7 @@ const AddBox = () => {
 
       {/* Image Upload Section */}
       <div
-        className="w-72 h-56 bg-[#e8ebf0] rounded-lg flex justify-center items-center cursor-pointer"
+        className="w-56 md:w-72 h-40  md:h-56 bg-[#e8ebf0] rounded-lg flex justify-center items-center cursor-pointer"
         onClick={handleDivClick}
       >
         {imageUrl ? (

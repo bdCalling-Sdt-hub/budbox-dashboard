@@ -39,7 +39,7 @@ const ComboBoxCard = ({ item }) => {
   };
   return (
     <div className="w-full shadow-xl rounded-2xl ">
-      <div className="w-full h-64 relative">
+      <div className="w-full h-36 md:h-44 lg:h-56 xl:h-60 relative">
         <img
           src={`${imageBaseUrl}${item?.image?.url}`}
           alt="budBoxImage"

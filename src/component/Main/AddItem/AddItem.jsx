@@ -63,7 +63,7 @@ const AddItem = () => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full pb-10">
       {/* Header */}
       <div className="flex gap-4 items-center my-6">
         <Link to={"/items"}>

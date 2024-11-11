@@ -49,7 +49,7 @@ const BudboxesCard = ({ item }) => {
           // eslint-disable-next-line react/prop-types
           src={`${imageBaseUrl}${image?.url}`}
           alt={name}
-          className="w-full h-96 object-cover rounded-md z-30 cursor-pointer z-0"
+          className="w-full h-36 md:h-44 lg:h-56 xl:h-60 object-cover rounded-md z-30 cursor-pointer z-0"
         />
       </Link>
       <div className="p-5 space-y-4">

@@ -38,7 +38,7 @@ const PersonalInformation = () => {
       {/* Profile Information */}
       <div className="w-full h-full grid grid-cols-1 md:grid-cols-12 gap-8 mt-10">
         {/* Profile Picture */}
-        <div className="w-full h-96 border col-span-full md:col-span-3 rounded-lg flex justify-center items-center flex-col gap-5">
+        <div className="w-full h-full mt-10 my-auto border col-span-full md:col-span-3 rounded-lg flex justify-center items-center flex-col gap-5">
           <img
             className="size-32 rounded-full mx-auto"
             src={`${imageBaseUrl}${user?.image?.url}`}

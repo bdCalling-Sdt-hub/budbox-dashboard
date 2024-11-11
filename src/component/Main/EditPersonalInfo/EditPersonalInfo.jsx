@@ -18,7 +18,9 @@ const EditInformation = () => {
   const [updateProfileInfo, { isLoading }] = useUpdateUserMutation();
 
   const [imageFile, setImageFile] = useState(null);
-  const [imageUrl, setImageUrl] = useState(user?.image ? `${imageBaseUrl}${user.image.url}` : null);
+  const [imageUrl, setImageUrl] = useState(
+    user?.image ? `${imageBaseUrl}${user.image.url}` : null
+  );
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -62,7 +64,6 @@ const EditInformation = () => {
       }
       if (response.data) {
         dispatch(updateUser({ user: response?.data?.attributes }));
-        console.log(response.data)
         toast.success("Profile updated successfully!");
         navigate("/personal-info");
       }
@@ -72,7 +73,6 @@ const EditInformation = () => {
     }
   };
 
-  console.log(`${imageBaseUrl}${user?.image?.url}`)
   return (
     <div className="w-full">
       {/* Back Button and Title */}
@@ -86,22 +86,30 @@ const EditInformation = () => {
       </div>
 
       {/* Profile Information */}
-      <div className="w-full h-full grid grid-cols-1 md:grid-cols-12 gap-8 mt-10">
+      <div className="w-full h-full grid grid-cols-1 md:grid-cols-12 gap-8">
         {/* Profile Picture */}
-        <div className="w-full h-96 border col-span-full md:col-span-3 rounded-lg flex justify-center items-center flex-col gap-5">
-          <div onClick={handleDivClick} className="cursor-pointer">
+        <div className="w-full h-full mt-10 border col-span-full md:col-span-3 rounded-lg flex justify-center items-center flex-col gap-5">
+          <div
+            className="relative cursor-pointer w-32 h-32"
+            onClick={handleDivClick}
+          >
             {imageUrl ? (
               <img
-                className="size-32 rounded-full mx-auto"
+                className="rounded-full w-full h-full object-cover"
                 src={imageUrl}
                 alt="Profile Preview"
               />
             ) : (
-              <div className="bg-[#c6dadc] p-2 text-white flex flex-col items-center">
+              <div className="bg-[#c6dadc] p-2 text-white flex flex-col items-center rounded-full w-full h-full">
                 <IoCameraOutline size={40} />
                 <span>Upload Image</span>
               </div>
             )}
+            <div className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center rounded-full opacity-0 hover:opacity-100 transition-opacity duration-300">
+              <p className="text-white text-sm text-center">
+                Change Image
+              </p>
+            </div>
           </div>
           <input
             type="file"
@@ -122,26 +130,17 @@ const EditInformation = () => {
           className="w-full col-span-full md:col-span-9 space-y-6 mt-10"
         >
           {/* Full Name */}
-          <Form.Item
-            label="Full Name"
-            name="fullName"
-          >
+          <Form.Item label="Full Name" name="fullName">
             <CustomInput placeholder="Enter your full name" />
           </Form.Item>
 
           {/* Email */}
-          <Form.Item
-            label="Email"
-            name="email"
-          >
+          <Form.Item label="Email" name="email">
             <CustomInput placeholder="Enter your email" readOnly />
           </Form.Item>
 
           {/* Phone Number */}
-          <Form.Item
-            label="Phone Number"
-            name="phone"
-          >
+          <Form.Item label="Phone Number" name="phone">
             <CustomInput type="number" placeholder="Enter your phone number" />
           </Form.Item>
 

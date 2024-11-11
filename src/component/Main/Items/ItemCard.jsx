@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { imageBaseUrl } from "../../../config/imageBaseUrl";
@@ -8,7 +9,16 @@ import Swal from "sweetalert2";
 const ItemCard = ({ item }) => {
   const [deleteProduct] = useDeleteProductMutation();
   // eslint-disable-next-line react/prop-types
-  const { id, name, price, image, weight, stockQuantity,weightUnit, description } = item;
+  const {
+    id,
+    name,
+    price,
+    image,
+    weight,
+    stockQuantity,
+    weightUnit,
+    description,
+  } = item;
   // Show confirmation modal
   const showDeleteConfirm = async (productId) => {
     const result = await Swal.fire({
@@ -50,7 +60,7 @@ const ItemCard = ({ item }) => {
             : "/images/default.png"
         }
         alt={name || "Product Image"}
-        className="w-full h-64 rounded-t-lg object-cover"
+        className="w-full h-36 md:h-44 lg:h-56 xl:h-60 rounded-t-lg object-cover"
       />
 
       <div className="p-5 space-y-2">
@@ -62,7 +72,9 @@ const ItemCard = ({ item }) => {
         </div>
         <p>{description ? `${description}` : "Description Not Available"}</p>
 
-        <p className="text-sm font-semibold">Weight : {weight ? `${weight} ${weightUnit}` : "Weight Not Specified"}</p>
+        <p className="text-sm font-semibold">
+          Weight : {weight ? `${weight} ${weightUnit}` : "Weight Not Specified"}
+        </p>
         <p className="text-sm font-semibold">
           Stock Quantity :{" "}
           {stockQuantity ? `${stockQuantity}` : "Weight Not Specified"}
