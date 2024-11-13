@@ -37,7 +37,7 @@ const Items = () => {
     );
   } else {
     content = (
-      <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-5 pb-10">
+      <div className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 pb-10">
         {allItems?.map((item, i) => (
           <ItemCard key={i} item={item} />
         ))}
