@@ -1,13 +1,13 @@
-import { IoChevronBack } from "react-icons/io5";
-import { Link, useNavigate } from "react-router-dom";
+import { Button, Form } from "antd";
 import JoditEditor from "jodit-react"; // Import Jodit React
 import { useEffect, useRef, useState } from "react";
-import { Button, Form } from "antd";
-import {
-  useGetPrivacyPolicyQuery,
-  useAddPrivacyPolicyMutation,
-} from "../../redux/features/setting/settingApi";
+import { IoChevronBack } from "react-icons/io5";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import {
+  useAddPrivacyPolicyMutation,
+  useGetPrivacyPolicyQuery,
+} from "../../redux/features/setting/settingApi";
 
 const EditPrivacyPolicy = () => {
   const [form] = Form.useForm();
@@ -105,7 +105,7 @@ const EditPrivacyPolicy = () => {
             <Button
               type="primary"
               htmlType="submit"
-              className="bg-[#C90739] text-white px-5 py-2 rounded-md"
+              className="bg-yellow-500 text-white px-5 py-2 rounded-md"
               disabled={isLoading} // Disable button while loading
             >
               Update

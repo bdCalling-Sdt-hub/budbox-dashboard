@@ -6,12 +6,15 @@ import router from "./routes/routes";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { Toaster } from "sonner";
+import { ConfigProvider } from "antd";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router} />
-      <Toaster richColors  position="top-center"  />
-    </Provider>
+    <ConfigProvider theme={{ token: { colorPrimary: "#FFD100" } }}>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+        <Toaster richColors position="top-center" />
+      </Provider>
+    </ConfigProvider>
   </React.StrictMode>
 );
