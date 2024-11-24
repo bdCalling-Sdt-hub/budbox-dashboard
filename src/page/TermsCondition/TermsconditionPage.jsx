@@ -17,7 +17,7 @@ const TermsconditionPage = () => {
           </Link>
           <h1 className="text-2xl font-semibold">Terms of Conditions</h1>
         </div>
-        <Link to={"/settings/edit-terms-conditions/11"}>
+        <Link to={"/settings/edit-terms-conditions"}>
           <CustomButton border>
             <TbEdit className="size-5" />
             <span>Edit</span>

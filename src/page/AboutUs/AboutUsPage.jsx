@@ -17,7 +17,7 @@ const AboutUsPage = () => {
           </Link>
           <h1 className="text-2xl font-semibold">About Us</h1>
         </div>
-        <Link to={"/settings/edit-about-us/11"}>
+        <Link to={"/settings/edit-about-us"}>
           <CustomButton border>
             <TbEdit className="size-5" />
             <span>Edit</span>

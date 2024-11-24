@@ -1,23 +1,23 @@
 import { IoChevronBack } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { Button, Form } from "antd";
-import ReactQuill from "react-quill"; // Import React Quill
-import "react-quill/dist/quill.snow.css"; // Import Quill styles
-import { useState } from "react";
+import JoditEditor from "jodit-react"; // Import Jodit React
+import { useRef, useState } from "react";
 
 const EditAboutUs = () => {
   const [form] = Form.useForm();
+  const editor = useRef(null); // Jodit Editor ref
   const [content, setContent] = useState(
     "<p>Enter your 'About Us' content here.</p>"
   ); // Default content for the About Us section
 
   const handleSubmit = () => {
     console.log("Updated About Us Content:", content);
-    // Handle form submission, e.g., update the about us section in the backend
+    // Handle form submission, e.g., update the About Us section in the backend
   };
 
   return (
-    <section className="w-full h-full min-h-screen ">
+    <section className="w-full h-full min-h-screen">
       {/* Header Section */}
       <div className="flex justify-between items-center py-5">
         <div className="flex gap-4 items-center">
@@ -31,27 +31,42 @@ const EditAboutUs = () => {
       {/* Form Section */}
       <div className="w-full p-6 rounded-lg shadow-md">
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
-          {/* React Quill for About Us Content */}
+          {/* Jodit React for About Us Content */}
           <Form.Item name="content" initialValue={content}>
-            <ReactQuill
+            <JoditEditor
+              ref={editor}
               value={content}
-              onChange={(value) => setContent(value)}
-              modules={{
-                toolbar: [
-                  [{ header: [1, 2, 3, 4, 5, 6, false] }], // Header dropdown
-                  [{ font: [] }], // Font options
-                  [{ list: "ordered" }, { list: "bullet" }], // Ordered and bullet lists
-                  ["bold", "italic", "underline", "strike"], // Formatting options
-                  [{ align: [] }], // Text alignment
-                  [{ color: [] }, { background: [] }], // Color and background
-                  ["blockquote", "code-block"], // Blockquote and code block
-                  ["link", "image", "video"], // Link, image, and video upload
-                  [{ script: "sub" }, { script: "super" }], // Subscript and superscript
-                  [{ indent: "-1" }, { indent: "+1" }], // Indent
-                  ["clean"], // Remove formatting
+              config={{
+                readonly: false, // Enable editing
+                height: 300, // Editor height
+                buttons: [
+                  "bold",
+                  "italic",
+                  "underline",
+                  "strikethrough",
+                  "|",
+                  "ul",
+                  "ol",
+                  "outdent",
+                  "indent",
+                  "|",
+                  "font",
+                  "fontsize",
+                  "paragraph",
+                  "|",
+                  "link",
+                  "image",
+                  "video",
+                  "|",
+                  "align",
+                  "undo",
+                  "redo",
+                  "hr",
+                  "copyformat",
                 ],
               }}
-              style={{ height: "300px" }} // Set the increased height
+              onBlur={(newContent) => setContent(newContent)} // Save content on blur
+              tabIndex={1} // Tab index for the editor
             />
           </Form.Item>
 

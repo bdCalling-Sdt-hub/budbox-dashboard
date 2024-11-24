@@ -127,7 +127,7 @@ const router = createBrowserRouter([
         element: <PrivacyPolicyPage />,
       },
       {
-        path: "/settings/edit-privacy-policy/:id",
+        path: "/settings/edit-privacy-policy",
         element: <EditPrivacyPolicy />,
       },
       {
@@ -135,7 +135,7 @@ const router = createBrowserRouter([
         element: <TermsconditionPage />,
       },
       {
-        path: "/settings/edit-terms-conditions/:id",
+        path: "/settings/edit-terms-conditions",
         element: <EditTermsConditions />,
       },
       {
@@ -143,7 +143,7 @@ const router = createBrowserRouter([
         element: <AboutUsPage />,
       },
       {
-        path: "/settings/edit-about-us/:id",
+        path: "/settings/edit-about-us",
         element: <EditAboutUs/>
       }
     ],

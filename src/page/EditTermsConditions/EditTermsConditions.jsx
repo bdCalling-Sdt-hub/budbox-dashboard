@@ -1,23 +1,46 @@
 import { IoChevronBack } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Form } from "antd";
-import ReactQuill from "react-quill"; // Import React Quill
-import "react-quill/dist/quill.snow.css"; // Import Quill styles
-import { useState } from "react";
+import JoditEditor from "jodit-react"; // Import Jodit React
+import { useEffect, useRef, useState } from "react";
+import {
+  useAddTermsConditionMutation,
+  useGetTermsConditionQuery,
+} from "../../redux/features/setting/settingApi";
+import { toast } from "sonner";
 
 const EditTermsConditions = () => {
   const [form] = Form.useForm();
-  const [content, setContent] = useState(
-    "<h1>Enter your 'Terms and Conditions' content here.</h1>"
-  ); // Default content for the Terms and Conditions section
+  const navigate = useNavigate()
+  const { data: termsConditionsData, isLoading } = useGetTermsConditionQuery();
+  const [editTermsCondition] = useAddTermsConditionMutation();
+  const editor = useRef(null); // Jodit Editor ref
+  const [content, setContent] = useState(""); // Initialize with an empty string
 
-  const handleSubmit = () => {
-    console.log("Updated Terms and Conditions Content:", content);
-    // Handle form submission, e.g., update the Terms and Conditions in the backend
+  useEffect(() => {
+    if (!isLoading && termsConditionsData?.[0]?.content) {
+      setContent(termsConditionsData[0].content);
+    }
+  }, [isLoading, termsConditionsData]);
+
+  const handleSubmit = async () => {
+    try {
+      const res = await editTermsCondition({ content });
+      if (res.error) {
+        toast.error(res.error.data.message || "Failed to update terms.");
+        return;
+      }
+      if (res.data) {
+        toast.success("Terms and Conditions updated successfully");
+        navigate("/settings")
+      }
+    } catch (error) {
+      console.error("Update error:", error);
+    }
   };
 
   return (
-    <section className="w-full h-full min-h-screen ">
+    <section className="w-full h-full min-h-screen">
       {/* Header Section */}
       <div className="flex justify-between items-center py-5">
         <div className="flex gap-4 items-center">
@@ -31,28 +54,47 @@ const EditTermsConditions = () => {
       {/* Form Section */}
       <div className="w-full p-6 rounded-lg shadow-md">
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
-          {/* React Quill for Terms and Conditions Content */}
-          <Form.Item name="content" initialValue={content}>
-            <ReactQuill
-              value={content}
-              onChange={(value) => setContent(value)}
-              modules={{
-                toolbar: [
-                  [{ header: [1, 2, 3, 4, 5, 6, false] }], // Header dropdown
-                  [{ font: [] }], // Font options
-                  [{ list: "ordered" }, { list: "bullet" }], // Ordered and bullet lists
-                  ["bold", "italic", "underline", "strike"], // Formatting options
-                  [{ align: [] }], // Text alignment
-                  [{ color: [] }, { background: [] }], // Color and background
-                  ["blockquote", "code-block"], // Blockquote and code block
-                  ["link", "image", "video"], // Link, image, and video upload
-                  [{ script: "sub" }, { script: "super" }], // Subscript and superscript
-                  [{ indent: "-1" }, { indent: "+1" }], // Indent
-                  ["clean"], // Remove formatting
-                ],
-              }}
-              style={{ height: "300px" }} // Set the increased height
-            />
+          {/* Jodit React for Terms and Conditions Content */}
+          <Form.Item>
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : (
+              <JoditEditor
+                ref={editor}
+                value={content}
+                config={{
+                  readonly: false,
+                  height: 300,
+                  buttons: [
+                    "bold",
+                    "italic",
+                    "underline",
+                    "strikethrough",
+                    "|",
+                    "ul",
+                    "ol",
+                    "outdent",
+                    "indent",
+                    "|",
+                    "font",
+                    "fontsize",
+                    "paragraph",
+                    "|",
+                    "link",
+                    "image",
+                    "video",
+                    "|",
+                    "align",
+                    "undo",
+                    "redo",
+                    "hr",
+                    "copyformat",
+                  ],
+                }}
+                onBlur={(newContent) => setContent(newContent)} // Save content on blur
+                tabIndex={1}
+              />
+            )}
           </Form.Item>
 
           {/* Update Button */}
@@ -61,6 +103,7 @@ const EditTermsConditions = () => {
               type="primary"
               htmlType="submit"
               className="bg-[#C90739] text-white px-5 py-2 rounded-md"
+              disabled={isLoading} // Disable button while loading
             >
               Update
             </Button>
