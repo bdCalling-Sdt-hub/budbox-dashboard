@@ -17,7 +17,7 @@ const PrivacyPolicyPage = () => {
           </Link>
           <h1 className="text-2xl font-semibold">Privacy Policy</h1>
         </div>
-        <Link to={'/settings/edit-privacy-policy'}>
+        <Link to={"/settings/edit-privacy-policy"}>
           <CustomButton border>
             <TbEdit className="size-5" />
             <span>Edit</span>
@@ -28,20 +28,22 @@ const PrivacyPolicyPage = () => {
       {/* Show Spin loader if data is loading */}
       {isLoading ? (
         <div className="flex justify-center items-center h-[calc(100vh-120px)]">
-          <Spin/>
+          <Spin />
         </div>
       ) : (
-        <div>
+        <div className="px-5 pb-8">
           {privacyPolicyData &&
             privacyPolicyData.map((privacy) => (
-              <p key={privacy._id} className="text-lg">
-                {privacy.content}
-              </p>
+              <div
+                key={privacy._id}
+                className="text-lg"
+                dangerouslySetInnerHTML={{ __html: privacy.content }} // Render raw HTML
+              ></div>
             ))}
         </div>
       )}
     </section>
   );
-}
+};
 
 export default PrivacyPolicyPage;

@@ -26,7 +26,7 @@ const settingApi = baseApi.injectEndpoints({
         method: "POST",
         data: data,
       }),
-      invalidatesTags: ["About"],
+      invalidatesTags: ["AboutUs"],
       transformResponse: (response) => response?.data?.attributes,
     }),
     getTermsCondition: builder.query({
@@ -50,7 +50,7 @@ const settingApi = baseApi.injectEndpoints({
         url: "/info/about-us",
         method: "GET",
       }),
-      providesTags: ["About"],
+      providesTags: ["AboutUs"],
       transformResponse: (response) => response?.data?.attributes,
     }),
   }),

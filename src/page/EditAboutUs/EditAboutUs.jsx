@@ -1,19 +1,46 @@
 import { IoChevronBack } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Form } from "antd";
 import JoditEditor from "jodit-react"; // Import Jodit React
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
+import {
+  useGetAboutUsQuery,
+  useAddAboutUsMutation,
+} from "../../redux/features/setting/settingApi";
 
 const EditAboutUs = () => {
   const [form] = Form.useForm();
+  const navigate = useNavigate();
   const editor = useRef(null); // Jodit Editor ref
   const [content, setContent] = useState(
     "<p>Enter your 'About Us' content here.</p>"
-  ); // Default content for the About Us section
+  );
 
-  const handleSubmit = () => {
-    console.log("Updated About Us Content:", content);
-    // Handle form submission, e.g., update the About Us section in the backend
+  const { data: aboutUsData, isLoading } = useGetAboutUsQuery(); // Fetch existing About Us data
+  const [editAboutUs] = useAddAboutUsMutation(); // Mutation for updating About Us
+
+  useEffect(() => {
+    if (!isLoading && aboutUsData?.[0]?.content) {
+      setContent(aboutUsData[0].content);
+    }
+  }, [isLoading, aboutUsData]);
+
+  const handleSubmit = async () => {
+    try {
+      const res = await editAboutUs({ content });
+      console.log(res)
+      if (res.error) {
+        toast.error(res.error.data.message || "Failed to update About Us.");
+        return;
+      }
+      if (res.data) {
+        toast.success("About Us updated successfully");
+        navigate("/settings");
+      }
+    } catch (error) {
+      console.error("Update error:", error);
+    }
   };
 
   return (
@@ -32,42 +59,46 @@ const EditAboutUs = () => {
       <div className="w-full p-6 rounded-lg shadow-md">
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
           {/* Jodit React for About Us Content */}
-          <Form.Item name="content" initialValue={content}>
-            <JoditEditor
-              ref={editor}
-              value={content}
-              config={{
-                readonly: false, // Enable editing
-                height: 300, // Editor height
-                buttons: [
-                  "bold",
-                  "italic",
-                  "underline",
-                  "strikethrough",
-                  "|",
-                  "ul",
-                  "ol",
-                  "outdent",
-                  "indent",
-                  "|",
-                  "font",
-                  "fontsize",
-                  "paragraph",
-                  "|",
-                  "link",
-                  "image",
-                  "video",
-                  "|",
-                  "align",
-                  "undo",
-                  "redo",
-                  "hr",
-                  "copyformat",
-                ],
-              }}
-              onBlur={(newContent) => setContent(newContent)} // Save content on blur
-              tabIndex={1} // Tab index for the editor
-            />
+          <Form.Item>
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : (
+              <JoditEditor
+                ref={editor}
+                value={content}
+                config={{
+                  readonly: false, // Enable editing
+                  height: 300, // Editor height
+                  buttons: [
+                    "bold",
+                    "italic",
+                    "underline",
+                    "strikethrough",
+                    "|",
+                    "ul",
+                    "ol",
+                    "outdent",
+                    "indent",
+                    "|",
+                    "font",
+                    "fontsize",
+                    "paragraph",
+                    "|",
+                    "link",
+                    "image",
+                    "video",
+                    "|",
+                    "align",
+                    "undo",
+                    "redo",
+                    "hr",
+                    "copyformat",
+                  ],
+                }}
+                onBlur={(newContent) => setContent(newContent)} // Save content on blur
+                tabIndex={1} // Tab index for the editor
+              />
+            )}
           </Form.Item>
 
           {/* Update Button */}
@@ -76,6 +107,7 @@ const EditAboutUs = () => {
               type="primary"
               htmlType="submit"
               className="bg-[#C90739] text-white px-5 py-2 rounded-md"
+              disabled={isLoading} // Disable button while loading
             >
               Update
             </Button>

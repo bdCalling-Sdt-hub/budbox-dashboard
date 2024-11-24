@@ -28,15 +28,17 @@ const TermsconditionPage = () => {
       {/* Show Spin loader if data is loading */}
       {isLoading ? (
         <div className="flex justify-center items-center h-[calc(100vh-120px)]">
-          <Spin/>
+          <Spin />
         </div>
       ) : (
-        <div>
+        <div className="px-5 pb-8">
           {termsConditionsData &&
             termsConditionsData.map((term) => (
-              <p key={term._id} className="text-lg">
-                {term.content}
-              </p>
+              <div
+                key={term._id}
+                className="text-lg"
+                dangerouslySetInnerHTML={{ __html: term.content }} // Render HTML content
+              ></div>
             ))}
         </div>
       )}

@@ -1,9 +1,9 @@
-import { IoChevronBack } from "react-icons/io5";
-import { Link } from "react-router-dom";
-import { TbEdit } from "react-icons/tb";
-import CustomButton from "../../utils/CustomButton";
-import { useGetAboutUsQuery } from "../../redux/features/setting/settingApi";
 import { Spin } from "antd"; // Importing Spin
+import { IoChevronBack } from "react-icons/io5";
+import { TbEdit } from "react-icons/tb";
+import { Link } from "react-router-dom";
+import { useGetAboutUsQuery } from "../../redux/features/setting/settingApi";
+import CustomButton from "../../utils/CustomButton";
 
 const AboutUsPage = () => {
   const { data: aboutUsData, isLoading } = useGetAboutUsQuery();
@@ -31,12 +31,14 @@ const AboutUsPage = () => {
           <Spin />
         </div>
       ) : (
-        <div>
+        <div className="px-5 pb-8">
           {aboutUsData &&
             aboutUsData.map((about) => (
-              <p key={about._id} className="text-lg">
-                {about.content}
-              </p>
+              <div
+                key={about._id}
+                className="text-lg"
+                dangerouslySetInnerHTML={{ __html: about.content }} // Rendering raw HTML
+              ></div>
             ))}
         </div>
       )}
