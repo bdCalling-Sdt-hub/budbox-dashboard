@@ -55,7 +55,7 @@ const EditPrivacyPolicy = () => {
       </div>
 
       {/* Form Section */}
-      <div className="w-full p-6 rounded-lg shadow-md">
+      <div className="w-full p-6">
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
           {/* Jodit React Editor for Privacy Policy Content */}
           <Form.Item>
@@ -67,7 +67,7 @@ const EditPrivacyPolicy = () => {
                 value={content}
                 config={{
                   readonly: false, // Enable editing
-                  height: 300,
+                  height: 500,
                   buttons: [
                     "bold",
                     "italic",

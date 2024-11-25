@@ -52,7 +52,7 @@ const EditTermsConditions = () => {
       </div>
 
       {/* Form Section */}
-      <div className="w-full p-6 rounded-lg shadow-md">
+      <div className="w-full p-6">
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
           {/* Jodit React for Terms and Conditions Content */}
           <Form.Item>
@@ -64,7 +64,7 @@ const EditTermsConditions = () => {
                 value={content}
                 config={{
                   readonly: false,
-                  height: 300,
+                  height: 500,
                   buttons: [
                     "bold",
                     "italic",
