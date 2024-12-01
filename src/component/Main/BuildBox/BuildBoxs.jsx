@@ -2,15 +2,26 @@ import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 import { useGetAllComboBoxQuery } from "../../../redux/features/combobox/comboboxApi";
 import { IoChevronBack } from "react-icons/io5";
-import { Spin } from "antd";
+import { Pagination, Spin } from "antd";
 import BuildBoxCard from "./BuildBoxCard";
+import { useState } from "react";
 const BuildBoxs = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9;
+
   const {
     data: comboboxs,
     isError,
     isLoading,
     error,
-  } = useGetAllComboBoxQuery("build-box");
+  } = useGetAllComboBoxQuery({
+    type: "build-box",
+    page: currentPage,
+    limit: itemsPerPage,
+  });
+
+  const totalResults = comboboxs?.totalResults;
+
   let content = null;
   if (isLoading) {
     content = (
@@ -44,6 +55,11 @@ const BuildBoxs = () => {
       </div>
     );
   }
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <>
       <div className="w-full flex justify-between gap-4 items-center">
@@ -61,6 +77,18 @@ const BuildBoxs = () => {
         </Link>
       </div>
       {content}
+      {totalResults > itemsPerPage && (
+        <div className="flex justify-center py-5">
+          <Pagination
+            current={currentPage}
+            total={totalResults}
+            pageSize={itemsPerPage}
+            onChange={handlePageChange} // Update the current page
+            showSizeChanger={false}
+            className="pagination"
+          />
+        </div>
+      )}
     </>
   );
 };

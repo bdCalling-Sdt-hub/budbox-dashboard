@@ -3,10 +3,16 @@ import { baseApi } from "../../baseApi/baseApi";
 const comboboxApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllComboBox: builder.query({
-      query: (type) => {
+      query: ({ type, page, limit }) => {
         const params = new URLSearchParams();
         if (type) {
           params.append("categoryType", type);
+        }
+        if (page) {
+          params.append("page", page);
+        }
+        if (limit) {
+          params.append("limit", limit);
         }
         return {
           url: `/admin/budboxs`,

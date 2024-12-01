@@ -39,7 +39,7 @@ const ComboBoxCard = ({ item }) => {
   };
   return (
     <div className="w-full shadow-xl rounded-2xl ">
-      <div className="w-full h-36 md:h-44 lg:h-56 xl:h-60 relative">
+      <div className="w-full h-36 md:h-40 lg:h-48 2xl:h-60  relative">
         <img
           src={`${imageBaseUrl}${item?.image?.url}`}
           alt="budBoxImage"
@@ -48,15 +48,13 @@ const ComboBoxCard = ({ item }) => {
       </div>
       <div className="w-full col-span-full md:col-span-8 p-5">
         <h1 className="text-2xl font-bold text-gray-900">{item?.name}</h1>
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-5 my-4">
+        <div className="w-full space-y-2 mt-4">
           {item?.products?.map((product, i) => (
             <div
               key={i}
-              className="flex items-center gap-1 font-semibold text-sm"
+            
             >
-              <h1>{i + 1}.</h1>
-              <h1>{product?.name}</h1>
-              <p className="font-semibold">{`($${product.price})`}</p>
+              <h1>{`${i + 1}. ${product?.name}($${product?.price})`}</h1>
             </div>
           ))}
         </div>

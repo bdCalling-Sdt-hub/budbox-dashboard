@@ -3,15 +3,29 @@ import { FaPlus } from "react-icons/fa6";
 import { useGetAllComboBoxQuery } from "../../../redux/features/combobox/comboboxApi";
 import ComboBoxCard from "./ComboBoxCard";
 import { IoChevronBack } from "react-icons/io5";
-import { Spin } from "antd";
+import { Spin, Pagination } from "antd";
+import { useState } from "react";
+
 const ComboxBoxs = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9; 
+
+  // Fetch data with pagination
   const {
     data: comboboxs,
     isError,
     isLoading,
     error,
-  } = useGetAllComboBoxQuery("combo-box");
+  } = useGetAllComboBoxQuery({
+    type: "combo-box",
+    page: currentPage,
+    limit: itemsPerPage,
+  });
+
+  const totalResults = comboboxs?.totalResults;
+
   let content = null;
+
   if (isLoading) {
     content = (
       <div className="w-full flex justify-center py-10">
@@ -32,7 +46,7 @@ const ComboxBoxs = () => {
           alt="No results"
           className="w-[256px] mx-auto h-[256px] mb-4"
         />
-        <h2 className="text-xl font-bold mb-2">No Combo box Found</h2>
+        <h2 className="text-xl font-bold mb-2">No Combo Box Found</h2>
       </div>
     );
   } else {
@@ -44,6 +58,11 @@ const ComboxBoxs = () => {
       </div>
     );
   }
+
+  // Handle page change
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <>
@@ -62,6 +81,20 @@ const ComboxBoxs = () => {
         </Link>
       </div>
       {content}
+
+      {/* Ant Design Pagination */}
+      {totalResults > itemsPerPage && (
+        <div className="flex justify-center py-5">
+          <Pagination
+            current={currentPage}
+            total={totalResults}
+            pageSize={itemsPerPage}
+            onChange={handlePageChange} // Update the current page
+            showSizeChanger={false}
+            className="pagination"
+          />
+        </div>
+      )}
     </>
   );
 };

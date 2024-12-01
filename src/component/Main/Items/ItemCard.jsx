@@ -60,7 +60,7 @@ const ItemCard = ({ item }) => {
             : "/images/default.png"
         }
         alt={name || "Product Image"}
-        className="w-full h-36 md:h-44 lg:h-56 xl:h-60 rounded-t-lg object-cover"
+        className="w-full h-36 md:h-40 lg:h-48 2xl:h-60 rounded-t-lg object-cover"
       />
 
       <div className="p-5 space-y-2">
