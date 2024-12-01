@@ -2,15 +2,25 @@ import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import ItemCard from "./ItemCard";
 import { useGetAllProductsQuery } from "../../../redux/features/product/productApi";
-import { Spin } from "antd";
+import { Spin, Pagination } from "antd";
+import { useState } from "react";
 
 const Items = () => {
+  const [currentPage, setCurrentPage] = useState(1); // Current page state
+  const itemsPerPage = 9; 
   const {
-    data: allItems,
+    data: responseData,
     isLoading,
     isError,
     error,
-  } = useGetAllProductsQuery();
+  } = useGetAllProductsQuery({
+    page: currentPage,
+    limit: itemsPerPage,
+  });
+
+  const allItems = responseData?.results;
+  const totalResults = responseData?.totalResults;
+
   let content = null;
   if (isLoading) {
     content = (
@@ -44,6 +54,12 @@ const Items = () => {
       </div>
     );
   }
+
+  // Handle page change
+  const handlePageChange = (page) => {
+    setCurrentPage(page); // Update the current page
+  };
+
   return (
     <>
       <div className="w-full flex justify-between items-center py-6">
@@ -55,7 +71,22 @@ const Items = () => {
           </button>
         </Link>
       </div>
+
       {content}
+
+      {/* Ant Design Pagination */}
+      {totalResults > itemsPerPage && (
+        <div className="flex justify-center py-5">
+          <Pagination
+            current={currentPage}
+            total={totalResults}
+            pageSize={itemsPerPage}
+            onChange={handlePageChange} // Change the page
+            showSizeChanger={false} // Optional: Disable the size changer
+            className="pagination"
+          />
+        </div>
+      )}
     </>
   );
 };

@@ -13,12 +13,16 @@ const productApi = baseApi.injectEndpoints({
       invalidatesTags: ["Products"],
     }),
     getAllProducts: builder.query({
-      query: () => ({
+      query: ({page,limit}) => ({
         url: "/admin/products",
         method: "GET",
+        params: {
+          page,
+          limit,
+        },
       }),
       providesTags: ["Products"],
-      transformResponse: (response) => response?.data?.attributes?.results,
+      transformResponse: (response) => response?.data?.attributes,
     }),
     getProductById: builder.query({
       query: (id) => ({
