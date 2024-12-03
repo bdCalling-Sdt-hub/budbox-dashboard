@@ -3,16 +3,10 @@ import { baseApi } from "../../baseApi/baseApi";
 const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllUsers: builder.query({
-      query: ({ page, limit, filters }) => {
+      query: ({ page, limit }) => {
         const params = new URLSearchParams();
         if (page) params.append("page", page);
-        if (limit) params.append("limit", limit);
-        if (filters) {
-          filters.forEach((item) => {
-            params.append(item.name, item.value);
-          });
-        }
-
+        if (limit) params.append("limit", limit)
         return {
           url: "/admin/all-users",
           method: "GET",
