@@ -7,6 +7,7 @@ import CustomButton from "../../../utils/CustomButton";
 import CustomInput from "../../../utils/CustomInput";
 import { useAddComboBoxMutation } from "../../../redux/features/combobox/comboboxApi";
 import { useGetAllProductsQuery } from "../../../redux/features/product/productApi"; // Import the hook for fetching products
+import { MdOutlineAddAPhoto } from "react-icons/md";
 
 const AddComboBox = () => {
   const [imageFile, setImageFile] = useState(null);
@@ -18,8 +19,8 @@ const AddComboBox = () => {
 
   // Fetch products using useGetAllProductsQuery
   const { data, isLoading: isProductLoading } = useGetAllProductsQuery({
-     page: 1,
-     limit: 5000,
+    page: 1,
+    limit: 5000,
   });
 
   // Transform the product data to match the format required by the Select options
@@ -89,15 +90,23 @@ const AddComboBox = () => {
 
       {/* Image Upload Section */}
       <div
-        className="w-72 h-56 bg-[#e8ebf0] rounded-lg flex justify-center items-center cursor-pointer"
+        className="w-72 h-56 bg-[#e8ebf0] rounded-lg flex justify-center items-center cursor-pointer relative"
         onClick={handleDivClick}
       >
         {imageUrl ? (
-          <img
-            src={imageUrl}
-            alt="Selected"
-            className="w-full h-full object-cover rounded-lg"
-          />
+          <>
+            <img
+              src={imageUrl}
+              alt="Selected"
+              className="w-full h-full object-cover rounded-lg"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg">
+              <span className="text-white font-semibold flex flex-col gap-3 justify-center items-center">
+                <MdOutlineAddAPhoto size={28} />
+                Change Image
+              </span>
+            </div>
+          </>
         ) : (
           <div className="bg-[#c6dadc] p-2 text-white">
             <IoCameraOutline size={40} />
@@ -120,7 +129,9 @@ const AddComboBox = () => {
         <Form.Item
           label="ComboBox Name"
           name="comboBoxName"
-          rules={[{ required: true, message: "Please enter the ComboBox name!" }]}
+          rules={[
+            { required: true, message: "Please enter the ComboBox name!" },
+          ]}
           className="w-full"
         >
           <CustomInput placeholder="Enter ComboBox name" />
@@ -135,7 +146,9 @@ const AddComboBox = () => {
               validator: (_, value) =>
                 value && value.length >= 3
                   ? Promise.resolve()
-                  : Promise.reject(new Error("Please select at least 3 products")),
+                  : Promise.reject(
+                      new Error("Please select at least 3 products")
+                    ),
             },
           ]}
         >
@@ -155,7 +168,11 @@ const AddComboBox = () => {
           name="discount"
           rules={[{ required: false }]}
         >
-          <CustomInput type="number" min="1" placeholder="Enter discount percentage" />
+          <CustomInput
+            type="number"
+            min="1"
+            placeholder="Enter discount percentage"
+          />
         </Form.Item>
 
         {/* Submit Button */}

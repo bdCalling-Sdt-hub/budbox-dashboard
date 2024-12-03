@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import CustomButton from "../../../utils/CustomButton";
 import CustomInput from "../../../utils/CustomInput";
 import { useAddCategoryMutation } from "../../../redux/features/category/categoryApi";
+import { MdOutlineAddAPhoto } from "react-icons/md";
 
 const AddBox = () => {
   const [imageFile, setImageFile] = useState(null);
@@ -32,7 +33,7 @@ const AddBox = () => {
   };
 
   const onFinish = async (values) => {
-    if(!imageFile){
+    if (!imageFile) {
       toast.error("Please select an image");
       return;
     }
@@ -45,7 +46,6 @@ const AddBox = () => {
     try {
       const response = await addBox(formdata);
       if (response.error) {
-        console.log(response.error);
         toast.error(response.error.data.message);
       } else {
         toast.success("Bud Box added successfully");
@@ -55,7 +55,6 @@ const AddBox = () => {
         navigate("/budboxes");
       }
     } catch (error) {
-      console.error("Error adding item:", error);
       toast.error("Something went wrong");
     }
   };
@@ -72,15 +71,23 @@ const AddBox = () => {
 
       {/* Image Upload Section */}
       <div
-        className="w-56 md:w-72 h-40  md:h-56 bg-[#e8ebf0] rounded-lg flex justify-center items-center cursor-pointer"
+        className="w-56 md:w-72 h-40  md:h-56 bg-[#e8ebf0] rounded-lg flex justify-center items-center cursor-pointer relative"
         onClick={handleDivClick}
       >
         {imageUrl ? (
-          <img
-            src={imageUrl}
-            alt="Selected"
-            className="w-full h-full object-cover rounded-lg"
-          />
+          <>
+            <img
+              src={imageUrl}
+              alt="Selected"
+              className="w-full h-full object-cover rounded-lg"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg">
+              <span className="text-white font-semibold flex flex-col gap-3 justify-center items-center">
+                <MdOutlineAddAPhoto size={28} />
+                Change Image
+              </span>
+            </div>
+          </>
         ) : (
           <div className="bg-[#c6dadc] p-2 text-white">
             <IoCameraOutline size={40} />

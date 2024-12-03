@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { useAddProductMutation } from "../../../redux/features/product/productApi";
 import CustomButton from "../../../utils/CustomButton";
 import CustomInput from "../../../utils/CustomInput";
+import { MdOutlineAddAPhoto } from "react-icons/md";
 
 const AddItem = () => {
   const [imageFile, setImageFile] = useState(null);
@@ -40,7 +41,7 @@ const AddItem = () => {
     formdata.append("name", values.productName);
     formdata.append("price", values.price);
     formdata.append("weight", values.weight);
-    formdata.append("weightUnit", values.weightUnit); 
+    formdata.append("weightUnit", values.weightUnit);
     formdata.append("stockQuantity", values.quantity);
     formdata.append("description", values.description); // Add description to form data
     formdata.append("image", imageFile);
@@ -74,15 +75,23 @@ const AddItem = () => {
 
       {/* Image Upload Section */}
       <div
-        className="w-72 h-56 bg-[#e8ebf0] rounded-lg flex justify-center items-center cursor-pointer"
+        className="w-72 h-56 bg-[#e8ebf0] rounded-lg flex justify-center items-center cursor-pointer relative"
         onClick={handleDivClick}
       >
         {imageUrl ? (
-          <img
-            src={imageUrl}
-            alt="Selected"
-            className="w-full h-full object-cover rounded-lg"
-          />
+          <>
+            <img
+              src={imageUrl}
+              alt="Selected"
+              className="w-full h-full object-cover rounded-lg"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg">
+              <span className="text-white font-semibold flex flex-col gap-3 justify-center items-center">
+                <MdOutlineAddAPhoto size={28} />
+                Change Image
+              </span>
+            </div>
+          </>
         ) : (
           <div className="bg-[#c6dadc] p-2 text-white">
             <IoCameraOutline size={40} />
@@ -106,7 +115,9 @@ const AddItem = () => {
           <Form.Item
             label="Product Name"
             name="productName"
-            rules={[{ required: true, message: "Please enter the product name!" }]}
+            rules={[
+              { required: true, message: "Please enter the product name!" },
+            ]}
             className="w-full"
           >
             <CustomInput placeholder="Product Name" />

@@ -115,7 +115,6 @@ const EditBuildBox = () => {
           >
             {imageUrl ? (
               <>
-                {" "}
                 <img
                   src={imageUrl}
                   alt="Selected"

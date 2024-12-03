@@ -11,6 +11,7 @@ import {
   useGetCategoryByIdQuery,
   useUpdateCategoryMutation,
 } from "../../../redux/features/category/categoryApi";
+import { MdOutlineAddAPhoto } from "react-icons/md";
 
 const EditBox = () => {
   const { id } = useParams(); // Get BudBox ID from URL params
@@ -59,7 +60,6 @@ const EditBox = () => {
 
     try {
       const response = await updateBox({ id, data: formdata });
-      console.log(response);
       if (response.error) {
         toast.error(response.error.data.message);
       }
@@ -68,7 +68,6 @@ const EditBox = () => {
         navigate("/budboxes");
       }
     } catch (error) {
-      console.error("Error updating BudBox:", error);
       toast.error("Something went wrong while updating the BudBox.");
     }
   };
@@ -91,15 +90,23 @@ const EditBox = () => {
 
           {/* Image Upload Section */}
           <div
-            className="w-72 h-56 bg-[#e8ebf0] rounded-lg flex justify-center items-center cursor-pointer"
+            className="w-72 h-56 bg-[#e8ebf0] rounded-lg flex justify-center items-center cursor-pointer relative"
             onClick={handleDivClick}
           >
             {imageUrl ? (
-              <img
-                src={imageUrl}
-                alt="Selected"
-                className="w-full h-full object-cover rounded-lg"
-              />
+              <>
+                <img
+                  src={imageUrl}
+                  alt="Selected"
+                  className="w-full h-full object-cover rounded-lg"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg">
+                  <span className="text-white font-semibold flex flex-col gap-3 justify-center items-center">
+                    <MdOutlineAddAPhoto size={28} />
+                    Change Image
+                  </span>
+                </div>
+              </>
             ) : (
               <div className="bg-[#c6dadc] p-2 text-white">
                 <IoCameraOutline size={40} />
