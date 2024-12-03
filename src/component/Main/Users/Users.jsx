@@ -53,7 +53,14 @@ const Users = () => {
       title: "#SI",
       dataIndex: "si",
       key: "index",
-      responsive: ["lg"], // Hide in mobile view
+      responsive: ["lg"], 
+
+    },
+    {
+      title: "Image",
+      dataIndex: "image",
+      key: "image",
+      render: (text) => <img src={imageBaseUrl + text} alt={text} className="w-10 h-10 rounded-full" />,
     },
     {
       title: "User Name",
@@ -64,11 +71,6 @@ const Users = () => {
       title: "Email",
       dataIndex: "email",
       key: "email",
-    },
-    {
-      title: "Phone Number",
-      dataIndex: "phone",
-      key: "phone",
     },
     {
       title: "Join Date",

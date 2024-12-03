@@ -11,6 +11,7 @@ import { BiCalendarEdit } from "react-icons/bi";
 import { FiBox } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../../redux/features/auth/authSlice";
+import { FaQ } from "react-icons/fa6";
 
 const sidebarItems = [
   {
@@ -42,6 +43,11 @@ const sidebarItems = [
     path: "/orders",
     name: "Orders",
     icon: <BiCalendarEdit className="size-8" />,
+  },
+  {
+    path:'/faq',
+    name:"FAQ",
+    icon:<FaQ className="size-7"/>
   },
   {
     path: "/settings",

@@ -5,18 +5,14 @@ import ComboBoxCard from "./ComboBoxCard";
 import { IoChevronBack } from "react-icons/io5";
 import { Spin, Pagination } from "antd";
 import { useState } from "react";
+import NoDataFound from "../NodataFound/NoDataFound";
 
 const ComboxBoxs = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 9; 
+  const itemsPerPage = 9;
 
   // Fetch data with pagination
-  const {
-    data: comboboxs,
-    isError,
-    isLoading,
-    error,
-  } = useGetAllComboBoxQuery({
+  const { data: comboboxs, isLoading } = useGetAllComboBoxQuery({
     type: "combo-box",
     page: currentPage,
     limit: itemsPerPage,
@@ -32,23 +28,8 @@ const ComboxBoxs = () => {
         <Spin />
       </div>
     );
-  } else if (isError && error) {
-    content = (
-      <h3 className="font-semibold text-rose-500 text-center py-5">
-        Something went wrong
-      </h3>
-    );
   } else if (!comboboxs?.results?.length) {
-    content = (
-      <div className="w-full text-center py-5 flex flex-col justify-center items-center">
-        <img
-          src="/src/assets/nodata/not-data.svg"
-          alt="No results"
-          className="w-[256px] mx-auto h-[256px] mb-4"
-        />
-        <h2 className="text-xl font-bold mb-2">No Combo Box Found</h2>
-      </div>
-    );
+    content = <NoDataFound message="No Combo Boxes Found" />;
   } else {
     content = (
       <div className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 pb-10">

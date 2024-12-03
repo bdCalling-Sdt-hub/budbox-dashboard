@@ -31,6 +31,9 @@ import EditAboutUs from "../page/EditAboutUs/EditAboutUs";
 import AddBuildBox from "../component/Main/AddBuildBox/AddBuildBox";
 import BuildBoxs from "../component/Main/BuildBox/BuildBoxs";
 import EditBuildBox from "../component/Main/EditBuildBox/EditBuildBox";
+import Faq from "../component/Main/Faq/Faq";
+import AddFaq from "../component/Main/AddFaq/AddFaq";
+import EditFaq from "../component/Main/EditFaq/EditFaq";
 
 const router = createBrowserRouter([
   {
@@ -95,6 +98,18 @@ const router = createBrowserRouter([
         element: <AddItemPage />,
       },
       {
+        path: "faq",
+        element: <Faq />,
+      },
+      {
+        path: "/faq/add-faq",
+        element: <AddFaq />,
+      },
+      {
+        path: "/faq/edit-faq/:id",
+        element: <EditFaq />,
+      },
+      {
         path: "items/edit-item/:id",
         element: <EditItemPage />,
       },
@@ -144,8 +159,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/settings/edit-about-us",
-        element: <EditAboutUs/>
-      }
+        element: <EditAboutUs />,
+      },
     ],
   },
   {

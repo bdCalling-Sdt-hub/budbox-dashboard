@@ -3,14 +3,10 @@ import { Link } from "react-router-dom";
 import BudboxesCard from "./BudboxesCard";
 import { useGetAllCategoriesQuery } from "../../../redux/features/category/categoryApi";
 import { Spin } from "antd";
+import NoDataFound from "../NodataFound/NoDataFound";
 
 const Budboxes = () => {
-  const {
-    data: boxesData,
-    isLoading,
-    isError,
-    error,
-  } = useGetAllCategoriesQuery();
+  const { data: boxesData, isLoading } = useGetAllCategoriesQuery();
   let content = null;
   if (isLoading) {
     content = (
@@ -18,23 +14,8 @@ const Budboxes = () => {
         <Spin />
       </div>
     );
-  } else if (isError && error) {
-    content = (
-      <h3 className="font-semibold text-rose-500 text-center py-5">
-        Something went wrong
-      </h3>
-    );
   } else if (!boxesData?.length) {
-    content = (
-      <div className="w-full h-full text-center py-5 flex flex-col justify-center items-center">
-        <img
-          src="/src/assets/nodata/not-data.svg"
-          alt="No results"
-          className="w-[256px] mx-auto h-[256px] mb-4"
-        />
-        <h2 className="text-xl font-bold mb-2">No Bud Box Found</h2>
-      </div>
-    );
+    content = <NoDataFound message="No Budboxes Found" />;
   } else {
     content = (
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5">
