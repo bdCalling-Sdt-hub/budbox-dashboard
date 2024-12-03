@@ -11,6 +11,7 @@ import {
 } from "../../../redux/features/combobox/comboboxApi"; // Add update and fetch query hooks
 import { useGetAllProductsQuery } from "../../../redux/features/product/productApi";
 import { imageBaseUrl } from "../../../config/imageBaseUrl";
+import { MdOutlineAddAPhoto } from "react-icons/md";
 
 const EditBuildBox = () => {
   const { id } = useParams(); // Get ComboBox ID from URL
@@ -109,15 +110,24 @@ const EditBuildBox = () => {
 
           {/* Image Upload Section */}
           <div
-            className="w-72 h-56 bg-[#e8ebf0] rounded-lg flex justify-center items-center cursor-pointer"
+            className="w-72 h-56 bg-[#e8ebf0] rounded-lg flex justify-center items-center cursor-pointer relative"
             onClick={handleDivClick}
           >
             {imageUrl ? (
-              <img
-                src={imageUrl}
-                alt="Selected"
-                className="w-full h-full object-cover rounded-lg"
-              />
+              <>
+                {" "}
+                <img
+                  src={imageUrl}
+                  alt="Selected"
+                  className="w-full h-full object-cover rounded-lg"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg">
+                  <span className="text-white font-semibold flex flex-col gap-3 justify-center items-center">
+                    <MdOutlineAddAPhoto size={28} />
+                    Change Image
+                  </span>
+                </div>
+              </>
             ) : (
               <div className="bg-[#c6dadc] p-2 text-white">
                 <IoCameraOutline size={40} />
