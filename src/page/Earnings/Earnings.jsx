@@ -14,14 +14,18 @@ import moment from "moment";
 import { useGetEarningsQuery } from "../../redux/features/earnings/earningsApi";
 import { IoIosSearch } from "react-icons/io";
 const Earnings = () => {
+   const [currentPage, setCurrentPage] = useState(1);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
-  const { data: recentTransactionsData } = useGetEarningsQuery();
+  const { data: recentTransactionsData } = useGetEarningsQuery({
+    page: currentPage,
+    limit: 10,
+  });
 
   const transformedData =
     recentTransactionsData?.map((transaction, index) => ({
       key: index + 1,
-      userName: `${transaction.userId.firstName} ${transaction.userId.lastName}`,
+      userName: `${transaction.userId.fullName}`,
       userEmail: transaction.userId.email,
       boxPackage: transaction.budboxs.map((box) => box.name).join(", "),
       amount: `$${transaction.amount}`,
@@ -93,27 +97,7 @@ const Earnings = () => {
   return (
     <section className="w-full py-5">
       <div className="flex flex-wrap justify-between items-center mb-4">
-        <h1 className="text-xl font-semibold mb-2 sm:mb-0">Orders</h1>
-        <Form
-          layout="inline"
-          // onFinish={onFinish}
-          className="flex flex-wrap gap-2"
-        >
-          <Form.Item className="w-full sm:w-auto">
-            <DatePicker placeholder="Date" />
-          </Form.Item>
-          <Form.Item name="username" className="w-full sm:w-auto">
-            <Input placeholder="User name" />
-          </Form.Item>
-          <Form.Item className="w-full sm:w-auto">
-            <button
-              type="submit"
-              className="rounded-full flex justify-center items-center bg-[#111111] text-white p-2"
-            >
-              <IoIosSearch size={18} />
-            </button>
-          </Form.Item>
-        </Form>
+        <h1 className="text-xl font-semibold mb-2 sm:mb-0">Earnings</h1>
       </div>
       <ConfigProvider
         theme={{
@@ -129,7 +113,6 @@ const Earnings = () => {
         <Table
           columns={columns}
           dataSource={transformedData}
-          pagination={false}
           scroll={{
             x: "max-content",
           }}

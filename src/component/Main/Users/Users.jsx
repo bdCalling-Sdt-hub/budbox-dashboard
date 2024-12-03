@@ -2,34 +2,25 @@
 import { useEffect, useState } from "react";
 import {
   ConfigProvider,
-  DatePicker,
-  Input,
   Modal,
   Space,
-  Table,
-  Form,
+  Table
 } from "antd";
 import { BsInfoCircle } from "react-icons/bs";
 import moment from "moment";
-import { IoIosSearch } from "react-icons/io";
 import { useGetAllUsersQuery } from "../../../redux/features/user/userApi";
 import { imageBaseUrl } from "../../../config/imageBaseUrl";
-
-const { Item } = Form;
 
 const Users = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [params, setParams] = useState([]);
-  const [date, setDate] = useState("");
   const [allUser, setAllUser] = useState([]);
   const [user, setUser] = useState(null);
 
   const { data, isFetching, isError, error } = useGetAllUsersQuery({
     page: currentPage,
     limit: pageSize,
-    filters: params,
   });
 
   const handleView = (record) => {
@@ -93,21 +84,6 @@ const Users = () => {
     },
   ];
 
-  const onFinish = (values) => {
-    let queryParams = [];
-    const { username } = values;
-    if (date) {
-      queryParams.push({ name: "date", value: date });
-    }
-    if (username) {
-      queryParams.push({ name: "fullName", value: username });
-    }
-    setParams(queryParams);
-  };
-
-  const handleDate = (date, dateString) => {
-    setDate(dateString);
-  };
 
   useEffect(() => {
     if (isError && error) {
@@ -121,27 +97,6 @@ const Users = () => {
     <section className="w-full">
       <div className="flex flex-col md:flex-row md:justify-between items-center space-y-4 md:space-y-0">
         <h1 className="text-2xl font-semibold">Users List</h1>
-        <Form
-          className="flex flex-col md:flex-row gap-3 px-3 py-2 md:py-[22px]"
-          layout="inline"
-          onFinish={onFinish}
-        >
-          <Item>
-            <DatePicker
-              placeholder="Date"
-              onChange={handleDate}
-              className="w-full md:w-auto"
-            />
-          </Item>
-          <Item name="username">
-            <Input placeholder="User name" className="w-full md:w-auto" />
-          </Item>
-          <Item>
-            <button className="w-full md:w-auto rounded-full p-2 bg-[#111111] text-white flex justify-center items-center">
-              <IoIosSearch size={20} />
-            </button>
-          </Item>
-        </Form>
       </div>
       <ConfigProvider
         theme={{

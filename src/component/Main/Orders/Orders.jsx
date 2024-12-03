@@ -1,29 +1,21 @@
 import { useState } from "react";
 import {
   ConfigProvider,
-  DatePicker,
-  Input,
   Modal,
   Space,
   Table,
-  Form,
   Tag,
 } from "antd";
-import { IoIosSearch } from "react-icons/io";
 import { useGetOrdersQuery } from "../../../redux/features/orders/ordersApi";
 import { PiEyeClosedBold } from "react-icons/pi";
 import { imageBaseUrl } from "../../../config/imageBaseUrl";
-
-const { Item } = Form;
-
 const Orders = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [date, setDate] = useState("");
   const [selectedOrder, setSelectedOrder] = useState(null);
   const { data: responseData } = useGetOrdersQuery({
     page: currentPage,
-    limit: 10
+    limit: 10,
   });
 
   const dataSource = responseData?.map((order, index) => {
@@ -111,46 +103,10 @@ const Orders = () => {
     setIsModalOpen(true);
   };
 
-  const onFinish = (values) => {
-    let queryParams = [];
-    const { username } = values;
-    if (date) {
-      queryParams.push({ name: "date", value: date });
-    }
-    if (username) {
-      queryParams.push({ name: "userName", value: username });
-    }
-    // setParams(queryParams); // Use this to pass params to an API call
-  };
-
-  const handleDate = (date, dateString) => {
-    setDate(dateString);
-  };
-
   return (
     <section className="w-full py-5">
       <div className="flex flex-wrap justify-between items-center mb-4">
         <h1 className="text-xl font-semibold mb-2 sm:mb-0">Orders</h1>
-        <Form
-          layout="inline"
-          onFinish={onFinish}
-          className="flex flex-wrap gap-2"
-        >
-          <Item className="w-full sm:w-auto">
-            <DatePicker placeholder="Date" onChange={handleDate} />
-          </Item>
-          <Item name="username" className="w-full sm:w-auto">
-            <Input placeholder="User name" />
-          </Item>
-          <Item className="w-full sm:w-auto">
-            <button
-              type="submit"
-              className="rounded-full flex justify-center items-center bg-[#111111] text-white p-2"
-            >
-              <IoIosSearch size={18} />
-            </button>
-          </Item>
-        </Form>
       </div>
       <ConfigProvider
         theme={{
