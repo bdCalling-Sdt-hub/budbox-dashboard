@@ -3,15 +3,10 @@ import { baseApi } from "../../baseApi/baseApi";
 const ordersApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getOrders: builder.query({
-      query: ({ page, limit, filters }) => {
+      query: ({ page, limit }) => {
         const params = new URLSearchParams();
         if (page) params.append("page", page);
-        if (limit) params.append("limit", limit);
-        if (filters) {
-          filters.forEach((item) => {
-            params.append(item.name, item.value);
-          });
-        }
+        if (limit) params.append("limit", limit)
         return {
           url: "/order/admin-all",
           method: "GET",
@@ -22,9 +17,9 @@ const ordersApi = baseApi.injectEndpoints({
       transformResponse: (response) => response?.data?.attributes,
     }),
     updateOder: builder.mutation({
-      query: (data) => ({
-        url: `/order/${data.id}`,
-        method: "PATCH",
+      query: ({id, data}) => ({
+        url: `/order/${id}`,
+        method: "POST",
         body: data,
       }),
       invalidatesTags: ["Orders"],

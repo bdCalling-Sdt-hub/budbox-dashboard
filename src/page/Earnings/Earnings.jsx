@@ -3,27 +3,25 @@ import { useState } from "react";
 import {
   Table,
   Modal,
-  Form,
   Space,
   ConfigProvider,
-  DatePicker,
-  Input,
 } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { useGetEarningsQuery } from "../../redux/features/earnings/earningsApi";
-import { IoIosSearch } from "react-icons/io";
 const Earnings = () => {
-   const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
   const { data: recentTransactionsData } = useGetEarningsQuery({
     page: currentPage,
-    limit: 10,
+    limit: pageSize,
   });
 
+
   const transformedData =
-    recentTransactionsData?.map((transaction, index) => ({
+    recentTransactionsData?.data?.map((transaction, index) => ({
       key: index + 1,
       userName: `${transaction.userId.fullName}`,
       userEmail: transaction.userId.email,
@@ -113,6 +111,16 @@ const Earnings = () => {
         <Table
           columns={columns}
           dataSource={transformedData}
+          pagination={{
+            current: currentPage,
+            pageSize: pageSize,
+            total: recentTransactionsData?.totalDocuments,
+            onChange: (page, pageSize) => {
+              setCurrentPage(page);
+              setPageSize(pageSize);
+            },
+            position: ["bottomCenter"],
+          }}
           scroll={{
             x: "max-content",
           }}

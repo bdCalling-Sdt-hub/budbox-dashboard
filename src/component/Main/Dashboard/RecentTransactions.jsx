@@ -13,7 +13,7 @@ const RecentTransactions = () => {
   });
 
   const transformedData =
-    recentTransactionsData?.map((transaction, index) => ({
+    recentTransactionsData?.data?.map((transaction, index) => ({
       key: index + 1,
       transactionId: transaction.id,
       userName: `${transaction.userId.firstName} ${transaction.userId.lastName}`,

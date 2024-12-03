@@ -13,7 +13,6 @@ const earningsApi = baseApi.injectEndpoints({
           params,
         };
       },
-      transformResponse: (response) => response?.data,
     }),
   }),
 });
