@@ -7,7 +7,10 @@ import { useGetEarningsQuery } from "../../../redux/features/earnings/earningsAp
 const RecentTransactions = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
-  const { data: recentTransactionsData } = useGetEarningsQuery();
+  const { data: recentTransactionsData } = useGetEarningsQuery({
+    page: 1,
+    limit: 10,
+  });
 
   const transformedData =
     recentTransactionsData?.map((transaction, index) => ({
@@ -81,6 +84,7 @@ const RecentTransactions = () => {
     },
   ];
 
+  console.log(recentTransactionsData);
   return (
     <div className="w-full col-span-full md:col-span-6 bg-white rounded-lg p-5">
       <h2 className="font-semibold py-3">Recent Transactions</h2>

@@ -13,7 +13,7 @@ const earningsApi = baseApi.injectEndpoints({
           });
         }
         return {
-          url: "/admin/earnings",
+          url: "/admin/getRecentTransactions",
           method: "GET",
           params,
         };
