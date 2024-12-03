@@ -29,7 +29,6 @@ const EditAboutUs = () => {
   const handleSubmit = async () => {
     try {
       const res = await editAboutUs({ content });
-      console.log(res)
       if (res.error) {
         toast.error(res.error.data.message || "Failed to update About Us.");
         return;

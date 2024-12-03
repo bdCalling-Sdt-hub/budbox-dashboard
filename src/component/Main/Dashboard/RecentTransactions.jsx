@@ -98,7 +98,7 @@ const RecentTransactions = () => {
         onCancel={handleCancel}
         footer={null}
         centered
-        bodyStyle={{ padding: "15px" }}
+        style={{ padding: "15px" }}
       >
         <div className="text-black bg-primary">
           <h1 className="text-center text-2xl font-semibold my-2">
@@ -118,14 +118,6 @@ const RecentTransactions = () => {
               <p>{selectedTransaction?.user?.email || "N/A"}</p>
             </div>
             <div className="flex justify-between py-3 border-b">
-              <p>Phone Number :</p>
-              <p>{selectedTransaction?.user?.phone || "N/A"}</p>
-            </div>
-            <div className="flex justify-between py-3 border-b">
-              <p>Address :</p>
-              <p>{selectedTransaction?.user?.address || "N/A"}</p>
-            </div>
-            <div className="flex justify-between py-3 border-b">
               <p>Box Package :</p>
               <p>{selectedTransaction?.boxPackage || "N/A"}</p>
             </div>
@@ -134,7 +126,7 @@ const RecentTransactions = () => {
               <p>{selectedTransaction?.amount || "N/A"}</p>
             </div>
             <div className="flex justify-between py-3">
-              <p>Date :</p>
+              <p>Order Date :</p>
               <p>
                 {selectedTransaction?.date
                   ? moment(selectedTransaction.date).format("DD MMM YYYY")

@@ -21,11 +21,14 @@ const settingApi = baseApi.injectEndpoints({
       transformResponse: (response) => response?.data?.attributes,
     }),
     addAboutUs: builder.mutation({
-      query: (data) => ({
-        url: "/info/about-us",
-        method: "POST",
-        data: data,
-      }),
+      query: (data) => {
+        console.log(data);
+        return {
+          url: "/info/about-us",
+          method: "POST",
+          body: data,
+        };
+      },
       invalidatesTags: ["AboutUs"],
       transformResponse: (response) => response?.data?.attributes,
     }),

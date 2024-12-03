@@ -1,8 +1,8 @@
 import { baseApi } from "../../baseApi/baseApi";
 
-const earningsApi = baseApi.injectEndpoints({
+const ordersApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getEarnings: builder.query({
+    getOrders: builder.query({
       query: ({ page, limit, filters }) => {
         const params = new URLSearchParams();
         if (page) params.append("page", page);
@@ -13,14 +13,23 @@ const earningsApi = baseApi.injectEndpoints({
           });
         }
         return {
-          url: "/admin/earnings",
+          url: "/order/admin-all",
           method: "GET",
           params,
         };
       },
-      transformResponse: (response) => response?.data,
+      providesTags: ["Orders"],
+      transformResponse: (response) => response?.data?.attributes,
+    }),
+    updateOder: builder.mutation({
+      query: (data) => ({
+        url: `/order/${data.id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["Orders"],
     }),
   }),
 });
 
-export const { useGetEarningsQuery } = earningsApi;
+export const { useGetOrdersQuery, useUpdateOderMutation } = ordersApi;

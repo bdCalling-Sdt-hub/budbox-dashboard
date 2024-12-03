@@ -7,7 +7,7 @@ import { useState } from "react";
 
 const Items = () => {
   const [currentPage, setCurrentPage] = useState(1); // Current page state
-  const itemsPerPage = 9; 
+  const itemsPerPage = 8; 
   const {
     data: responseData,
     isLoading,

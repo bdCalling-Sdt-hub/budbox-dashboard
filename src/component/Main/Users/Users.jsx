@@ -19,12 +19,18 @@ const { Item } = Form;
 
 const Users = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [params, setParams] = useState([]);
   const [date, setDate] = useState("");
   const [allUser, setAllUser] = useState([]);
   const [user, setUser] = useState(null);
-  const { data, isFetching, isError, error } = useGetAllUsersQuery(params);
+
+  const { data, isFetching, isError, error } = useGetAllUsersQuery({
+    page: currentPage,
+    limit: pageSize,
+    filters: params,
+  });
 
   const handleView = (record) => {
     setUser(record);
@@ -92,7 +98,7 @@ const Users = () => {
       queryParams.push({ name: "date", value: date });
     }
     if (username) {
-      queryParams.push({ name: "userName", value: username });
+      queryParams.push({ name: "fullName", value: username });
     }
     setParams(queryParams);
   };
@@ -149,9 +155,14 @@ const Users = () => {
         <Table
           loading={isFetching}
           pagination={{
-            position: ["bottomCenter"],
             current: currentPage,
-            onChange: setCurrentPage,
+            pageSize: pageSize,
+            total: data?.data?.attributes?.user?.totalResults || 0,
+            onChange: (page, pageSize) => {
+              setCurrentPage(page);
+              setPageSize(pageSize);
+            },
+            position: ["bottomCenter"],
           }}
           columns={columns}
           dataSource={dataSource}
