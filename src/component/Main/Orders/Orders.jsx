@@ -21,7 +21,10 @@ const Orders = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [date, setDate] = useState("");
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const { data: responseData } = useGetOrdersQuery();
+  const { data: responseData } = useGetOrdersQuery({
+    page: currentPage,
+    limit: 10
+  });
 
   const dataSource = responseData?.map((order, index) => {
     return {
@@ -219,7 +222,7 @@ const Orders = () => {
                   key: "price",
                 },
               ]}
-              dataSource={selectedOrder?.budboxs?.map((box,i) => ({
+              dataSource={selectedOrder?.budboxs?.map((box, i) => ({
                 key: i + 1,
                 name: box?.name,
                 quantity: box?.quantity,

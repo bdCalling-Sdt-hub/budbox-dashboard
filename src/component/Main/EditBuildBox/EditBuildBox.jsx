@@ -27,11 +27,14 @@ const EditBuildBox = () => {
 
   // Fetch products for dropdown
   const { data: productsData, isLoading: isProductLoading } =
-    useGetAllProductsQuery();
+    useGetAllProductsQuery({
+      page: 1,
+      limit: 5000,
+    });
 
   // Transform products data for Select options
   const productOptions =
-    productsData?.map((product) => ({
+    productsData?.results?.map((product) => ({
       value: product.id,
       label: `${product.name} - $${product.price}`,
     })) || [];

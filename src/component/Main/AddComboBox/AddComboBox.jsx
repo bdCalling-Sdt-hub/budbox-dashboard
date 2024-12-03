@@ -17,11 +17,14 @@ const AddComboBox = () => {
   const navigate = useNavigate();
 
   // Fetch products using useGetAllProductsQuery
-  const { data, isLoading: isProductLoading } = useGetAllProductsQuery();
+  const { data, isLoading: isProductLoading } = useGetAllProductsQuery({
+     page: 1,
+     limit: 5000,
+  });
 
   // Transform the product data to match the format required by the Select options
   const productOptions =
-    data?.map((product) => ({
+    data?.results?.map((product) => ({
       value: product.id,
       label: `${product.name} - $${product.price}`,
     })) || [];
